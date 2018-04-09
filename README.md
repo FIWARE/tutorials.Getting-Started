@@ -46,7 +46,7 @@ To keep things simple both components will be run using [Docker](https://www.doc
 
  **Postman** is a testing framework for REST APIs. The tool can be downloaded from [here](www.getpostman.com). 
  
-The text in this tutorial uses `cUrl` commands to interact with the Orion Context Broker server, however a [Postman collection](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/FIWARE%20Getting%20Started.postman_collection.json)  of commands is also available within this GitHub repository. The entire tutorial is also available directly as [Postman documentation](https://web.postman.co/collections/513743-0092fea0-57a6-4b4b-a998-c0367382d31e?workspace=92070066-e8ee-4c1f-b4f1-ef4e447f946c#introduction).
+The text in this tutorial uses `cUrl` commands to interact with the Orion Context Broker server, however a [Postman collection](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/FIWARE%20Getting%20Started.postman_collection.json)  of commands is also available within this GitHub repository. The entire tutorial is also available directly as [Postman documentation](https://documenter.getpostman.com/view/513743/RVu5j8XY).
 
 ## Starting the containers
 
