@@ -13,13 +13,14 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://{{orion}}/version",
+					"raw": "http://{{orion}}/version/",
 					"protocol": "http",
 					"host": [
 						"{{orion}}"
 					],
 					"path": [
-						"version"
+						"version",
+						""
 					]
 				},
 				"description": "Once the Orion Context Broker is running, You can check the status by making an HTTP request to the exposed port. \nIf the response is blank, this is usually because the MongoDB database holding the context information is not running or not connected."
@@ -38,15 +39,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"store1\",\n    \"type\": \"Store\",\n   \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Bornholmer Straße 65\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Prenzlauer Berg\",\n            \"postalCode\": \"10439\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:point\",\n        \"value\": \"52.5547, 13.3986\"\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Bose Brucke Einkauf\"\n    }\n}"
+					"raw": "{\n    \"id\": \"store1\",\n    \"type\": \"Store\",\n   \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Bornholmer Straße 65\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Prenzlauer Berg\",\n            \"postalCode\": \"10439\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3986, 52.5547]\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Bose Brucke Einkauf\"\n    }\n}"
 				},
 				"url": {
-					"raw": "http://{{orion}}/entities/",
+					"raw": "http://{{orion}}/v2/entities/",
 					"protocol": "http",
 					"host": [
 						"{{orion}}"
 					],
 					"path": [
+						"v2",
 						"entities",
 						""
 					]
@@ -67,7 +69,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"store2\",\n    \"type\": \"Store\",\n    \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Friedrichstraße 44\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Kreuzberg\",\n            \"postalCode\": \"10969\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:point\",\n        \"value\": \"52.5075, 13.3903\"\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Checkpoint Markt\"\n    }\n}"
+					"raw": "{\n    \"id\": \"store2\",\n    \"type\": \"Store\",\n    \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Friedrichstraße 44\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Kreuzberg\",\n            \"postalCode\": \"10969\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": \"13.3903, 52.5075\"\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Checkpoint Markt\"\n    }\n}"
 				},
 				"url": {
 					"raw": "http://{{orion}}/v2/entities/",
@@ -138,12 +140,6 @@
 							"key": "attrs",
 							"value": "name",
 							"description": "Ordered list of attribute names to display",
-							"disabled": true
-						},
-						{
-							"key": "options",
-							"value": "keyValues",
-							"description": "* `keyValues` option in order to get a more compact and brief representation, including just attribute values\n* `values` option combined with a list of attribute values  `attrs`  for an ordered list of attributes only",
 							"disabled": true
 						}
 					]
@@ -220,7 +216,14 @@
 						},
 						{
 							"key": "options",
-							"value": "keyValues"
+							"value": "keyValues",
+							"description": "* `keyValues` option in order to get a more compact and brief representation, including just attribute values\n* `values` option combined with a list of attribute values  `attrs`  for an ordered list of attributes only"
+						},
+						{
+							"key": "attrs",
+							"value": "name",
+							"description": "Ordered list of attribute names to display",
+							"disabled": true
 						}
 					]
 				},
@@ -304,7 +307,7 @@
 	],
 	"variable": [
 		{
-			"id": "a2463600-4bbc-4866-8f86-d12163376cf0",
+			"id": "df0c7c83-8325-4d8f-8b3f-bea47630872d",
 			"key": "orion",
 			"value": "localhost:1026",
 			"type": "string",

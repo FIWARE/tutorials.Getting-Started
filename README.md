@@ -14,7 +14,7 @@ This is an Introductory Tutorial to the FIWARE Platform
     + [Obtain entity data by id](#obtain-entity-data-by-id)
     + [Obtain entity data by type](#obtain-entity-data-by-type)
     + [Filter context data by comparing the values of an attribute](#filter-context-data-by-comparing-the-values-of-an-attribute)
-    + [Filter context data by comparing the values of a geo:point attribute](#filter-context-data-by-comparing-the-values-of-a-geopoint-attribute)
+    + [Filter context data by comparing the values of a geo:json attribute](#filter-context-data-by-comparing-the-values-of-a-geojson-attribute)
 - [Iterative Development](#iterative-development)
 
 # Creating your first "Powered by FIWARE" app
@@ -128,8 +128,11 @@ curl -X POST \
         }
     },
     "location": {
-        "type": "geo:point",
-        "value": "52.5547, 13.3986"
+        "type": "geo:json",
+        "value": {
+           "type": "Point",
+           "coordinates": [13.3986, 52.5547]
+        }
     },
     "name": {
         "type": "Text",
@@ -158,8 +161,11 @@ curl -X POST \
         }
     },
     "location": {
-        "type": "geo:point",
-        "value": "52.5075, 13.3903"
+        "type": "geo:json",
+        "value": {
+             "type": "Point",
+             "coordinates": [13.3903, 52.5075]
+        }
     },
     "name": {
         "type": "Text",
@@ -200,7 +206,13 @@ curl -X GET \
         "addressLocality": "Prezlauer Berg",
         "postalCode": "10439"
     },
-    "location": "52.5547, 13.3986",
+    "location": {
+        "type": "Point",
+        "coordinates": [
+            52.5547,
+            13.3986
+        ]
+    },
     "name": "Bose Brucke Einkauf"
 }
 ```
@@ -229,7 +241,13 @@ curl -X GET \
             "addressLocality": "Prenzlauer Berg",
             "postalCode": "10439"
         },
-        "location": "52.5547, 13.3986",
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.3986,
+                52.5547
+            ]
+        },
         "name": "Bose Brucke Einkauf"
     },
     {
@@ -241,7 +259,13 @@ curl -X GET \
             "addressLocality": "Kreuzberg",
             "postalCode": "10969"
         },
-        "location": "52.5075, 13.3903",
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.3903,
+                52.5075
+            ]
+        },
         "name": "Checkpoint Markt"
     }
 ]
@@ -271,13 +295,19 @@ http://localhost:1026/v2/entities?q=address.addressLocality==Kreuzberg&type=Stor
             "addressLocality": "Kreuzberg",
             "postalCode": "10969"
         },
-        "location": "52.5075, 13.3903",
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.3903,
+                52.5075
+            ]
+        },
         "name": "Checkpoint Markt"
     }
 ]
 ```
 
-### Filter context data by comparing the values of a geo:point attribute
+### Filter context data by comparing the values of a geo:json attribute
 
 This example return all Stores within 1.5km the **Brandenburg Gate**  in **Berlin** (*52.5162N 13.3777W*) 
 
@@ -301,7 +331,13 @@ curl -X GET \
             "addressLocality": "Kreuzberg",
             "postalCode": "10969"
         },
-        "location": "52.5075, 13.3903",
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.3903,
+                52.5075
+            ]
+        },
         "name": "Checkpoint Markt"
     }
 ]
