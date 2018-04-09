@@ -1,4 +1,23 @@
-# Creating your first “Powered by FIWARE” app
+
+This is an Introductory Tutorial to the FIWARE Platform
+
+#  Contents
+
+- [Creating your first "Powered by FIWARE" app](#creating-your-first-powered-by-fiware-app)
+  * [Architecture](#architecture)
+  * [Prerequisites](#prerequisites)
+    + [Docker](#docker)
+    + [Postman (Optional)](#postman-optional)
+  * [Starting the containers](#starting-the-containers)
+  * [Creating Context Data](#creating-context-data)
+  * [Querying Context Data](#querying-context-data)
+    + [Obtain entity data by id](#obtain-entity-data-by-id)
+    + [Obtain entity data by type](#obtain-entity-data-by-type)
+    + [Filter context data by comparing the values of an attribute](#filter-context-data-by-comparing-the-values-of-an-attribute)
+    + [Filter context data by comparing the values of a geo:point attribute](#filter-context-data-by-comparing-the-values-of-a-geopoint-attribute)
+- [Iterative Development](#iterative-development)
+
+# Creating your first "Powered by FIWARE" app
 
 Let’s start with the data from a supermarket chain’s store finder and create a very simple “Powered by FIWARE” application by passing in the address and location of each store as context data to the FIWARE context broker.
 
