@@ -9,17 +9,25 @@ Our demo application will only make use of one FIWARE component - the [Orion Con
 Currently, the Orion Context Broker  relies on open source [MongoDB](https://www.mongodb.com/) technology to keep persistence of the context data it holds. Therefore, the architecture will consist of two elements:
 
 * The  Orion Context Broker server which will receive requests using NGSI
-* The underlying MongoDB database associated to the  Orion Context Broker server
+* The underlying MongoDB database associated to the Orion Context Broker server
 
-Since all interactions between the two elements are initiated by HTTP requests, the entities can be containerized and run from exposed ports.
+Since all interactions between the two elements are initiated by HTTP requests, the entities can be containerized and run from exposed ports. 
 
 ## Prerequisites
 
-To keep things simple both components will be run using [Docker](https://www.docker.com). Docker is a container technology which allows to different components isolated into their respective environments. 
+### Docker
+
+To keep things simple both components will be run using [Docker](https://www.docker.com). **Docker** is a container technology which allows to different components isolated into their respective environments. 
 
 * To install Docker on Windows follow the instructions [here](https://docs.docker.com/docker-for-windows/)
 * To install Docker on Mac follow the instructions [here](https://docs.docker.com/docker-for-mac/)
 * To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
+
+### Postman (Optional)
+
+ **Postman** is a testing framework for REST APIs. The tool can be downloaded from [here](www.getpostman.com). 
+ 
+The text in this tutorial uses `cUrl` commands to interact with the Orion Context Broker server, however a [Postman collection](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/FIWARE%20Getting%20Started.postman_collection.json)  of commands is also available within this GitHub repository. The entire tutorial is also available directly as [Postman documentation](https://web.postman.co/collections/513743-0092fea0-57a6-4b4b-a998-c0367382d31e?workspace=92070066-e8ee-4c1f-b4f1-ef4e447f946c#introduction).
 
 ## Starting the containers
 
@@ -81,7 +89,7 @@ The response will look similar to the following:
 
 ## Creating Context Data
 
-At its heart, FIWARE is a system for managing context information, so lets add some context data into the system by creating two new entities (stores in **Berlin**). Any entity must have a` id` and `type` attributes, additional attributes are optional and will depend on the system being described. Each additional attribute should also have a defined `type` and a `value` attribute.
+At its heart, FIWARE is a system for managing context information, so lets add some context data into the system by creating two new entities (stores in **Berlin**). Any entity must have a `id` and `type` attributes, additional attributes are optional and will depend on the system being described. Each additional attribute should also have a defined `type` and a `value` attribute.
 
 ```bash
 curl -X POST \
