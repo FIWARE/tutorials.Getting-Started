@@ -7,8 +7,12 @@ This is an Introductory Tutorial to the FIWARE Platform
   * [Architecture](#architecture)
   * [Prerequisites](#prerequisites)
     + [Docker](#docker)
+    + [Docker Compose (Optional)](#docker-compose-optional)
     + [Postman (Optional)](#postman-optional)
   * [Starting the containers](#starting-the-containers)
+    + [Option 1) Using Docker commands directly](#option-1-using-docker-commands-directly)
+    + [Option 2) Using Docker Compose](#option-2-using-docker-compose)
+    + [Checking the service health](#checking-the-service-health)
   * [Creating Context Data](#creating-context-data)
   * [Querying Context Data](#querying-context-data)
     + [Obtain entity data by id](#obtain-entity-data-by-id)
@@ -42,13 +46,20 @@ To keep things simple both components will be run using [Docker](https://www.doc
 * To install Docker on Mac follow the instructions [here](https://docs.docker.com/docker-for-mac/)
 * To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
 
+### Docker Compose (Optional)
+
+**Docker Compose** is a tool for defining and running multi-container Docker applications. A [YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) is used configure the required
+services for the application. This means all container sevices can be brought up in a single commmand. Docker Compose is installed by default as part of Docker for Windows and  Docker for Mac, however Linux users will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
+
 ### Postman (Optional)
 
  **Postman** is a testing framework for REST APIs. The tool can be downloaded from [here](www.getpostman.com). 
  
-The text in this tutorial uses `cUrl` commands to interact with the Orion Context Broker server, however a [Postman collection](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/FIWARE%20Getting%20Started.postman_collection.json)  of commands is also available within this GitHub repository. The entire tutorial is also available directly as [Postman documentation](https://documenter.getpostman.com/view/513743/RVu5j8XY).
+The text in this tutorial uses `cUrl` commands to interact with the Orion Context Broker server, however a [Postman collection](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/FIWARE%20Getting%20Started.postman_collection.json)  of commands is also available within this GitHub repository. The entire tutorial is also available directly as [Postman documentation](https://documenter.getpostman.com/view/513743/fiware-getting-started/RVu5kp1c).
 
 ## Starting the containers
+
+### Option 1) Using Docker commands directly
 
 First  pull the necessary Docker images from Docker Hub and create a network for our containers to connect to:
 
@@ -71,6 +82,35 @@ The Orion Context Broker can be started and connected to the network with the fo
 docker run -d --name orion  --network=my-net \
   -p 1026:1026  fiware/orion -dbhost context-db
 ``` 
+
+ 
+>**Note:**  If you want to clean up and start again you can do so with the following commands
+>
+>```bash
+>docker stop orion
+>docker rm orion
+>docker stop context-db
+>docker rm context-db
+>docker network rm my-net
+>``` 
+>
+
+### Option 2) Using Docker Compose
+
+All services can be initialised from the command line using the following command:
+
+```bash
+docker-compose up -d
+``` 
+
+>**Note:** If you want to clean up and start again you can do so with the following command:
+>
+>```bash
+>docker-compose down
+>``` 
+>
+
+### Checking the service health
  
 You can check if the Orion Context Broker is running by making an HTTP request to the exposed port:
 
@@ -94,17 +134,7 @@ The response will look similar to the following:
     }
 }
 ```
- 
->**Note:**  If you want to clean up and start again you can do so with the following commands
->```bash
->docker stop orion
->docker rm orion
->docker stop context-db
->docker rm context-db
->docker network rm my-net
->``` 
->
- 
+
 
 ## Creating Context Data
 

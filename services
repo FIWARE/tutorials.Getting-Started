@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+#  Command Line Interface to start all services associated with the Getting-Started Tutorial
+#
+#  For this tutorial the commands are merely a convenience script to run docker-compose
+#
+
+set -e
+
+if (( $# != 1 )); then
+    echo "Illegal number of parameters"
+    echo "usage: services [start|stop]"
+    exit 1
+fi
+
+command="$1"
+case "${command}" in
+	"help")
+        echo "usage: services [start|stop]"
+        ;;
+    "start")
+		echo "starting containers"
+		docker-compose up -d
+		;;
+	"stop")
+		echo "stopping containers"
+		docker-compose down
+		;;
+esac
