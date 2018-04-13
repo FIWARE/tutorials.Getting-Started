@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0092fea0-57a6-4b4b-a998-c0367382d31e",
+		"_postman_id": "dd7b3ba8-5aa3-405a-b054-47608a483f77",
 		"name": "FIWARE Getting Started",
 		"description": "Our demo application will only make use of one FIWARE component - the [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker) . Usage of the Orion Context Broker is sufficient for an application to qualify as “Powered by FIWARE”.\n\nThis collection consists of a series of HTTP requests to the Orion Broker. It is assumed that orion is running on port 1026 of the `localhost` \n\n## Initialization\n\n```bash \ndocker pull mongo:3.6\ndocker pull fiware/orion\ndocker network create my-net\n```\n\n## Start Up\n```bash\ndocker run -d --name=context-db --network=my-net \\\n  --expose=27017 mongo:3.6 --bind_ip_all --smallfiles\ndocker run -d --name orion  --network=my-net \\\n  -p 1026:1026  fiware/orion -dbhost context-db\n``` ",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
@@ -39,7 +39,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"store1\",\n    \"type\": \"Store\",\n   \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Bornholmer Straße 65\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Prenzlauer Berg\",\n            \"postalCode\": \"10439\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3986, 52.5547]\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Bose Brucke Einkauf\"\n    }\n}"
+					"raw": "{\n    \"id\": \"urn:ngsi-ld:Store:001\",\n    \"type\": \"Store\",\n    \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Bornholmer Straße 65\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Prenzlauer Berg\",\n            \"postalCode\": \"10439\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3986, 52.5547]\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Bösebrücke Einkauf\"\n    }\n}"
 				},
 				"url": {
 					"raw": "http://{{orion}}/v2/entities/",
@@ -69,7 +69,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"store2\",\n    \"type\": \"Store\",\n    \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Friedrichstraße 44\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Kreuzberg\",\n            \"postalCode\": \"10969\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": \"13.3903, 52.5075\"\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Checkpoint Markt\"\n    }\n}"
+					"raw": "{\n\t\"type\": \"Store\",\n    \"id\": \"urn:ngsi-ld:Store:002\",\n    \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Friedrichstraße 44\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Kreuzberg\",\n            \"postalCode\": \"10969\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3903, 52.5075]\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Checkpoint Markt\"\n    }\n}"
 				},
 				"url": {
 					"raw": "http://{{orion}}/v2/entities/",
@@ -114,7 +114,7 @@
 				"header": [],
 				"body": {},
 				"url": {
-					"raw": "http://{{orion}}/v2/entities/store1?options=keyValues",
+					"raw": "http://{{orion}}/v2/entities/urn:ngsi-ld:Store:store1?options=keyValues",
 					"protocol": "http",
 					"host": [
 						"{{orion}}"
@@ -122,7 +122,7 @@
 					"path": [
 						"v2",
 						"entities",
-						"store1"
+						"urn:ngsi-ld:Store:store1"
 					],
 					"query": [
 						{
@@ -169,7 +169,7 @@
 						{
 							"key": "type",
 							"value": "Store",
-							"description": "Entity type"
+							"description": "Entity type, to avoid ambiguity in case there are several entities with the same entity id"
 						},
 						{
 							"key": "options",
@@ -212,7 +212,8 @@
 						},
 						{
 							"key": "type",
-							"value": "Store"
+							"value": "Store",
+							"description": "Entity type, to avoid ambiguity in case there are several entities with the same entity id"
 						},
 						{
 							"key": "options",
@@ -263,7 +264,8 @@
 						},
 						{
 							"key": "type",
-							"value": "Store"
+							"value": "Store",
+							"description": "Entity type, to avoid ambiguity in case there are several entities with the same entity id"
 						},
 						{
 							"key": "options",

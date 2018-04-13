@@ -57,7 +57,7 @@ services for the application. This means all container sevices can be brought up
 
  **Postman** is a testing framework for REST APIs. The tool can be downloaded from [here](www.getpostman.com). 
  
-The text in this tutorial uses `cUrl` commands to interact with the Orion Context Broker server, however a [Postman collection](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/FIWARE%20Getting%20Started.postman_collection.json)  of commands is also available within this GitHub repository. The entire tutorial is also available directly as [Postman documentation](https://documenter.getpostman.com/view/513743/fiware-getting-started/RVu5kp1c).
+The text in this tutorial uses `cUrl` commands to interact with the Orion Context Broker server, however a [Postman collection](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/FIWARE%20Getting%20Started.postman_collection.json)  of commands is also available within this GitHub repository. The entire tutorial is also available directly as [Postman documentation](http://fiware.github.io/tutorials.Getting-Started/).
 
 ## Starting the containers
 
@@ -148,9 +148,9 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -d '
 {
-    "id": "store1",
+    "id": "urn:ngsi-ld:Store:001",
     "type": "Store",
-   "address": {
+    "address": {
         "type": "PostalAddress",
         "value": {
             "streetAddress": "Bornholmer Straße 65",
@@ -162,13 +162,13 @@ curl -X POST \
     "location": {
         "type": "geo:json",
         "value": {
-           "type": "Point",
-           "coordinates": [13.3986, 52.5547]
+             "type": "Point",
+             "coordinates": [13.3986, 52.5547]
         }
     },
     "name": {
         "type": "Text",
-        "value": "Bose Brucke Einkauf"
+        "value": "Bösebrücke Einkauf"
     }
 }'
 ```
@@ -181,9 +181,9 @@ curl -X POST \
   -H 'Content-Type: application/json' \
   -d '
 {
-    "id": "store2",
     "type": "Store",
-   "address": {
+    "id": "urn:ngsi-ld:Store:002",
+    "address": {
         "type": "PostalAddress",
         "value": {
             "streetAddress": "Friedrichstraße 44",
@@ -205,7 +205,39 @@ curl -X POST \
     }
 }'
 ```
- 
+
+### Data Model Guidelines
+
+Although the each data entity within your context will vary according to your use case, the common structure of each data entity should be standardized order to promote reuse. The full FIWARE data model guidelines can be found [here](http://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html). This tutorial has demonstrates the usage of the following recommendations:
+
+#### All terms are defined in American English 
+Although the `value` fields of the context data may be in any language, all attributes and types are written using the English language.
+
+#### Entity type names must start with a Capital letter
+
+In this case we only have one entity type - **Store**  
+
+#### Entity ids should be a URN following NGSI-LD guidelines 
+
+NGSI-LD is a currently a [draft recommendation](https://docbox.etsi.org/ISG/CIM/Open/ISG_CIM_NGSI-LD_API_Draft_for_public_review.pdf), however the proposal is that each `id` is a URN follows a standard format: `urn:ngsi-ld:<entity-type>:<entity-id>`. This will mean that every `id` in the system will be unique
+
+#### Data type names should reuse schema.org data types where possible
+
+[Schema.org](http://schema.org/) is an initiative to create common structured data schemas. In order to promote reuse we have deliberately used the [`Text`](http://schema.org/PostalAddress) and [`PostalAddress`](http://schema.org/PostalAddress) type names within our **Store** entity. Other existing standards such as [Open311](http://www.open311.org/) (for civic issue tracking) or [Datex II](http://www.datex2.eu/) (for transport systems) can also be used, but the point is to check for the existence of the same attribute on existing data models and reuse it.
+
+#### Use camel case syntax for attribute names
+
+The  `streetAddress`, `addressRegion`, `addressLocality` and `postalCode` are all examples of attributes using camel casing
+
+#### Location information should be defined using `address` and `location` attributes
+
+* We have used an `address` attribute for civic locations as per [schema.org](http://schema.org/) 
+* We have used a `location` attribute for geographical coordinates.
+
+####  Use GeoJSON for codifying geospatial properties
+
+[GeoJSON](http://geojson.org) is an open standard format designed for representing simple geographical features.
+The `location` attribute has been encoded as a geoJSON `Point` location.
  
 ## Querying Context Data
 
@@ -217,35 +249,35 @@ Here are a few examples, in each case the `options=keyValues` query parameter ha
 
 ### Obtain entity data by id
 
-This example returns the data of store1 
+This example returns the data of `urn:ngsi-ld:Store:shop1` 
 
 #### Request:
 
 ```bash
 curl -X GET \
-   http://localhost:1026/v2/entities/store1?options=keyValues
+   http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues
  ```
  
 #### Response:
 
 ```json 
 {
-    "id": "store1",
+    "id": "urn:ngsi-ld:Store:001",
     "type": "Store",
     "address": {
         "streetAddress": "Bornholmer Straße 65",
         "addressRegion": "Berlin",
-        "addressLocality": "Prezlauer Berg",
+        "addressLocality": "Prenzlauer Berg",
         "postalCode": "10439"
     },
     "location": {
         "type": "Point",
         "coordinates": [
-            52.5547,
-            13.3986
+            13.3986,
+            52.5547
         ]
     },
-    "name": "Bose Brucke Einkauf"
+    "name": "Bösebrücke Einkauf"
 }
 ```
 
@@ -265,7 +297,7 @@ curl -X GET \
 ```json
 [
     {
-        "id": "store1",
+        "id": "urn:ngsi-ld:Store:001",
         "type": "Store",
         "address": {
             "streetAddress": "Bornholmer Straße 65",
@@ -283,7 +315,7 @@ curl -X GET \
         "name": "Bose Brucke Einkauf"
     },
     {
-        "id": "store2",
+        "id": "urn:ngsi-ld:Store:002",
         "type": "Store",
         "address": {
             "streetAddress": "Friedrichstraße 44",
@@ -319,7 +351,7 @@ http://localhost:1026/v2/entities?q=address.addressLocality==Kreuzberg&type=Stor
 ```json 
 [
     {
-        "id": "store2",
+        "id": "urn:ngsi-ld:Store:002",
         "type": "Store",
         "address": {
             "streetAddress": "Friedrichstraße 44",
@@ -355,7 +387,7 @@ curl -X GET \
 ```json
 [
     {
-        "id": "store2",
+        "id": "urn:ngsi-ld:Store:002",
         "type": "Store",
         "address": {
             "streetAddress": "Friedrichstraße 44",
