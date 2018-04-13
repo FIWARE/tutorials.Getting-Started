@@ -14,6 +14,7 @@ This is an Introductory Tutorial to the FIWARE Platform
     + [Option 2) Using Docker Compose](#option-2-using-docker-compose)
     + [Checking the service health](#checking-the-service-health)
   * [Creating Context Data](#creating-context-data)
+    + [Data Model Guidelines](#data-model-guidelines)
   * [Querying Context Data](#querying-context-data)
     + [Obtain entity data by id](#obtain-entity-data-by-id)
     + [Obtain entity data by type](#obtain-entity-data-by-type)
@@ -208,7 +209,7 @@ curl -X POST \
 
 ### Data Model Guidelines
 
-Although the each data entity within your context will vary according to your use case, the common structure of each data entity should be standardized order to promote reuse. The full FIWARE data model guidelines can be found [here](http://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html). This tutorial has demonstrates the usage of the following recommendations:
+Although the each data entity within your context will vary according to your use case, the common structure within each data entity should be standardized order to promote reuse. The full FIWARE data model guidelines can be found [here](http://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html). This tutorial demonstrates the usage of the following recommendations:
 
 #### All terms are defined in American English 
 Although the `value` fields of the context data may be in any language, all attributes and types are written using the English language.
