@@ -1,18 +1,24 @@
 
-This is an Introductory Tutorial to the FIWARE Platform
+This is an Introductory Tutorial to the FIWARE Platform.
+
+We will start with the data from a supermarket chain’s store finder and create a very simple *“Powered by FIWARE”* application by passing in the address and location of each store as context data to the FIWARE context broker.
+
+The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as [Postman documentation](http://fiware.github.io/tutorials.Getting-Started/)
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
+
 
 #  Contents
 
+- [Architecture](#architecture)
+- [Prerequisites](#prerequisites)
+  * [Docker](#docker)
+  * [Docker Compose (Optional)](#docker-compose-optional)
+- [Starting the containers](#starting-the-containers)
+  * [Option 1) Using Docker commands directly](#option-1-using-docker-commands-directly)
+  * [Option 2) Using Docker Compose](#option-2-using-docker-compose)
 - [Creating your first "Powered by FIWARE" app](#creating-your-first-powered-by-fiware-app)
-  * [Architecture](#architecture)
-  * [Prerequisites](#prerequisites)
-    + [Docker](#docker)
-    + [Docker Compose (Optional)](#docker-compose-optional)
-    + [Postman (Optional)](#postman-optional)
-  * [Starting the containers](#starting-the-containers)
-    + [Option 1) Using Docker commands directly](#option-1-using-docker-commands-directly)
-    + [Option 2) Using Docker Compose](#option-2-using-docker-compose)
-    + [Checking the service health](#checking-the-service-health)
+  * [Checking the service health](#checking-the-service-health)
   * [Creating Context Data](#creating-context-data)
     + [Data Model Guidelines](#data-model-guidelines)
   * [Querying Context Data](#querying-context-data)
@@ -20,15 +26,12 @@ This is an Introductory Tutorial to the FIWARE Platform
     + [Obtain entity data by type](#obtain-entity-data-by-type)
     + [Filter context data by comparing the values of an attribute](#filter-context-data-by-comparing-the-values-of-an-attribute)
     + [Filter context data by comparing the values of a geo:json attribute](#filter-context-data-by-comparing-the-values-of-a-geojson-attribute)
-- [Iterative Development](#iterative-development)
+- [Next Steps](#next-steps)
+  * [Iterative Development](#iterative-development)
 
-# Creating your first "Powered by FIWARE" app
+# Architecture
 
-Let’s start with the data from a supermarket chain’s store finder and create a very simple “Powered by FIWARE” application by passing in the address and location of each store as context data to the FIWARE context broker.
-
-## Architecture
-
-Our demo application will only make use of one FIWARE component - the [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker) . Usage of the Orion Context Broker is sufficient for an application to qualify as “Powered by FIWARE”.
+Our demo application will only make use of one FIWARE component - the [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker) . Usage of the Orion Context Broker is sufficient for an application to qualify as *“Powered by FIWARE”*.
 
 Currently, the Orion Context Broker  relies on open source [MongoDB](https://www.mongodb.com/) technology to keep persistence of the context data it holds. Therefore, the architecture will consist of two elements:
 
@@ -39,9 +42,9 @@ Since all interactions between the two elements are initiated by HTTP requests, 
 
 ![](https://fiware.github.io/tutorials.Getting-Started/img//architecture.png)
 
-## Prerequisites
+# Prerequisites
 
-### Docker
+## Docker
 
 To keep things simple both components will be run using [Docker](https://www.docker.com). **Docker** is a container technology which allows to different components isolated into their respective environments. 
 
@@ -49,20 +52,14 @@ To keep things simple both components will be run using [Docker](https://www.doc
 * To install Docker on Mac follow the instructions [here](https://docs.docker.com/docker-for-mac/)
 * To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
 
-### Docker Compose (Optional)
+## Docker Compose (Optional)
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A [YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) is used configure the required
 services for the application. This means all container sevices can be brought up in a single commmand. Docker Compose is installed by default as part of Docker for Windows and  Docker for Mac, however Linux users will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
 
-### Postman (Optional)
+# Starting the containers
 
- **Postman** is a testing framework for REST APIs. The tool can be downloaded from [here](www.getpostman.com). 
- 
-The text in this tutorial uses `cUrl` commands to interact with the Orion Context Broker server, however a [Postman collection](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/FIWARE%20Getting%20Started.postman_collection.json)  of commands is also available within this GitHub repository. The entire tutorial is also available directly as [Postman documentation](http://fiware.github.io/tutorials.Getting-Started/).
-
-## Starting the containers
-
-### Option 1) Using Docker commands directly
+## Option 1) Using Docker commands directly
 
 First  pull the necessary Docker images from Docker Hub and create a network for our containers to connect to:
 
@@ -98,7 +95,7 @@ docker run -d --name orion  --network=my-net \
 >``` 
 >
 
-### Option 2) Using Docker Compose
+## Option 2) Using Docker Compose
 
 All services can be initialised from the command line using the following command:
 
@@ -113,7 +110,9 @@ docker-compose up -d
 >``` 
 >
 
-### Checking the service health
+# Creating your first "Powered by FIWARE" app
+
+## Checking the service health
  
 You can check if the Orion Context Broker is running by making an HTTP request to the exposed port:
 
@@ -408,12 +407,15 @@ curl -X GET \
 ]
 ```
 
-Want to learn how you can more complex app adding advance features? Learn how.
+# Next Steps
 
-# Iterative Development
+Want to learn how you can more complex app adding advance features? You can learn how by reading the other tutorials in this series.
+
+## Iterative Development
 The context of the store finder demo is very simple, it could easily be expanded to hold the whole of a stock management system by passing in the current stock count of each store as context data to the [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker).
 
 So far, so simple, but consider how this Smart application could be iterated:
+
 * Real-time dashboards could be created to monitor the state of the stock across each store using a visualization component. \[[Wirecloud](https://catalogue.fiware.org/enablers/application-mashup-wirecloud)\]
 * The current layout of both the warehouse and store could be passed to the context broker so the location of the stock could be displayed on a map \[[Wirecloud](https://catalogue.fiware.org/enablers/application-mashup-wirecloud)\]
 * User Management components\[[Wilma](https://catalogue.fiware.org/enablers/pep-proxy-wilma), [AuthZForce](https://catalogue.fiware.org/enablers/authorization-pdp-authzforce), [Keyrock](https://catalogue.fiware.org/enablers/identity-management-keyrock)\] could be added so that only store managers are able to change the price of items
