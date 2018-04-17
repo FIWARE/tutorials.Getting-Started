@@ -35,7 +35,7 @@ Our demo application will only make use of one FIWARE component - the [Orion Con
 
 Currently, the Orion Context Broker  relies on open source [MongoDB](https://www.mongodb.com/) technology to keep persistence of the context data it holds. Therefore, the architecture will consist of two elements:
 
-* The  Orion Context Broker server which will receive requests using NGSI
+* The Orion Context Broker server which will receive requests using [NGSI](http://fiware.github.io/specifications/ngsiv2/latest/)
 * The underlying MongoDB database associated to the Orion Context Broker server
 
 Since all interactions between the two elements are initiated by HTTP requests, the entities can be containerized and run from exposed ports. 
@@ -410,6 +410,10 @@ curl -X GET \
 # Next Steps
 
 Want to learn how you can more complex app adding advance features? You can learn how by reading the other tutorials in this series.
+
+1. [Getting Started](https://github.com/Fiware/tutorials.Getting-Started)
+2. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships/) 
+3. [CRUD Operations](https://github.com/Fiware/tutorials.CRUD-Operations/) 
 
 ## Iterative Development
 The context of the store finder demo is very simple, it could easily be expanded to hold the whole of a stock management system by passing in the current stock count of each store as context data to the [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker).
