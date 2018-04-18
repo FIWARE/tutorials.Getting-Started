@@ -138,6 +138,31 @@ The response will look similar to the following:
 ```
 
 
+>**What if I get a `Failed to connect to localhost port 1026: Connection refused` Response?**
+>
+> If you get a `Connection refused` response, the Orion Content Broker cannot be found where expected for this tutorial  - you will need 
+> to substitute the URL and port in each cUrl command with the corrected ip address. All the cUrl commands tutorial assume 
+> that orion is available on `localhost:1026`. 
+> 
+>Try the following remedies:
+> * To check that the docker containers are running try the following:
+>
+>```bash
+>docker ps
+>```
+>
+>You should see two containers running. If orion is not running, you can restart the containers as necessary. 
+>This command will also display open port information.
+>
+> * If you have installed [`docker-machine`](https://docs.docker.com/machine/) and [Virtual Box](https://www.virtualbox.org/), the
+> orion docker container may be running from another IP address -  you will need to retrieve the virtual host ip as shown:
+>
+>```bash
+>curl -X GET http://$(docker-machine ip default):1026/version
+>```
+>
+
+
 ## Creating Context Data
 
 At its heart, FIWARE is a system for managing context information, so lets add some context data into the system by creating two new entities (stores in **Berlin**). Any entity must have a `id` and `type` attributes, additional attributes are optional and will depend on the system being described. Each additional attribute should also have a defined `type` and a `value` attribute.
@@ -379,7 +404,7 @@ This example return all Stores within 1.5km the **Brandenburg Gate**  in **Berli
 
 ```bash
 curl -X GET \
-  http://localhost:1026/v2/entities?type=Store&georel=near;maxDistance:1500&geometry=point&coords=52.5162,13.3777
+  'http://localhost:1026/v2/entities?type=Store&georel=near;maxDistance:1500&geometry=point&coords=52.5162,13.3777'
 ```
  
 #### Response:
