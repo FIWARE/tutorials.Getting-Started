@@ -63,7 +63,7 @@ services for the application. This means all container sevices can be brought up
 
 First  pull the necessary Docker images from Docker Hub and create a network for our containers to connect to:
 
-```bash 
+```console
 docker pull mongo:3.6
 docker pull fiware/orion
 docker network create my-net
@@ -71,14 +71,14 @@ docker network create my-net
 
 A Docker container running a MongoDB database can be started and connected to the network with the following command:
 
-```bash
+```console
 docker run -d --name=context-db --network=my-net \
   --expose=27017 mongo:3.6 --bind_ip_all --smallfiles
 ``` 
 
 The Orion Context Broker can be started and connected to the network with the following command:
 
-```bash
+```console
 docker run -d --name orion  --network=my-net \
   -p 1026:1026  fiware/orion -dbhost context-db
 ``` 
@@ -86,7 +86,7 @@ docker run -d --name orion  --network=my-net \
  
 >**Note:**  If you want to clean up and start again you can do so with the following commands
 >
->```bash
+>```console
 >docker stop orion
 >docker rm orion
 >docker stop context-db
@@ -99,13 +99,13 @@ docker run -d --name orion  --network=my-net \
 
 All services can be initialised from the command line using the following command:
 
-```bash
+```console
 docker-compose up -d
 ``` 
 
 >**Note:** If you want to clean up and start again you can do so with the following command:
 >
->```bash
+>```console
 >docker-compose down
 >``` 
 >
@@ -116,7 +116,7 @@ docker-compose up -d
  
 You can check if the Orion Context Broker is running by making an HTTP request to the exposed port:
 
-```bash
+```console
 curl -X GET http://localhost:1026/version
 ```
 
@@ -147,7 +147,7 @@ The response will look similar to the following:
 >Try the following remedies:
 > * To check that the docker containers are running try the following:
 >
->```bash
+>```console
 >docker ps
 >```
 >
@@ -157,7 +157,7 @@ The response will look similar to the following:
 > * If you have installed [`docker-machine`](https://docs.docker.com/machine/) and [Virtual Box](https://www.virtualbox.org/), the
 > orion docker container may be running from another IP address -  you will need to retrieve the virtual host ip as shown:
 >
->```bash
+>```console
 >curl -X GET http://$(docker-machine ip default):1026/version
 >```
 >
@@ -167,7 +167,7 @@ The response will look similar to the following:
 
 At its heart, FIWARE is a system for managing context information, so lets add some context data into the system by creating two new entities (stores in **Berlin**). Any entity must have a `id` and `type` attributes, additional attributes are optional and will depend on the system being described. Each additional attribute should also have a defined `type` and a `value` attribute.
 
-```bash
+```console
 curl -X POST \
   http://localhost:1026/v2/entities/ \
   -H 'Content-Type: application/json' \
@@ -200,7 +200,7 @@ curl -X POST \
  
 Each subsequent entity must have a unique `id` for the given `type`
 
-```bash
+```console
 curl -X POST \
   http://localhost:1026/v2/entities/ \
   -H 'Content-Type: application/json' \
@@ -278,7 +278,7 @@ This example returns the data of `urn:ngsi-ld:Store:shop1`
 
 #### Request:
 
-```bash
+```console
 curl -X GET \
    http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues
  ```
@@ -312,7 +312,7 @@ This example returns the data of all `Store` entities within the context data
 
 #### Request:
 
-```bash
+```console
 curl -X GET \
     http://localhost:1026/v2/entities?type=Store&options=keyValues
 ```
@@ -366,7 +366,7 @@ This example returns all stores found in the Kreuzberg District
 
 #### Request:
 
-```bash
+```console
 curl -X GET \    
 http://localhost:1026/v2/entities?q=address.addressLocality==Kreuzberg&type=Store&options=keyValues 
 ```
@@ -402,7 +402,7 @@ This example return all Stores within 1.5km the **Brandenburg Gate**  in **Berli
 
 #### Request:
 
-```bash
+```console
 curl -X GET \
   'http://localhost:1026/v2/entities?type=Store&georel=near;maxDistance:1500&geometry=point&coords=52.5162,13.3777'
 ```
