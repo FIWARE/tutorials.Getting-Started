@@ -8,22 +8,29 @@
 set -e
 
 if (( $# != 1 )); then
-    echo "Illegal number of parameters"
-    echo "usage: services [start|stop]"
-    exit 1
+	echo "Illegal number of parameters"
+	echo "usage: services [start|stop]"
+	exit 1
 fi
 
 command="$1"
 case "${command}" in
 	"help")
-        echo "usage: services [start|stop]"
-        ;;
-    "start")
+		echo "usage: services [start|stop]"
+		;;
+	"start")
 		echo "starting containers"
 		docker-compose up -d
 		;;
 	"stop")
 		echo "stopping containers"
 		docker-compose down
+		echo "removing volumes"
+		docker volume prune --force
 		;;
+	"create")
+		echo "Obtaining Mongo DB image"
+		docker pull mongo:3.6
+		echo "Obtaining Latest Orion Image"
+		docker pull fiware/orion
 esac
