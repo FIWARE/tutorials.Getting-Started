@@ -7,6 +7,8 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
 
+* このチュートリアルは[日本語](https://github.com/Fiware/tutorials.Getting-Started/blob/master/README.ja.md)でもご覧いただけます。
+
 
 #  Contents
 
@@ -40,7 +42,7 @@ Currently, the Orion Context Broker  relies on open source [MongoDB](https://www
 
 Since all interactions between the two elements are initiated by HTTP requests, the entities can be containerized and run from exposed ports. 
 
-![](https://fiware.github.io/tutorials.Getting-Started/img//architecture.png)
+![](https://fiware.github.io/tutorials.Getting-Started/img/architecture.png)
 
 # Prerequisites
 
