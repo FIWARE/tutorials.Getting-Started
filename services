@@ -20,11 +20,11 @@ case "${command}" in
 		;;
 	"start")
 		echo "starting containers"
-		docker-compose up -d
+		docker-compose -p fiware up -d 
 		;;
 	"stop")
 		echo "stopping containers"
-		docker-compose down
+		docker-compose -p fiware down
 		echo "removing volumes"
 		docker volume prune --force
 		;;

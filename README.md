@@ -68,20 +68,20 @@ First  pull the necessary Docker images from Docker Hub and create a network for
 ```console
 docker pull mongo:3.6
 docker pull fiware/orion
-docker network create my-net
+docker network create fiware_default
 ```
 
 A Docker container running a MongoDB database can be started and connected to the network with the following command:
 
 ```console
-docker run -d --name=context-db --network=my-net \
+docker run -d --name=context-db --network=fiware_default \
   --expose=27017 mongo:3.6 --bind_ip_all --smallfiles
 ``` 
 
 The Orion Context Broker can be started and connected to the network with the following command:
 
 ```console
-docker run -d --name orion  --network=my-net \
+docker run -d --name orion -h orion --network=fiware_default \
   -p 1026:1026  fiware/orion -dbhost context-db
 ``` 
 
@@ -93,7 +93,7 @@ docker run -d --name orion  --network=my-net \
 >docker rm orion
 >docker stop context-db
 >docker rm context-db
->docker network rm my-net
+>docker network rm fiware_default
 >``` 
 >
 
@@ -102,13 +102,13 @@ docker run -d --name orion  --network=my-net \
 All services can be initialised from the command line using the following command:
 
 ```console
-docker-compose up -d
+docker-compose -p fiware up -d
 ``` 
 
 >**Note:** If you want to clean up and start again you can do so with the following command:
 >
 >```console
->docker-compose down
+>docker-compose -p fiware down
 >``` 
 >
 
@@ -163,6 +163,12 @@ The response will look similar to the following:
 >curl -X GET http://$(docker-machine ip default):1026/version
 >```
 >
+> Alternatively run all your curl commands from within the container network:
+>
+>```console
+>docker run --network fiware_default --rm appropriate/curl -s \
+>  -X GET http://orion:1026/version
+>```
 
 
 ## Creating Context Data

@@ -72,20 +72,20 @@ ue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker) と
 ```console 
 docker pull mongo:3.6
 docker pull fiware/orion
-docker network create my-net
+docker network create fiware_default
 ```
 
 MongoDB データベースを実行している Docker コンテナを起動し、ネットワークに接続するには、次のコマンドを実行します :
 
 ```console
-docker run -d --name=context-db --network=my-net \
+docker run -d --name=context-db --network=fiware_default \
   --expose=27017 mongo:3.6 --bind_ip_all --smallfiles
 ``` 
 
 Orion Context Broker は、次のコマンドを使用して起動し、ネットワークに接続できます :
 
 ```console
-docker run -d --name orion  --network=my-net \
+docker run -d --name orion  --network=fiware_default \
   -p 1026:1026  fiware/orion -dbhost context-db
 ``` 
 
@@ -97,7 +97,7 @@ docker stop orion
 docker rm orion
 docker stop context-db
 docker rm context-db
-docker network rm my-net
+docker network rm fiware_default
 ``` 
 >
 
@@ -107,13 +107,13 @@ docker network rm my-net
 すべてのサービスは、次のコマンドを使用してコマンドラインから初期化できます :
 
 ```console
-docker-compose up -d
+docker-compose -p fiware up -d
 ``` 
 
 >**注** : クリーンアップして再起動する場合は、次のコマンドを使用して再起動できます :
 >
 ```bash
-docker-compose down
+docker-compose -p fiware down
 ``` 
 >
 

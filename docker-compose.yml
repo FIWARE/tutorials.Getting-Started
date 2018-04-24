@@ -9,7 +9,7 @@ services:
     ports:
         - "27017:27017"
     networks:
-        - my-net
+        - default
     command: --bind_ip_all --smallfiles
 
   orion:
@@ -19,7 +19,7 @@ services:
     depends_on:
       - context-db
     networks:
-        - my-net
+        - default
     expose:
         - "1026"
     ports:
@@ -27,4 +27,4 @@ services:
     command: -dbhost context-db
 
 networks:
-  my-net:
+  default:
