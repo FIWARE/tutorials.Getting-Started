@@ -1,4 +1,6 @@
 
+![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png)
+
 This is an Introductory Tutorial to the FIWARE Platform.
 
 We will start with the data from a supermarket chain’s store finder and create a very simple *“Powered by FIWARE”* application by passing in the address and location of each store as context data to the FIWARE context broker.
