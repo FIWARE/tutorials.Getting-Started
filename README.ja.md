@@ -1,3 +1,4 @@
+![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png)
 
 これは、FIWARE Platform のチュートリアルです。
 
