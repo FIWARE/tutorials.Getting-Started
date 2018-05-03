@@ -452,6 +452,8 @@ curl -X GET \
 2. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships/) 
 3. [CRUD Operations](https://github.com/Fiware/tutorials.CRUD-Operations/)
 4. [Context Providers](https://github.com/Fiware/tutorials.Context-Providers/) 
+5. [Altering the Context Programmatically](https://github.com/Fiware/tutorials.Accessing-Context/) 
+6. [Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions/) 
 
 <a name="iterative-development"></a>
 # 反復型開発
@@ -459,8 +461,8 @@ curl -X GET \
 
 これまでのところ単純ですが、このスマート・アプリケーションをどのように反復できるかを考えてみましょう :
 
-* ビジュアライゼーション・コンポーネントを使用して各ストアの在庫状態を監視するリアルタイム・ダッシュボードを作成することができます。\[[Wirecloud](https://catalogue.fiware.org/enablers/application-mash up-wirecloud)\]
-* 倉庫とストアの現在のレイアウトを Context Broker に渡すことができるので、在庫の場所を地図上に表示することができます。\[[Wirecloud](https://catalogue.fiware.org/enablers/application-mash up-wirecloud)\]
+* ビジュアライゼーション・コンポーネントを使用して各ストアの在庫状態を監視するリアルタイム・ダッシュボードを作成することができます。\[[Wirecloud](https://catalogue.fiware.org/enablers/application-mashup-wirecloud)\]
+* 倉庫とストアの現在のレイアウトを Context Broker に渡すことができるので、在庫の場所を地図上に表示することができます。\[[Wirecloud](https://catalogue.fiware.org/enablers/application-mashup-wirecloud)\]
 * ストア管理者のみがアイテムの価格を変更できるように、ユーザ管理コンポーネント \[[Wilma](https://catalogue.fiware.org/enablers/pep-proxy-wilma), [AuthZForce](https://catalogue.fiware.org/enablers/authorization-pdp-authzforce), [Keyrock](https://catalogue.fiware.org/enablers/identity-management-keyrock)\] を追加することができます
 * 棚が空でないことを保証して商品が販売するので、倉庫内で閾値警報を発生させることができます。[publish/subscribe function of [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker)]
 * 倉庫から積み込まれるアイテムの生成された各リストは、補充の効率を最大にするために計算することができます。\[[Complex Event Processing -  CEP](https://catalogue.fiware.org/enablers/complex-event-processing-cep-proactive-technology-online)\]
