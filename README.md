@@ -1,6 +1,8 @@
 
 ![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png)
 
+[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](http://fiware.github.io/specifications/OpenAPI/ngsiv2/)
+
 This is an Introductory Tutorial to the FIWARE Platform.
 
 We will start with the data from a supermarket chain’s store finder and create a very simple *“Powered by FIWARE”* 
