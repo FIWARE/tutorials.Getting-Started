@@ -1,12 +1,12 @@
 
 ![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png)
 
-[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](http://fiware.github.io/specifications/OpenAPI/ngsiv2/)
+[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](http://fiware.github.io/context.Orion/api/v2/stable/)
 
-This is an Introductory Tutorial to the FIWARE Platform.
-
-We will start with the data from a supermarket chain’s store finder and create a very simple *“Powered by FIWARE”* 
-application by passing in the address and location of each store as context data to the FIWARE context broker.
+This is an Introductory Tutorial to the FIWARE Platform. We will start with the data 
+from a supermarket chain’s store finder and create a very simple *“Powered by FIWARE”* 
+application by passing in the address and location of each store as context data to
+the FIWARE context broker.
 
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as [Postman documentation](http://fiware.github.io/tutorials.Getting-Started/)
 
