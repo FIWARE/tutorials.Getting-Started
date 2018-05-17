@@ -450,14 +450,14 @@ curl -X GET \
 
 アドバンス機能を追加するアプリをもっと複雑にする方法を知りたいですか？ このシリーズの他のチュートリアルを読むことで、学ぶことができます。
 
-101. [Getting Started](https://github.com/Fiware/tutorials.Getting-Started)
-102. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships/) 
-103. [CRUD Operations](https://github.com/Fiware/tutorials.CRUD-Operations/) 
-104. [Context Providers](https://github.com/Fiware/tutorials.Context-Providers/) 
-105. [Altering the Context Programmatically](https://github.com/Fiware/tutorials.Accessing-Context/) 
-106. [Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions/) 
+&nbsp; 101. [Getting Started](https://github.com/Fiware/tutorials.Getting-Started)
+&nbsp; 102. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships/) 
+&nbsp; 103. [CRUD Operations](https://github.com/Fiware/tutorials.CRUD-Operations/) 
+&nbsp; 104. [Context Providers](https://github.com/Fiware/tutorials.Context-Providers/) 
+&nbsp; 105. [Altering the Context Programmatically](https://github.com/Fiware/tutorials.Accessing-Context/) 
+&nbsp; 106. [Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions/) 
 
-201. [Introduction to IoT Sensors](https://github.com/Fiware/tutorials.IoT-Sensors/) 
+&nbsp; 201. [Introduction to IoT Sensors](https://github.com/Fiware/tutorials.IoT-Sensors/) 
 
 <a name="iterative-development"></a>
 # 反復型開発

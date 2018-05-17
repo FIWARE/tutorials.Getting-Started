@@ -478,14 +478,14 @@ curl -X GET \
 Want to learn how to add more complexity to your application by adding advanced features?
 You can find out by reading the other tutorials in this series:
 
-101. [Getting Started](https://github.com/Fiware/tutorials.Getting-Started)
-102. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships/) 
-103. [CRUD Operations](https://github.com/Fiware/tutorials.CRUD-Operations/) 
-104. [Context Providers](https://github.com/Fiware/tutorials.Context-Providers/) 
-105. [Altering the Context Programmatically](https://github.com/Fiware/tutorials.Accessing-Context/) 
-106. [Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions/) 
+&nbsp; 101. [Getting Started](https://github.com/Fiware/tutorials.Getting-Started)
+&nbsp; 102. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships/) 
+&nbsp; 103. [CRUD Operations](https://github.com/Fiware/tutorials.CRUD-Operations/) 
+&nbsp; 104. [Context Providers](https://github.com/Fiware/tutorials.Context-Providers/) 
+&nbsp; 105. [Altering the Context Programmatically](https://github.com/Fiware/tutorials.Accessing-Context/) 
+&nbsp; 106. [Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions/) 
 
-201. [Introduction to IoT Sensors](https://github.com/Fiware/tutorials.IoT-Sensors/) 
+&nbsp; 201. [Introduction to IoT Sensors](https://github.com/Fiware/tutorials.IoT-Sensors/) 
 
 ## Iterative Development
 The context of the store finder demo is very simple, it could easily be expanded to hold the whole
