@@ -39,13 +39,13 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 # Architecture
 
 Our demo application will only make use of one FIWARE component - the
-[Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker).
+[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/).
 Usage of the Orion Context Broker is sufficient for an application to qualify as *“Powered by FIWARE”*.
 
 Currently, the Orion Context Broker  relies on open source [MongoDB](https://www.mongodb.com/) technology
 to keep persistence of the context data it holds. Therefore, the architecture will consist of two elements:
 
-* The Orion Context Broker server which will receive requests using [NGSI](https://swagger.lab.fiware.org/?url=https://raw.githubusercontent.com/Fiware/specifications/master/OpenAPI/ngsiv2/ngsiv2-openapi.json)
+* The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)which will receive requests using [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
 * The underlying MongoDB database associated to the Orion Context Broker server
 
 Since all interactions between the two elements are initiated by HTTP requests, the entities can be
@@ -490,7 +490,7 @@ You can find out by reading the other tutorials in this series:
 ## Iterative Development
 The context of the store finder demo is very simple, it could easily be expanded to hold the whole
 of a stock management system by passing in the current stock count of each store as context data to
-the [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker).
+the [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/).
 
 So far, so simple, but consider how this Smart application could be iterated:
 
@@ -498,7 +498,7 @@ So far, so simple, but consider how this Smart application could be iterated:
 * The current layout of both the warehouse and store could be passed to the context broker so the location of
   the stock could be displayed on a map \[[Wirecloud](https://catalogue.fiware.org/enablers/application-mashup-wirecloud)\]
 * User Management components\[[Wilma](https://catalogue.fiware.org/enablers/pep-proxy-wilma), [AuthZForce](https://catalogue.fiware.org/enablers/authorization-pdp-authzforce), [Keyrock](https://catalogue.fiware.org/enablers/identity-management-keyrock)\] could be added so that only store managers are able to change the price of items
-* A threshold alert could be raised in the warehouse as the goods are sold to ensure the shelves are not left empty [publish/subscribe function of [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker)]
+* A threshold alert could be raised in the warehouse as the goods are sold to ensure the shelves are not left empty [publish/subscribe function of [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)]
 * Each generated list of items to be loaded from the warehouse could be calculated to maximize the efficiency of replenishment \[[Complex Event Processing -  CEP](https://catalogue.fiware.org/enablers/complex-event-processing-cep-proactive-technology-online)\] 
 * A motion sensor could be added at the entrance to count the number of customers \[[IDAS](https://catalogue.fiware.org/enablers/backend-device-management-idas)\]
 * The motion sensor could ring a bell whenever a customer enters  \[[IDAS](https://catalogue.fiware.org/enablers/backend-device-management-idas)\]
