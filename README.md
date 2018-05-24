@@ -85,7 +85,7 @@ docker pull fiware/orion
 docker network create fiware_default
 ```
 
-A Docker container running a [MongoDB](https://www.mongodb.com/) databasecan be started and connected to the network with the following command:
+A Docker container running a [MongoDB](https://www.mongodb.com/) database can be started and connected to the network with the following command:
 
 ```console
 docker run -d --name=context-db --network=fiware_default \
