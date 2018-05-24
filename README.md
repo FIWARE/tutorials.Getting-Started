@@ -45,8 +45,9 @@ Usage of the Orion Context Broker is sufficient for an application to qualify as
 Currently, the Orion Context Broker  relies on open source [MongoDB](https://www.mongodb.com/) technology
 to keep persistence of the context data it holds. Therefore, the architecture will consist of two elements:
 
-* The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)which will receive requests using [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
-* The underlying MongoDB database associated to the Orion Context Broker server
+* The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
+* The underlying [MongoDB](https://www.mongodb.com/) database :
+  + Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and registrations
 
 Since all interactions between the two elements are initiated by HTTP requests, the entities can be
 containerized and run from exposed ports. 
@@ -84,7 +85,7 @@ docker pull fiware/orion
 docker network create fiware_default
 ```
 
-A Docker container running a MongoDB database can be started and connected to the network with the following command:
+A Docker container running a [MongoDB](https://www.mongodb.com/) databasecan be started and connected to the network with the following command:
 
 ```console
 docker run -d --name=context-db --network=fiware_default \
@@ -486,6 +487,7 @@ You can find out by reading the other tutorials in this series:
 &nbsp; 106. [Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions/)<br/>
 
 &nbsp; 201. [Introduction to IoT Sensors](https://github.com/Fiware/tutorials.IoT-Sensors/)<br/>
+&nbsp; 202. [Provisioning an IoT Agent](https://github.com/Fiware/tutorials.IoT-Agent/)<br/>
 
 ## Iterative Development
 The context of the store finder demo is very simple, it could easily be expanded to hold the whole
