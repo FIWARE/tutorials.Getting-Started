@@ -69,8 +69,8 @@ container technology which allows to different components isolated into their re
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A
 [YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml)
-is used configure the required services for the application. This means all container sevices can be brought
-up in a single commmand. Docker Compose is installed by default as part of Docker for Windows and Docker for
+is used configure the required services for the application. This means all container services can be brought
+up in a single command. Docker Compose is installed by default as part of Docker for Windows and Docker for
 Mac, however Linux users will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
 
 # Starting the containers
