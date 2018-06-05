@@ -2,9 +2,7 @@
 
 [![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](http://fiware.github.io/context.Orion/api/v2/stable/)
 
-これは、FIWARE Platform のチュートリアルです。
-
-スーパーマーケット・チェーンのストア・ファインダのデータから始め、コンテキスト・データとして各ストアの住所と場所を FIWARE context broker に渡して、非常に単純な *"Powered by FIWARE"* アプリケーションを作成します。
+これは、FIWARE Platform のチュートリアルです。スーパーマーケット・チェーンのストア・ファインダのデータから始め、コンテキスト・データとして各ストアの住所と場所を FIWARE context broker に渡して、非常に単純な *"Powered by FIWARE"* アプリケーションを作成します。
 
 このチュートリアルでは、全体で [cUrl](https://ec.haxx.se/) コマンドを使用していますが、[Postman documentation](http://fiware.github.io/tutorials.Getting-Started/) も利用できます。
 
@@ -35,13 +33,13 @@
 <a name="architecture"></a>
 # アーキテクチャ
 
-デモアプリケーションでは、[Orion Context Broker](https://catalog
-ue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker) という1つの FIWARE コンポーネントしか使用しません。アプリケーションが *"Powered by FIWARE"* と認定するには、Orion Context Broker を使用するだけで十分です。
+デモアプリケーションでは、[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) という1つの FIWARE コンポーネントしか使用しません。アプリケーションが *"Powered by FIWARE"* と認定するには、Orion Context Broker を使用するだけで十分です。
 
 現在、Orion Context Broker はオープンソースの [MongoDB](https://www.mongodb.com/) 技術を利用して、コンテキスト・データの永続性を維持しています。したがって、アーキテクチャは2つの要素で構成されます :
 
-* [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリクエストを受信する Orion Context Broker サーバ
-* Orion Context Broker サーバに関連付けられている MongoDB データベース
+* [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリクエストを受信する [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)
+* バックエンドの [MongoDB](https://www.mongodb.com/) データベース
+  + Orion Context Broker が、データ・エンティティなどのコンテキスト・データ情報、サブスクリプション、登録などを保持するために使用します
 
 2つの要素間のすべての対話は HTTP リクエストによって開始されるため、エンティティはコンテナ化され、公開されたポートから実行されます。
 
@@ -78,7 +76,7 @@ docker pull fiware/orion
 docker network create fiware_default
 ```
 
-MongoDB データベースを実行している Docker コンテナを起動し、ネットワークに接続するには、次のコマンドを実行します :
+[MongoDB](https://www.mongodb.com/) データベースを実行している Docker コンテナを起動し、ネットワークに接続するには、次のコマンドを実行します :
 
 ```console
 docker run -d --name=context-db --network=fiware_default \
@@ -462,14 +460,14 @@ curl -X GET \
 
 <a name="iterative-development"></a>
 # 反復型開発
-ストア・ファインダ・デモのコンテキストは非常にシンプルです。各ストアの現在の在庫数をコンテキスト・データとして [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker) に渡すことで、在庫管理システム全体を簡単に拡張することができます。
+ストア・ファインダ・デモのコンテキストは非常にシンプルです。各ストアの現在の在庫数をコンテキスト・データとして [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) に渡すことで、在庫管理システム全体を簡単に拡張することができます。
 
 これまでのところ単純ですが、このスマート・アプリケーションをどのように反復できるかを考えてみましょう :
 
 * ビジュアライゼーション・コンポーネントを使用して各ストアの在庫状態を監視するリアルタイム・ダッシュボードを作成することができます。\[[Wirecloud](https://catalogue.fiware.org/enablers/application-mashup-wirecloud)\]
 * 倉庫とストアの現在のレイアウトを Context Broker に渡すことができるので、在庫の場所を地図上に表示することができます。\[[Wirecloud](https://catalogue.fiware.org/enablers/application-mashup-wirecloud)\]
 * ストア管理者のみがアイテムの価格を変更できるように、ユーザ管理コンポーネント \[[Wilma](https://catalogue.fiware.org/enablers/pep-proxy-wilma), [AuthZForce](https://catalogue.fiware.org/enablers/authorization-pdp-authzforce), [Keyrock](https://catalogue.fiware.org/enablers/identity-management-keyrock)\] を追加することができます
-* 棚が空でないことを保証して商品が販売するので、倉庫内で閾値警報を発生させることができます。[publish/subscribe function of [Orion Context Broker](https://catalogue.fiware.org/enablers/publishsubscribe-context-broker-orion-context-broker)]
+* 棚が空でないことを保証して商品が販売するので、倉庫内で閾値警報を発生させることができます。[publish/subscribe function of [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)]
 * 倉庫から積み込まれるアイテムの生成された各リストは、補充の効率を最大にするために計算することができます。\[[Complex Event Processing -  CEP](https://catalogue.fiware.org/enablers/complex-event-processing-cep-proactive-technology-online)\]
 * 入り口にモーション・センサーを追加して顧客数をカウントすることもできます。\[[IDAS](https://catalogue.fiware.org/enablers/backend-device-management-idas)\]
 * 顧客がと入店するたびに、モーション・センサーがベルを鳴らすことができます。\[[IDAS](https://catalogue.fiware.org/enablers/backend-device-management-idas)\]
