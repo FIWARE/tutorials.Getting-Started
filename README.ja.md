@@ -167,6 +167,12 @@ docker ps
 curl -X GET http://$(docker-machine ip default):1026/version
 ```
 >
+>または、コンテナネットワーク内からすべての cUrl コマンドを実行します :
+>
+>```console
+>docker run --network fiware_default --rm appropriate/curl -s \
+>  -X GET http://orion:1026/version
+>```
 
 <a name="creating-context-data"></a>
 ## コンテキスト・データの作成
@@ -282,7 +288,7 @@ NGSI-LD は現時点では[ドラフトの勧告](https://docbox.etsi.org/ISG/CI
 <a name="obtain-entity-data-by-id"></a>
 ### id でエンティティ・データを取得
 
-この例では、 `urn:ngsi-ld:Store:shop1` のデータを返します
+この例では、 `urn:ngsi-ld:Store:001` のデータを返します
 
 #### リクエスト :
 
