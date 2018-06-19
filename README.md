@@ -420,7 +420,7 @@ This example returns all stores found in the Kreuzberg District
 
 ```console
 curl -X GET \
-http://localhost:1026/v2/entities?q=address.addressLocality==Kreuzberg&type=Store&options=keyValues 
+http://localhost:1026/v2/entities?type=Store&q=address.addressLocality==Kreuzberg&options=keyValues 
 ```
 
 #### Response:
