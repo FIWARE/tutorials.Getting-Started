@@ -132,9 +132,13 @@ docker-compose -p fiware up -d
  
 You can check if the Orion Context Broker is running by making an HTTP request to the exposed port:
 
+#### :one: Request:
+
 ```console
 curl -X GET http://localhost:1026/version
 ```
+
+#### Response:
 
 The response will look similar to the following:
 
@@ -193,6 +197,8 @@ system by creating two new entities (stores in **Berlin**). Any entity must have
 additional attributes are optional and will depend on the system being described. Each additional attribute
 should also have a defined `type` and a `value` attribute.
 
+#### :two: Request:
+
 ```console
 curl -X POST \
   http://localhost:1026/v2/entities/ \
@@ -224,6 +230,8 @@ curl -X POST \
 }'
 ```
  
+#### :three: Request:
+
 Each subsequent entity must have a unique `id` for the given `type`
 
 ```console
@@ -318,7 +326,7 @@ responses by stripping out the type elements from each attribute
 
 This example returns the data of `urn:ngsi-ld:Store:001` 
 
-#### Request:
+#### :four: Request:
 
 ```console
 curl -X GET \
@@ -352,7 +360,7 @@ curl -X GET \
 
 This example returns the data of all `Store` entities within the context data
 
-#### Request:
+#### :five: Request:
 
 ```console
 curl -X GET \
@@ -406,10 +414,10 @@ curl -X GET \
 
 This example returns all stores found in the Kreuzberg District
 
-#### Request:
+#### :six: Request:
 
 ```console
-curl -X GET \    
+curl -X GET \
 http://localhost:1026/v2/entities?q=address.addressLocality==Kreuzberg&type=Store&options=keyValues 
 ```
 
@@ -442,7 +450,7 @@ http://localhost:1026/v2/entities?q=address.addressLocality==Kreuzberg&type=Stor
 
 This example return all Stores within 1.5km the **Brandenburg Gate**  in **Berlin** (*52.5162N 13.3777W*) 
 
-#### Request:
+#### :seven: Request:
 
 ```console
 curl -X GET \
