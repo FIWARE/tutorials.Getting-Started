@@ -127,7 +127,8 @@ docker-compose -p fiware down
 公開されたポートに対して HTTP リクエストを行うことで、Orion Context Broker が実行されているかどうかを確認できます :
 
 ```console
-curl -X GET http://localhost:1026/version
+curl -X GET \
+  'http://localhost:1026/version'
 ```
 
 レスポンスは次のようになります :
@@ -163,9 +164,10 @@ docker ps
 >
 > * [Virtual Box](https://www.virtualbox.org/) と [`docker-machine`](https://docs.docker.com/machine/) をインストールしている場合は、orion docker コンテナが別の IP アドレスから実行されている可能性があります。次のように仮想ホスト IP を取得する必要があります :
 >
-```console
-curl -X GET http://$(docker-machine ip default):1026/version
-```
+>```console
+>curl -X GET \
+>  'http://$(docker-machine ip default):1026/version'
+>```
 >
 >または、コンテナネットワーク内からすべての cUrl コマンドを実行します :
 >
@@ -181,7 +183,7 @@ FIWARE はコンテキスト情報を管理するシステムなので、2つの
 
 ```console
 curl -iX POST \
-  http://localhost:1026/v2/entities/ \
+  'http://localhost:1026/v2/entities' \
   -H 'Content-Type: application/json' \
   -d '
 {
@@ -214,7 +216,7 @@ curl -iX POST \
 
 ```console
 curl -iX POST \
-  http://localhost:1026/v2/entities/ \
+  'http://localhost:1026/v2/entities' \
   -H 'Content-Type: application/json' \
   -d '
 {
@@ -294,7 +296,7 @@ NGSI-LD は現時点では[ドラフトの勧告](https://docbox.etsi.org/ISG/CI
 
 ```console
 curl -X GET \
-   http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues
+   'http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues'
  ```
  
 #### レスポンス :
@@ -329,7 +331,7 @@ curl -X GET \
 
 ```console
 curl -X GET \
-    http://localhost:1026/v2/entities?type=Store&options=keyValues
+    'http://localhost:1026/v2/entities?type=Store&options=keyValues'
 ```
 
 #### レスポンス :
@@ -421,7 +423,7 @@ http://localhost:1026/v2/entities?q=address.addressLocality==Kreuzberg&type=Stor
 
 ```console
 curl -X GET \
-  http://localhost:1026/v2/entities?type=Store&georel=near;maxDistance:1500&geometry=point&coords=52.5162,13.3777
+  'http://localhost:1026/v2/entities?type=Store&georel=near;maxDistance:1500&geometry=point&coords=52.5162,13.3777'
 ```
  
 #### レスポンス :

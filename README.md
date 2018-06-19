@@ -135,7 +135,8 @@ You can check if the Orion Context Broker is running by making an HTTP request t
 #### :one: Request:
 
 ```console
-curl -X GET http://localhost:1026/version
+curl -X GET \
+  'http://localhost:1026/version'
 ```
 
 #### Response:
@@ -179,14 +180,15 @@ The response will look similar to the following:
 > host IP as shown:
 >
 >```console
->curl -X GET http://$(docker-machine ip default):1026/version
+>curl -X GET \
+>  'http://$(docker-machine ip default):1026/version'
 >```
 >
 > Alternatively run all your cUrl commands from within the container network:
 >
 >```console
 >docker run --network fiware_default --rm appropriate/curl -s \
->  -X GET http://orion:1026/version
+>  -X GET 'http://orion:1026/version'
 >```
 
 
@@ -201,7 +203,7 @@ should also have a defined `type` and a `value` attribute.
 
 ```console
 curl -iX POST \
-  http://localhost:1026/v2/entities/ \
+  'http://localhost:1026/v2/entities' \
   -H 'Content-Type: application/json' \
   -d '
 {
@@ -236,7 +238,7 @@ Each subsequent entity must have a unique `id` for the given `type`
 
 ```console
 curl -iX POST \
-  http://localhost:1026/v2/entities/ \
+  'http://localhost:1026/v2/entities' \
   -H 'Content-Type: application/json' \
   -d '
 {
@@ -330,7 +332,7 @@ This example returns the data of `urn:ngsi-ld:Store:001`
 
 ```console
 curl -X GET \
-   http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues
+   'http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues'
  ```
  
 #### Response:
@@ -364,7 +366,7 @@ This example returns the data of all `Store` entities within the context data
 
 ```console
 curl -X GET \
-    http://localhost:1026/v2/entities?type=Store&options=keyValues
+    'http://localhost:1026/v2/entities?type=Store&options=keyValues'
 ```
 
 #### Response:
