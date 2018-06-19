@@ -200,7 +200,7 @@ should also have a defined `type` and a `value` attribute.
 #### :two: Request:
 
 ```console
-curl -X POST \
+curl -iX POST \
   http://localhost:1026/v2/entities/ \
   -H 'Content-Type: application/json' \
   -d '
@@ -235,7 +235,7 @@ curl -X POST \
 Each subsequent entity must have a unique `id` for the given `type`
 
 ```console
-curl -X POST \
+curl -iX POST \
   http://localhost:1026/v2/entities/ \
   -H 'Content-Type: application/json' \
   -d '

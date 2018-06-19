@@ -180,7 +180,7 @@ curl -X GET http://$(docker-machine ip default):1026/version
 FIWARE はコンテキスト情報を管理するシステムなので、2つの新しいエンティティ (**Berlin** のストア) を作成することによって、コンテキスト・データをシステムに追加することができます。どんなエンティティも `id` と `type` 属性を持たなければならず、追加の属性はオプションであり、記述されているシステムに依存します。それぞれの追加属性も `type`と `value` 属性を定義しなければなりません。
 
 ```console
-curl -X POST \
+curl -iX POST \
   http://localhost:1026/v2/entities/ \
   -H 'Content-Type: application/json' \
   -d '
@@ -213,7 +213,7 @@ curl -X POST \
 後続の各エンティティには、指定された `type` の一意の `id` が必要です。
 
 ```console
-curl -X POST \
+curl -iX POST \
   http://localhost:1026/v2/entities/ \
   -H 'Content-Type: application/json' \
   -d '
