@@ -1,0 +1,74 @@
+
+
+
+Context data is central to any "Powered by FIWARE" solution, in this regard:
+
+Briefly describe the main data entities found within your application.
+
+Where do they come from? How do they relate to the items in the real world?
+What are the relationships between the different data entities?
+What are the major attributes?
+How frequently are they updated?
+Where is the context data coming from?
+Where is it processed and stored?
+
+
+so
+Who is CEPHU expert.
+cEPHUSE to Orion
+suck out 
+tech support
+
+comet to cynus
+automate commet aggregartion
+feedback to cygnus 
+log level on debug for all items.
+
+cygnus chat... compelxity
+knowage - user interface... graphics and reporting
+
+supprot channels not working...
+
+StackOVerflow
+JIRA
+
+
+
+
+
+
+
+
+With regards to your application:
+
+Which FIWARE enablers have you successfully managed to integrate into your solution so far?
+Do the enablers satisfy your business needs? If not where are the gaps?
+What additional third party elements are needed? What does FIWARE not cover?
+
+
+Which proposed FIWARE enablers have you not yet managed to integrate into your solution so far?
+Where are the current roadblocks issues and difficulties?
+
+
+If pushed, what could you demonstrate at the moment? (not necessarily a complete solution)
+What problems would you like to highlight/demonstrate within your incomplete application?
+Where could we help in this regard?
+
+
+How have you considered scaling within your application architecture?
+
+
+
+
+
+Regarding FIWARE Generic Enablers: 
+
+Which was the hardest/easiest to integrate?
+How do you rate the documentation you have used for each GE?
+What would you like to see more of? What is missing?
+
+Webinars:
+
+There is a proposal to run a series of webinars later this month:
+If you could get the 20 mins time of an expert in [Component X]
+which component(s) would you choose an what would you like to know about?
