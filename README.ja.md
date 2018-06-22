@@ -105,9 +105,13 @@ docker network rm fiware_default
 <a name="option-2-using-docker-compose"></a>
 ## オプション 2) Docker Compose を使用
 
-すべてのサービスは、次のコマンドを使用してコマンドラインから初期化できます :
+すべてのサービスは、 `docker-compose` コマンドを使ってコマンドラインから初期化することができます。リポジトリを複製し、以下のコマンドを実行して必要なイメージを作成してください :
+
 
 ```console
+git clone git@github.com:Fiware/tutorials.Getting-Started.git
+cd tutorials.Getting-Started
+
 docker-compose -p fiware up -d
 ``` 
 
@@ -126,10 +130,14 @@ docker-compose -p fiware down
  
 公開されたポートに対して HTTP リクエストを行うことで、Orion Context Broker が実行されているかどうかを確認できます :
 
+#### :one: リクエスト :
+
 ```console
 curl -X GET \
   'http://localhost:1026/version'
 ```
+
+#### レスポンス :
 
 レスポンスは次のようになります :
 
@@ -181,6 +189,8 @@ docker ps
 
 FIWARE はコンテキスト情報を管理するシステムなので、2つの新しいエンティティ (**Berlin** のストア) を作成することによって、コンテキスト・データをシステムに追加することができます。どんなエンティティも `id` と `type` 属性を持たなければならず、追加の属性はオプションであり、記述されているシステムに依存します。それぞれの追加属性も `type`と `value` 属性を定義しなければなりません。
 
+#### :two: リクエスト :
+
 ```console
 curl -iX POST \
   'http://localhost:1026/v2/entities' \
@@ -212,6 +222,8 @@ curl -iX POST \
 }'
 ```
  
+#### :three: リクエスト :
+
 後続の各エンティティには、指定された `type` の一意の `id` が必要です。
 
 ```console
@@ -292,7 +304,7 @@ NGSI-LD は現時点では[ドラフトの勧告](https://docbox.etsi.org/ISG/CI
 
 この例では、 `urn:ngsi-ld:Store:001` のデータを返します
 
-#### リクエスト :
+#### :four: リクエスト :
 
 ```console
 curl -X GET \
@@ -327,7 +339,7 @@ curl -X GET \
 
 この例では、コンテキスト・データ内のすべての `Store` エンティティのデータを返します
 
-#### リクエスト :
+#### :five: リクエスト :
 
 ```console
 curl -X GET \
@@ -382,11 +394,11 @@ curl -X GET \
 
 この例では、Kreuzberg 地区にあるすべてのストアを返します
 
-#### リクエスト :
+#### :six: リクエスト :
 
 ```console
-curl -X GET \    
-http://localhost:1026/v2/entities?q=address.addressLocality==Kreuzberg&type=Store&options=keyValues 
+curl -X GET \
+http://localhost:1026/v2/entities?type=Store&q=address.addressLocality==Kreuzberg&options=keyValues
 ```
 
 #### レスポンス :
@@ -419,7 +431,7 @@ http://localhost:1026/v2/entities?q=address.addressLocality==Kreuzberg&type=Stor
 
 この例 では、ベルリンの**ブランデンブルク門**から 1.5km 以内のすべてのストアを返却します (*52.5162N 13.3777W*) 
 
-#### リクエスト :
+#### :seven: リクエスト :
 
 ```console
 curl -X GET \
@@ -457,16 +469,18 @@ curl -X GET \
 アドバンス機能を追加するアプリをもっと複雑にする方法を知りたいですか？ このシリーズの他のチュートリアルを読むことで、学ぶことができます。
 
 &nbsp; 101. [Getting Started](https://github.com/Fiware/tutorials.Getting-Started)<br/>
-&nbsp; 102. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships/)<br/>
-&nbsp; 103. [CRUD Operations](https://github.com/Fiware/tutorials.CRUD-Operations/)<br/>
-&nbsp; 104. [Context Providers](https://github.com/Fiware/tutorials.Context-Providers/)<br/>
-&nbsp; 105. [Altering the Context Programmatically](https://github.com/Fiware/tutorials.Accessing-Context/)<br/>
-&nbsp; 106. [Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions/)<br/>
+&nbsp; 102. [Entity Relationships](https://github.com/Fiware/tutorials.Entity-Relationships)<br/>
+&nbsp; 103. [CRUD Operations](https://github.com/Fiware/tutorials.CRUD-Operations)<br/>
+&nbsp; 104. [Context Providers](https://github.com/Fiware/tutorials.Context-Providers)<br/>
+&nbsp; 105. [Altering the Context Programmatically](https://github.com/Fiware/tutorials.Accessing-Context)<br/> 
+&nbsp; 106. [Subscribing to Changes in Context](https://github.com/Fiware/tutorials.Subscriptions)<br/>
 
-&nbsp; 201. [Introduction to IoT Sensors](https://github.com/Fiware/tutorials.IoT-Sensors/)<br/>
-&nbsp; 202. [Provisioning an IoT Agent](https://github.com/Fiware/tutorials.IoT-Agent/)<br/>
+&nbsp; 201. [Introduction to IoT Sensors](https://github.com/Fiware/tutorials.IoT-Sensors)<br/>
+&nbsp; 202. [Provisioning an IoT Agent](https://github.com/Fiware/tutorials.IoT-Agent)<br/>
+&nbsp; 250. [Introduction to Fast-RTPS and Micro-RTPS ](https://github.com/Fiware/tutorials.Fast-RTPS-Micro-RTPS)<br/>
 
-&nbsp; 301. [Persisting Context Data](https://github.com/Fiware/tutorials.Historic-Context/)<br/>
+&nbsp; 301. [Persisting Context Data](https://github.com/Fiware/tutorials.Historic-Context)<br/>
+&nbsp; 302. [Querying Time Series Data](https://github.com/Fiware/tutorials.Short-Term-History)<br/>
 
 <a name="iterative-development"></a>
 # 反復型開発
