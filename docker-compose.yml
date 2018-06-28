@@ -11,6 +11,8 @@ services:
     networks:
         - default
     command: --bind_ip_all --smallfiles
+    volumes:
+      - mongo-db:/data
 
   orion:
     image: fiware/orion:latest
@@ -28,3 +30,6 @@ services:
 
 networks:
   default:
+
+volumes:
+  mongo-db:
