@@ -536,3 +536,9 @@ So far, so simple, but consider how this Smart application could be iterated:
 * Data on the movement of crowds would be useful for scientific research - data about the state of the store could be published externally. \[[extensions to CKAN](https://catalogue.fiware.org/enablers/fiware-ckan-extensions)\]
 
 Each iteration adds value to the solution through existing components with standard interfaces and therefore minimizes development time.
+
+---
+
+## License
+
+[MIT](LICENSE) © FIWARE Foundation e.V.
