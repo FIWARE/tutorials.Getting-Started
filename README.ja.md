@@ -63,7 +63,7 @@
 <a name="docker-compose-optional"></a>
 ## Docker Compose (オプション)
 
-**Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行するためのツールです。[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) ファイルは、アプリケーションのために必要なサービスを設定する使用されています。つまり、すべてのコンテナ・サービスは1つのコマンドで呼び出すことができます。Docker Compose は、デフォルトで Docker for Windows と Docker for Mac の一部としてインストールされますが、Linux ユーザは[ここ](https://docs.docker.com/compose/install/)に記載されている手順に従う必要があります
+**Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行するためのツールです。[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つまり、すべてのコンテナ・サービスは1つのコマンドで呼び出すことができます。Docker Compose は、デフォルトで Docker for Windows と Docker for Mac の一部としてインストールされますが、Linux ユーザは[ここ](https://docs.docker.com/compose/install/)に記載されている手順に従う必要があります
 
 <a name="starting-the-containers"></a>
 # コンテナの起動
@@ -487,6 +487,8 @@ curl -X GET \
 &nbsp; 302. [Querying Time Series Data (Mongo-DB)](https://github.com/Fiware/tutorials.Short-Term-History)<br/>
 &nbsp; 303. [Querying Time Series Data (Crate-DB)](https://github.com/Fiware/tutorials.Time-Series-Data)<br/>
 
+全てのドキュメントは[ここ](https://www.letsfiware.jp/fiware-tutorials)にあります。
+
 <a name="iterative-development"></a>
 # 反復型開発
 ストア・ファインダ・デモのコンテキストは非常にシンプルです。各ストアの現在の在庫数をコンテキスト・データとして [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) に渡すことで、在庫管理システム全体を簡単に拡張することができます。
@@ -507,3 +509,8 @@ curl -X GET \
 * 群衆の移動に関するデータは、科学的研究に有用です。ストアの状態に関するデータは、外部に公開することができます。\[[extensions to CKAN](https://catalogue.fiware.org/enablers/fiware-ckan-extensions)\]
 
 各反復は、標準インタフェースを備えた既存のコンポーネントを介してソリューションに付加価値を与え、開発時間を最小限に抑えます。
+---
+
+## License
+
+[MIT](LICENSE) © FIWARE Foundation e.V.
