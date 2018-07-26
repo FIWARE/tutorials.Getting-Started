@@ -65,6 +65,16 @@
 
 **Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行するためのツールです。[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) ファイルは、アプリケーションのために必要なサービスを構成するために使用します。つまり、すべてのコンテナ・サービスは1つのコマンドで呼び出すことができます。Docker Compose は、デフォルトで Docker for Windows と Docker for Mac の一部としてインストールされますが、Linux ユーザは[ここ](https://docs.docker.com/compose/install/)に記載されている手順に従う必要があります
 
+
+次のコマンドを使用して、現在の **Docker** バージョンと **Docker Compose** バージョンを確認できます :
+
+```console
+docker-compose -v
+docker version
+```
+
+Docker バージョン 18.03 以降と Docker Compose 1.21 以上を使用していることを確認し、必要に応じてアップグレードしてください。
+
 <a name="starting-the-containers"></a>
 # コンテナの起動
 
