@@ -1,11 +1,9 @@
-version: "3"
+version: "3.1"
 services:
   mongo-db:
     image: mongo:3.6
     hostname: mongo-db
     container_name: db-mongo
-    expose:
-        - "27017"
     ports:
         - "27017:27017"
     networks:
@@ -22,14 +20,41 @@ services:
       - mongo-db
     networks:
         - default
-    expose:
-        - "1026"
     ports:
         - "1026:1026"
-    command: -dbhost mongo-db
+    command: -dbhost mongo-db -logLevel DEBUG
+
+
+  mongo-db2:
+    image: mongo:3.6
+    hostname: mongo-db2
+    container_name: db-mongo2
+    ports:
+        - "27018:27017"
+    networks:
+        - default
+    command: --bind_ip_all --smallfiles
+    volumes:
+      - mongo-db2:/data
+
+  orion2:
+    image: fiware/orion:latest
+    hostname: orion2
+    container_name: fiware-orion2
+    depends_on:
+      - mongo-db2
+    networks:
+        - default
+    ports:
+        - "1027:1027"
+    command: -dbhost mongo-db2 -port 1027 -logLevel DEBUG
 
 networks:
   default:
+    ipam:
+      config:
+        - subnet: 172.18.1.0/24
 
 volumes:
   mongo-db:
+  mongo-db2:
