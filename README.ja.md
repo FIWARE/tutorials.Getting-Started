@@ -497,6 +497,9 @@ curl -X GET \
 &nbsp; 302. [Querying Time Series Data (Mongo-DB)](https://github.com/Fiware/tutorials.Short-Term-History)<br/>
 &nbsp; 303. [Querying Time Series Data (Crate-DB)](https://github.com/Fiware/tutorials.Time-Series-Data)<br/>
 
+&nbsp; 401. [Managing Users and Organizations](https://github.com/Fiware/tutorials.Identity-Management)<br/>
+&nbsp; 402. [Roles and Permissions](https://github.com/Fiware/tutorials.Roles-Permissions)<br/>
+
 &nbsp; 503. [Introduction to Media Streams](https://github.com/Fiware/tutorials.Media-Streams)<br/>
 
 全てのドキュメントは[ここ](https://www.letsfiware.jp/fiware-tutorials)にあります。
