@@ -3,7 +3,7 @@
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://www.fiware.org/developers/catalogue/)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
-[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](http://fiware.github.io/context.Orion/api/v2/stable/)
+[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](https://fiware-ges.github.io/core.Orion/api/v2/stable/)
 
 これは、FIWARE Platform のチュートリアルです。スーパーマーケット・チェーンのストア・ファインダのデータから始め、コンテキスト・データとして各ストアの住所と場所を FIWARE context broker に渡して、非常に単純な *"Powered by FIWARE"* アプリケーションを作成します。
 
@@ -512,18 +512,18 @@ curl -X GET \
 
 これまでのところ単純ですが、このスマート・アプリケーションをどのように反復できるかを考えてみましょう :
 
-* ビジュアライゼーション・コンポーネントを使用して各ストアの在庫状態を監視するリアルタイム・ダッシュボードを作成することができます。\[[Wirecloud](https://catalogue.fiware.org/enablers/application-mashup-wirecloud)\]
-* 倉庫とストアの現在のレイアウトを Context Broker に渡すことができるので、在庫の場所を地図上に表示することができます。\[[Wirecloud](https://catalogue.fiware.org/enablers/application-mashup-wirecloud)\]
-* ストア管理者のみがアイテムの価格を変更できるように、ユーザ管理コンポーネント \[[Wilma](https://catalogue.fiware.org/enablers/pep-proxy-wilma), [AuthZForce](https://catalogue.fiware.org/enablers/authorization-pdp-authzforce), [Keyrock](https://catalogue.fiware.org/enablers/identity-management-keyrock)\] を追加することができます
+* ビジュアライゼーション・コンポーネントを使用して各ストアの在庫状態を監視するリアルタイム・ダッシュボードを作成することができます。\[[Wirecloud](https://github.com/Fiware/catalogue/blob/master/processing/README.md#Wirecloud)\]
+* 倉庫とストアの現在のレイアウトを Context Broker に渡すことができるので、在庫の場所を地図上に表示することができます。\[[Wirecloud](https://github.com/Fiware/catalogue/blob/master/processing/README.md#Wirecloud)\]
+* ストア管理者のみがアイテムの価格を変更できるように、ユーザ管理コンポーネント \[[Wilma](https://github.com/Fiware/catalogue/blob/master/security/README.md#Wilma), [AuthZForce](https://github.com/Fiware/catalogue/blob/master/security/README.md#Authzforce), [Keyrock](https://github.com/Fiware/catalogue/blob/master/security/README.md#Keyrock)\] を追加することができます
 * 棚が空でないことを保証して商品が販売するので、倉庫内で閾値警報を発生させることができます。[publish/subscribe function of [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)]
-* 倉庫から積み込まれるアイテムの生成された各リストは、補充の効率を最大にするために計算することができます。\[[Complex Event Processing -  CEP](https://catalogue.fiware.org/enablers/complex-event-processing-cep-proactive-technology-online)\]
-* 入り口にモーション・センサーを追加して顧客数をカウントすることもできます。\[[IDAS](https://catalogue.fiware.org/enablers/backend-device-management-idas)\]
-* 顧客がと入店するたびに、モーション・センサーがベルを鳴らすことができます。\[[IDAS](https://catalogue.fiware.org/enablers/backend-device-management-idas)\]
-* 各ストアにビデオ・フィードを導入するための一連のビデオカメラを追加することができます。\[[Kurento](https://catalogue.fiware.org/enablers/stream-oriented-kurento)\]
-* ビデオ画像を顧客が店内に立っている場所を認識するために処理することができます。\[[Kurento](https://catalogue.fiware.org/enablers/stream-oriented-kurento)\]
-* システム内の履歴データを維持し、処理することによって、顧客の足跡と滞留時間を計算することができます。ストアのどの領域が最も関心を集めているかを確認することができます。\[connection through [Cygnus](https://catalogue.fiware.org/enablers/cygnus) to Apache Flink\]
-* 異常な行動を認識したパターンは、盗難を避けるために警告を発するのに使用することができます。\[[Kurento](https://catalogue.fiware.org/enablers/stream-oriented-kurento)\]
-* 群衆の移動に関するデータは、科学的研究に有用です。ストアの状態に関するデータは、外部に公開することができます。\[[extensions to CKAN](https://catalogue.fiware.org/enablers/fiware-ckan-extensions)\]
+* 倉庫から積み込まれるアイテムの生成された各リストは、補充の効率を最大にするために計算することができます。\[[Complex Event Processing -  CEP](https://github.com/Fiware/catalogue/blob/master/security/README.md#new-perseo-incubated)\]
+* 入り口にモーション・センサーを追加して顧客数をカウントすることもできます。\[[IDAS](https://github.com/Fiware/catalogue/blob/master/iot-agents/README.md)\]
+* 顧客がと入店するたびに、モーション・センサーがベルを鳴らすことができます。\[[IDAS](https://github.com/Fiware/catalogue/blob/master/iot-agents/README.md)\]
+* 各ストアにビデオ・フィードを導入するための一連のビデオカメラを追加することができます。\[[Kurento](https://github.com/Fiware/catalogue/blob/master/processing/README.md#Kurento)\]
+* ビデオ画像を顧客が店内に立っている場所を認識するために処理することができます。\[[Kurento](https://github.com/Fiware/catalogue/blob/master/processing/README.md#Kurento)\]
+* システム内の履歴データを維持し、処理することによって、顧客の足跡と滞留時間を計算することができます。ストアのどの領域が最も関心を集めているかを確認することができます。\[connection through [Cygnus](https://github.com/Fiware/catalogue/blob/master/core/README.md#Cygnus) to Apache Flink\]
+* 異常な行動を認識したパターンは、盗難を避けるために警告を発するのに使用することができます。\[[Kurento](https://github.com/Fiware/catalogue/blob/master/processing/README.md#Kurento)\]
+* 群衆の移動に関するデータは、科学的研究に有用です。ストアの状態に関するデータは、外部に公開することができます。\[[extensions to CKAN](https://github.com/Fiware/catalogue/tree/master/data-publication#extensions-to-ckan)\]
 
 各反復は、標準インタフェースを備えた既存のコンポーネントを介してソリューションに付加価値を与え、開発時間を最小限に抑えます。
 ---
