@@ -9,7 +9,7 @@
 
 これは、FIWARE Platform のチュートリアルです。スーパーマーケット・チェーンのストア・ファインダのデータから始め、コンテキスト・データとして各ストアの住所と場所を FIWARE context broker に渡して、非常に単純な *"Powered by FIWARE"* アプリケーションを作成します。
 
-このチュートリアルでは、全体で [cUrl](https://ec.haxx.se/) コマンドを使用していますが、[Postman documentation](http://fiware.github.io/tutorials.Getting-Started/) も利用できます。
+このチュートリアルでは、全体で [cUrl](https://ec.haxx.se/) コマンドを使用していますが、[Postman documentation](https://fiware.github.io/tutorials.Getting-Started/) も利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
 
@@ -275,7 +275,7 @@ curl -iX POST \
 <a name="data-model-guidelines"></a>
 ### データモデルのガイドライン
 
-コンテキスト内の各データ・エンティティは、ユースケースによって異なりますが、各データ・エンティティ内の共通構造は、再利用を促進するために標準化された順序にする必要があります。完全な FIWARE データモデルのガイドラインは、[ここ](http://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html)にあります。このチュートリアルでは、次の推奨事項の使用方法を示します :
+コンテキスト内の各データ・エンティティは、ユースケースによって異なりますが、各データ・エンティティ内の共通構造は、再利用を促進するために標準化された順序にする必要があります。完全な FIWARE データモデルのガイドラインは、[ここ](https://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html)にあります。このチュートリアルでは、次の推奨事項の使用方法を示します :
 
 #### すべての用語はアメリカ英語で定義されています
 コンテキスト・データの `value` フィールドは任意の言語であってもよく、すべての属性およびタイプは英語を使用して書かれています。
