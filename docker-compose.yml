@@ -13,7 +13,7 @@ services:
       - mongo-db:/data
 
   orion:
-    image: fiware/orion:2.0.0
+    image: fiware/orion:2.1.0
     hostname: orion
     container_name: fiware-orion
     depends_on:
