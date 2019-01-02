@@ -603,6 +603,7 @@ curl -X GET \
 [Securing Application Access](https://github.com/Fiware/tutorials.Securing-Access)<br/>
 &nbsp; 404.
 [Securing Microservices with a PEP Proxy](https://github.com/Fiware/tutorials.PEP-Proxy)<br/>
+&nbsp; 405. [XACML Rules-based Permissions](https://github.com/Fiware/tutorials.XACML-Access-Rules)<br/>
 
 &nbsp; 503.
 [Introduction to Media Streams](https://github.com/Fiware/tutorials.Media-Streams)<br/>
