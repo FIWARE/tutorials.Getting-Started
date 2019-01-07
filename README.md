@@ -630,4 +630,4 @@ standard interfaces and therefore minimizes development time.
 
 ## License
 
-[MIT](LICENSE) © FIWARE Foundation e.V.
+[MIT](LICENSE) © 2018-2019 FIWARE Foundation e.V.
