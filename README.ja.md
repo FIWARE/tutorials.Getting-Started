@@ -21,6 +21,9 @@ FIWARE context broker に渡して、非常に単純な _"Powered by FIWARE"_ �
 
 # コンテンツ
 
+<details>
+<summary>詳細 <b>(クリックして拡大)</b></summary>
+
 -   [アーキテクチャ](#architecture)
 -   [前提条件](#prerequisites)
     -   [Docker](#docker)
@@ -39,6 +42,8 @@ FIWARE context broker に渡して、非常に単純な _"Powered by FIWARE"_ �
         -   [geo:json 属性の値を比較してコンテキスト・データをフィルタリング](#filter-context-data-by-comparing-the-values-of-a-geojson-attribute)
 -   [次のステップ](#next-steps)
     -   [反復型開発](#iterative-development)
+
+</details>
 
 <a name="architecture"></a>
 

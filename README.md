@@ -22,7 +22,10 @@ available as
     は[日本語](https://github.com/Fiware/tutorials.Getting-Started/blob/master/README.ja.md)で
     もご覧いただけます。
 
-# Contents
+## Contents
+
+<details>
+<summary><strong>Details</strong></summary>
 
 -   [Architecture](#architecture)
 -   [Prerequisites](#prerequisites)
@@ -42,6 +45,8 @@ available as
         -   [Filter context data by comparing the values of a geo:json attribute](#filter-context-data-by-comparing-the-values-of-a-geojson-attribute)
 -   [Next Steps](#next-steps)
     -   [Iterative Development](#iterative-development)
+
+</details>
 
 # Architecture
 
