@@ -609,6 +609,8 @@ curl -X GET \
 &nbsp; 404.
 [Securing Microservices with a PEP Proxy](https://github.com/Fiware/tutorials.PEP-Proxy)<br/>
 &nbsp; 405. [XACML Rules-based Permissions](https://github.com/Fiware/tutorials.XACML-Access-Rules)<br/>
+&nbsp; 406.
+[Administrating XACML via a PAP](https://github.com/Fiware/tutorials.Administrating-XACML)<br/>
 
 &nbsp; 503.
 [Introduction to Media Streams](https://github.com/Fiware/tutorials.Media-Streams)<br/>
