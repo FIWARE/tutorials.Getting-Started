@@ -22,7 +22,7 @@ services:
         - default
     ports:
         - "1026:1026"
-    command: -dbhost mongo-db -logLevel DEBUG
+    command: -dbhost mongo-db -logLevel DEBUG -noCache
     healthcheck:
       test: curl --fail -s http://localhost:1026/version || exit 1
 
@@ -33,4 +33,4 @@ networks:
         - subnet: 172.18.1.0/24
 
 volumes:
-  mongo-db:
+  mongo-db: ~
