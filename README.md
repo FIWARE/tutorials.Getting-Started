@@ -6,7 +6,6 @@
 [![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](https://fiware-ges.github.io/core.Orion/api/v2/stable/)
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
-<!-- prettier-ignore -->
 This is an Introductory Tutorial to the FIWARE Platform. We will start with the
 data from a supermarket chain’s store finder and create a very simple _“Powered
 by FIWARE”_ application by passing in the address and location of each store as

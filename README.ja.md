@@ -7,6 +7,7 @@
 <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
+<!-- prettier-ignore -->
 これは、FIWARE Platform のチュートリアルです。スーパーマーケット・チェーンのスト
 ア・ファインダのデータから始め、コンテキスト・データとして各ストアの住所と場所を
 FIWARE context broker に渡して、非常に単純な _"Powered by FIWARE"_ アプリケーシ
