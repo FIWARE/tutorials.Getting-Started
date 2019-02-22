@@ -122,7 +122,7 @@ docker run -d --name fiware-orion -h orion --network=fiware_default \
 
 > **Note:** If you want to clean up and start again you can do so with the following commands
 >
-> ```console
+> ```
 > docker stop fiware-orion
 > docker rm fiware-orion
 > docker stop mongo-db
@@ -144,7 +144,7 @@ docker-compose -p fiware up -d
 
 > **Note:** If you want to clean up and start again you can do so with the following command:
 >
-> ```console
+> ```
 > docker-compose -p fiware down
 > ```
 
@@ -546,7 +546,7 @@ So far, so simple, but consider how this Smart application could be iterated:
     [publish/subscribe function of [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)]
 -   Each generated list of items to be loaded from the warehouse could be calculated to maximize the efficiency of
     replenishment
-    \[[Complex Event Processing - CEP](https://github.com/Fiware/catalogue/blob/master/security/README.md#new-perseo-incubated)\]
+    \[[Complex Event Processing - CEP](https://github.com/Fiware/catalogue/blob/master/processing/README.md#new-perseo-incubated)\]
 -   A motion sensor could be added at the entrance to count the number of customers
     \[[IDAS](https://github.com/Fiware/catalogue/blob/master/iot-agents/README.md)\]
 -   The motion sensor could ring a bell whenever a customer enters

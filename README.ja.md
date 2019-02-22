@@ -647,7 +647,7 @@ curl -X GET \
     [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)]
 -   倉庫から積み込まれるアイテムの生成された各リストは、補充の効率を最大にするた
     めに計算することができます
-    。\[[Complex Event Processing - CEP](https://github.com/Fiware/catalogue/blob/master/security/README.md#new-perseo-incubated)\]
+    。\[[Complex Event Processing - CEP](https://github.com/Fiware/catalogue/blob/master/processing/README.md#new-perseo-incubated)\]
 -   入り口にモーション・センサーを追加して顧客数をカウントすることもできます
     。\[[IDAS](https://github.com/Fiware/catalogue/blob/master/iot-agents/README.md)\]
 -   顧客がと入店するたびに、モーション・センサーがベルを鳴らすことができます
