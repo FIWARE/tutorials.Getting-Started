@@ -595,10 +595,12 @@ curl -X GET \
 [Introduction to Fast-RTPS and Micro-RTPS ](https://github.com/Fiware/tutorials.Fast-RTPS-Micro-RTPS)<br/>
 
 &nbsp; 301.
-[Persisting Context Data (MongoDB, MySQL, PostgreSQL)](https://github.com/Fiware/tutorials.Historic-Context)<br/>
+[Persisting Context Data  using Apache Flume (MongoDB, MySQL, PostgreSQL)](https://github.com/Fiware/tutorials.Historic-Context-Flume)<br/>
 &nbsp; 302.
-[Querying Time Series Data (MongoDB)](https://github.com/Fiware/tutorials.Short-Term-History)<br/>
+[Persisting Context Data  using Apache NIFI (MongoDB, MySQL, PostgreSQL)](https://github.com/Fiware/tutorials.Historic-Context-NIFI)<br/>
 &nbsp; 303.
+[Querying Time Series Data (MongoDB)](https://github.com/Fiware/tutorials.Short-Term-History)<br/>
+&nbsp; 304.
 [Querying Time Series Data (CrateDB)](https://github.com/Fiware/tutorials.Time-Series-Data)<br/>
 
 &nbsp; 401.
