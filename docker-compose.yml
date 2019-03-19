@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.5"
 services:
   mongo-db:
     image: mongo:3.6
@@ -24,7 +24,7 @@ services:
       - "1026:1026"
     command: -dbhost mongo-db -logLevel DEBUG -noCache
     healthcheck:
-      test: curl --fail -s http://localhost:1026/version || exit 1
+      test: curl --fail -s http://orion:1026/version || exit 1
 
 networks:
   default:

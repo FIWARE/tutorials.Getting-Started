@@ -13,20 +13,25 @@ if (( $# != 1 )); then
 	exit 1
 fi
 
+stoppingContainers () {
+	echo "Stopping containers"
+	docker-compose --log-level ERROR -p fiware down -v --remove-orphans
+}
+
 command="$1"
 case "${command}" in
 	"help")
 		echo "usage: services [create|start|stop]"
 		;;
 	"start")
+		stoppingContainers
 		echo -e "Starting two containers \033[1;34mOrion\033[0m and a \033[1;30mMongoDB\033[0m database."
 		echo -e "- \033[1;34mOrion\033[0m is the context broker"
 		echo ""
 		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
 		;;
 	"stop")
-		echo "stopping containers"
-		docker-compose --log-level ERROR -p fiware down -v --remove-orphans
+		stoppingContainers
 		;;
 	"create")
 		echo "Obtaining Mongo DB image"
