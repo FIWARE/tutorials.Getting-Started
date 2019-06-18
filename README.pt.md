@@ -495,31 +495,30 @@ curl -X GET \
 Quer aprender como adicionar mais complexidade ao seu aplicativo adicionando recursos avançados? Você pode descobrir
 lendo os outros tutoriais desta série:
 
-&nbsp; 101. (https://github.com/FIWARE/tutorials.Getting-Started)<br/> &nbsp; 102.
-(https://github.com/FIWARE/tutorials.Entity-Relationships)<br/> &nbsp; 103. Operações do
+&nbsp; 101. [Primeiros passos](https://github.com/FIWARE/tutorials.Getting-Started)<br/> &nbsp; 102.
+[Relações de Entidade](https://github.com/FIWARE/tutorials.Entity-Relationships)<br/> &nbsp; 103. [Operações do
 CRUD](https://github.com/FIWARE/tutorials.CRUD-Operations)<br/> &nbsp; 104.
-[Provedores do contexto](https://github.com/FIWARE/tutorials.Context-Providers)<br/> &nbsp; 105. Alterando o Contexto
-Programático](https://github.com/FIWARE/tutorials.Accessing-Context)<br/> &nbsp; 106. Subscrevendo mudanças no
+[Provedores do contexto](https://github.com/FIWARE/tutorials.Context-Providers)<br/> &nbsp; 105. [Alterando o Contexto
+Programático](https://github.com/FIWARE/tutorials.Accessing-Context)<br/> &nbsp; 106. [Subscrevendo mudanças no
 contexto](https://github.com/FIWARE/tutorials.Subscriptions)<br/>
 
-&nbsp; 201. Introdução aos Sensores IoT](https://github.com/FIWARE/tutorials.IoT-Sensors)<br/> &nbsp; 202. Provisioning
-an IoT Agent](https://github.com/FIWARE/tutorials.IoT-Agent)<br/> &nbsp; 203.
-[IoT sobre MQTTT](https://github.com/FIWARE/tutorials.IoT-over-MQTT)<br/> &nbsp; 250. Introdução ao Fast-RTPS e ao
+&nbsp; 201.[ Introdução aos Sensores IoT](https://github.com/FIWARE/tutorials.IoT-Sensors)<br/> &nbsp; 202. [Provisionamento
+um agente IoT](https://github.com/FIWARE/tutorials.IoT-Agent)<br/> &nbsp; 203.
+[IoT sobre MQTTT](https://github.com/FIWARE/tutorials.IoT-over-MQTT)<br/> &nbsp; 250. [Introdução ao Fast-RTPS e ao
 Micro-RTPS](https://github.com/FIWARE/tutorials.Fast-RTPS-Micro-RTPS)<br/>
 
-&nbsp; 301. Dados de contexto persistentes usando Apache Flume (MongoDB, MySQL,
-PostgreSQL)](https://github.com/FIWARE/tutorials.Historic-Context-Flume)<br/> &nbsp; 302. Dados de contexto persistentes
+&nbsp; 301. [Dados de contexto persistentes usando Apache Flume (MongoDB, MySQL,
+PostgreSQL)](https://github.com/FIWARE/tutorials.Historic-Context-Flume)<br/> &nbsp; 302. [Dados de contexto persistentes
 usando Apache NIFI (MongoDB, MySQL, PostgreSQL)](https://github.com/FIWARE/tutorials.Historic-Context-NIFI)<br/>
 &nbsp; 303.
 [Consulta de dados de séries temporais (MongoDB)](https://github.com/FIWARE/tutorials.Short-Term-History)<br/>
-&nbsp; 304. Consulta de dados de séries temporais (CrateDB)](https://github.com/FIWARE/tutorials.Time-Series-Data)<br/>
+&nbsp; 304. [Consulta de dados de séries temporais (CrateDB)](https://github.com/FIWARE/tutorials.Time-Series-Data)<br/>
 
 &nbsp; 401. [Gerenciando Usuários e Organizações](https://github.com/FIWARE/tutorials.Identity-Management)<br/>
-&nbsp; 402. [Funções e Permissões](https://github.com/FIWARE/tutorials.Roles-Permissions)<br/> &nbsp; 403.
-(https://github.com/FIWARE/tutorials.Securing-Access)<br/> &nbsp; 404. Securing Microservices with a PEP
+&nbsp; 402. [Funções e Permissões](https://github.com/FIWARE/tutorials.Roles-Permissions)<br/> &nbsp; 403. [Protegendo o acesso a aplicativos](https://github.com/FIWARE/tutorials.Securing-Access)<br/> &nbsp; 404. [Protegendo Microserviços com um PEP
 Proxy](https://github.com/FIWARE/tutorials.PEP-Proxy)<br/> &nbsp; 405.
 [Permissões baseadas em regras XACML](https://github.com/FIWARE/tutorials.XACML-Access-Rules)<br/> &nbsp; 406.
-Administrar XACML através de um PAP](https://github.com/FIWARE/tutorials.Administrating-XACML)<br/>
+[Administrar XACML através de um PAP](https://github.com/FIWARE/tutorials.Administrating-XACML)<br/>
 
 &nbsp; 503. [Introdução aos fluxos de mídia](https://github.com/FIWARE/tutorials.Media-Streams)<br/>
 
