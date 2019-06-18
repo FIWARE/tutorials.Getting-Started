@@ -15,8 +15,9 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
 
--   このチュートリアルは[日本語](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.ja.md)でもご覧い
-    ただけます。
+🇯🇵  このチュートリアルは[日本語](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.ja.md)でもご覧い
+    ただけます。<br/>
+🇵🇹 Este tutorial também está disponível em [português](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.pt.md)
 
 ## Contents
 
