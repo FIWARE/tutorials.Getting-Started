@@ -312,7 +312,7 @@ no sistema será único
 #### Os nomes dos tipos de dados devem reutilizar os tipos de dados schema.org sempre que possível
 
 [Schema.org](http://schema.org/) é uma iniciativa para criar esquemas de dados estruturados comuns. A fim de promover a
-reutilização, nós usaram deliberadamente o [`Text`](http://schema.org/PostalAddress) e o [Endereço Postal]]
+reutilização, nós usaram deliberadamente o [`Text`](http://schema.org/PostalAddress) e o [Endereço Postal]
 (http://schema.org/PostalAddress) digite nomes dentro da nossa entidade **Loja**. Outras normas existentes, tais como as
 [Open311](http://www.open311.org/) (para rastreio de questões cívicas) ou [Datex II](http://www.datex2.eu/) (para
 transporte ) também pode ser usado, mas o objetivo é verificar a existência do mesmo atributo em modelos de dados
