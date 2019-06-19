@@ -216,7 +216,7 @@ A resposta será semelhante à seguinte:
 No seu cerne, o FIWARE é um sistema de gestão de informação de contexto, pelo que permite adicionar alguns dados de
 contexto ao sistema através de criar duas novas entidades (lojas em **Berlim**). Qualquer entidade deve ter atributos
 `id` e `type`, adicionais são opcionais e dependem do sistema que está sendo descrito. Cada atributo adicional também
-deve ter um definido `type` e um atributo `valor`.
+deve ter um definido `type` e um atributo `value`.
 
 #### :two: Pedido:
 
