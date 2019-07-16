@@ -35,6 +35,7 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
     -   [Checking the service health](#checking-the-service-health)
     -   [Creating Context Data](#creating-context-data)
         -   [Data Model Guidelines](#data-model-guidelines)
+        -   [Attribute Metadata](#attribute metadata)
     -   [Querying Context Data](#querying-context-data)
         -   [Obtain entity data by ID](#obtain-entity-data-by-id)
         -   [Obtain entity data by type](#obtain-entity-data-by-type)
@@ -238,6 +239,12 @@ curl -iX POST \
             "addressRegion": "Berlin",
             "addressLocality": "Prenzlauer Berg",
             "postalCode": "10439"
+        },
+        "metadata": {
+            "verified": {
+                "value": true,
+                "type": "Boolean"
+            }
         }
     },
     "location": {
@@ -273,6 +280,12 @@ curl -iX POST \
             "addressRegion": "Berlin",
             "addressLocality": "Kreuzberg",
             "postalCode": "10969"
+        },
+        "metadata": {
+            "verified": {
+                "value": true,
+                "type": "Boolean"
+            }
         }
     },
     "location": {
@@ -307,10 +320,10 @@ In this case we only have one entity type - **Store**
 
 #### Entity IDs should be a URN following NGSI-LD guidelines
 
-NGSI-LD is a currently a
-[specification](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.01.01_60/gs_CIM009v010101p.pdf), however the
-proposal is that each `id` is a URN follows a standard format: `urn:ngsi-ld:<entity-type>:<entity-id>`. This will mean
-that every `id` in the system will be unique
+NGSI-LD has recently been published as a full ETSI
+[specification](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.01.01_60/gs_CIM009v010101p.pdf), the proposal is
+that each `id` is a URN follows a standard format: `urn:ngsi-ld:<entity-type>:<entity-id>`. This will mean that every
+`id` in the system will be unique
 
 #### Data type names should reuse schema.org data types where possible
 
@@ -336,6 +349,19 @@ casing
 [GeoJSON](http://geojson.org) is an open standard format designed for representing simple geographical features. The
 `location` attribute has been encoded as a geoJSON `Point` location.
 
+### Attribute Metadata
+
+Metadata is _"data about data"_, it is additionl data used to describe properties of the attribute value itself like
+accuracy, provider, or a timestamp. Several built-in metadata attribute already exist and these names are reserved
+
+-   `dateCreated` (type: DateTime): attribute creation date as an ISO 8601 string.
+-   `dateModified` (type: DateTime): attribute modification date as an ISO 8601 string.
+-   `previousValue` (type: any): only in notifications. The value of this
+-   `actionType` (type: Text): only in notifications.
+
+One element of metadata can be found within the `address` attribute. a `verified` flag indicates whether the address has
+been confirmed.
+
 ## Querying Context Data
 
 A consuming application can now request context data by making HTTP requests to the Orion Context Broker. The existing
@@ -355,11 +381,15 @@ This example returns the data of `urn:ngsi-ld:Store:001`
 #### :four: Request:
 
 ```console
-curl -X GET \
-   'http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues'
+curl -G -X GET \
+   'http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001' \
+   -d 'options=keyValues'
 ```
 
 #### Response:
+
+Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
+`metadata` elements.
 
 ```json
 {
@@ -381,16 +411,22 @@ curl -X GET \
 
 ### Obtain entity data by type
 
-This example returns the data of all `Store` entities within the context data
+This example returns the data of all `Store` entities within the context data The `type` parameter limits the response
+to store entities only.
 
 #### :five: Request:
 
 ```console
-curl -X GET \
-    'http://localhost:1026/v2/entities?type=Store&options=keyValues'
+curl -G -X GET \
+    'http://localhost:1026/v2/entities' \
+    -d 'type=Store' \
+    -d 'options=keyValues'
 ```
 
 #### Response:
+
+Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
+`metadata` elements.
 
 ```json
 [
@@ -429,16 +465,106 @@ curl -X GET \
 
 ### Filter context data by comparing the values of an attribute
 
-This example returns all stores found in the Kreuzberg District
+This example returns all stores with the `name` attribute _Checkpoint Markt_. Filtering can be done using the `q`
+parameter - if a string has spaces in it, it can be URL encoded and held within single quote characters `'` = `%27`
 
 #### :six: Request:
 
 ```console
-curl -X GET \
-http://localhost:1026/v2/entities?type=Store&q=address.addressLocality==Kreuzberg&options=keyValues
+curl -G -X GET \
+    'http://localhost:1026/v2/entities' \
+    -d 'type=Store' \
+    -d 'q=name==%27Checkpoint%20Markt%27' \
+    -d 'options=keyValues'
 ```
 
 #### Response:
+
+Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
+`metadata` elements.
+
+```json
+[
+    {
+        "id": "urn:ngsi-ld:Store:002",
+        "type": "Store",
+        "address": {
+            "streetAddress": "Friedrichstraße 44",
+            "addressRegion": "Berlin",
+            "addressLocality": "Kreuzberg",
+            "postalCode": "10969"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3903, 52.5075]
+        },
+        "name": "Checkpoint Markt"
+    }
+]
+```
+
+### Filter context data by comparing the values of a sub-attribute
+
+This example returns all stores found in the Kreuzberg District.
+
+Filtering can be done using the `q` parameter - sub-attributes are annotated using the dot syntax e.g.
+`address.addressLocality`
+
+#### :seven: Request:
+
+```console
+curl -G -X GET \
+    'http://localhost:1026/v2/entities' \
+    -d 'type=Store' \
+    -d 'q=address.addressLocality==Kreuzberg' \
+    -d 'options=keyValues'
+```
+
+#### Response:
+
+Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
+`metadata` elements.
+
+```json
+[
+    {
+        "id": "urn:ngsi-ld:Store:002",
+        "type": "Store",
+        "address": {
+            "streetAddress": "Friedrichstraße 44",
+            "addressRegion": "Berlin",
+            "addressLocality": "Kreuzberg",
+            "postalCode": "10969"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3903, 52.5075]
+        },
+        "name": "Checkpoint Markt"
+    }
+]
+```
+
+### Filter context data by querying metadata
+
+This example returns the data of all `Store` entities with a verified address.
+
+Metadata queries can be made using the `mq` parameter.
+
+#### :eight: Request:
+
+```console
+curl -G -X GET \
+    'http://localhost:1026/v2/entities' \
+    -d 'type=Store' \
+    -d 'mq=address.verified==true' \
+    -d 'options=keyValues'
+```
+
+#### Response:
+
+Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
+`metadata` elements.
 
 ```json
 [
@@ -464,17 +590,39 @@ http://localhost:1026/v2/entities?type=Store&q=address.addressLocality==Kreuzber
 
 This example return all Stores within 1.5km the **Brandenburg Gate** in **Berlin** (_52.5162N 13.3777W_)
 
-#### :seven: Request:
+#### :nine: Request:
 
 ```console
-curl -X GET \
-  'http://localhost:1026/v2/entities?type=Store&georel=near;maxDistance:1500&geometry=point&coords=52.5162,13.3777'
+curl -G -X GET \
+  'http://localhost:1026/v2/entities' \
+  -d 'type=Store' \
+  -d 'georel=near;maxDistance:1500' \
+  -d 'geometry=point' \
+  -d 'coords=52.5162,13.3777'
 ```
 
 #### Response:
 
+Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
+`metadata` elements.
+
 ```json
 [
+    {
+        "id": "urn:ngsi-ld:Store:001",
+        "type": "Store",
+        "address": {
+            "streetAddress": "Bornholmer Straße 65",
+            "addressRegion": "Berlin",
+            "addressLocality": "Prenzlauer Berg",
+            "postalCode": "10439"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3986, 52.5547]
+        },
+        "name": "Bösebrücke Einkauf"
+    },
     {
         "id": "urn:ngsi-ld:Store:002",
         "type": "Store",

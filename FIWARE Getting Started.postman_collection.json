@@ -11,7 +11,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "http://{{orion}}/version/",
 					"protocol": "http",
@@ -39,7 +38,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"id\": \"urn:ngsi-ld:Store:001\",\n    \"type\": \"Store\",\n    \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Bornholmer Straße 65\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Prenzlauer Berg\",\n            \"postalCode\": \"10439\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3986, 52.5547]\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Bösebrücke Einkauf\"\n    }\n}"
+					"raw": "{\n    \"id\": \"urn:ngsi-ld:Store:001\",\n    \"type\": \"Store\",\n    \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Bornholmer Straße 65\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Prenzlauer Berg\",\n            \"postalCode\": \"10439\"\n        },\n        \"metadata\": {\n    \t\t\"verified\": {\n        \t\t\"value\": true,\n        \t\t\"type\": \"Boolean\"\n    \t\t}\n    \t}\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3986, 52.5547]\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Bösebrücke Einkauf\"\n    }\n}"
 				},
 				"url": {
 					"raw": "http://{{orion}}/v2/entities/",
@@ -69,7 +68,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"type\": \"Store\",\n    \"id\": \"urn:ngsi-ld:Store:002\",\n    \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Friedrichstraße 44\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Kreuzberg\",\n            \"postalCode\": \"10969\"\n        }\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3903, 52.5075]\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Checkpoint Markt\"\n    }\n}"
+					"raw": "{\n  \"type\": \"Store\",\n    \"id\": \"urn:ngsi-ld:Store:002\",\n    \"address\": {\n        \"type\": \"PostalAddress\",\n        \"value\": {\n            \"streetAddress\": \"Friedrichstraße 44\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Kreuzberg\",\n            \"postalCode\": \"10969\"\n        },\n        \"metadata\": {\n    \t\t\"verified\": {\n        \t\t\"value\": true,\n        \t\t\"type\": \"Boolean\"\n    \t\t}\n    \t}\n    },\n    \"location\": {\n        \"type\": \"geo:json\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3903, 52.5075]\n        }\n    },\n    \"name\": {\n        \"type\": \"Text\",\n        \"value\": \"Checkpoint Markt\"\n    }\n}"
 				},
 				"url": {
 					"raw": "http://{{orion}}/v2/entities/",
@@ -91,7 +90,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "http://{{orion}}/v2/entities",
 					"protocol": "http",
@@ -112,7 +110,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "http://{{orion}}/v2/entities/urn:ngsi-ld:Store:001?options=keyValues",
 					"protocol": "http",
@@ -144,7 +141,7 @@
 						}
 					]
 				},
-				"description": "This example returns the context data of `store1`. The `id` of the entity should be unique or the `type` parameter should also be used"
+				"description": "This example returns the context data of `store1`. The `id` of the entity should be unique or the `type` parameter should also be used.\n\nBecause of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` elements."
 			},
 			"response": []
 		},
@@ -153,7 +150,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "http://{{orion}}/v2/entities/?type=Store&options=keyValues",
 					"protocol": "http",
@@ -184,18 +180,17 @@
 						}
 					]
 				},
-				"description": "This example returns the data of all `Store` entities within the context data"
+				"description": "This example returns the data of all `Store` entities within the context data. \n\nThe `type` parameter limits the response to store entities only.\nBecause of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` elements."
 			},
 			"response": []
 		},
 		{
-			"name": "Filter context data by text value",
+			"name": "Filter context data by attribute value",
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
-					"raw": "http://{{orion}}/v2/entities/?q=address.addressLocality==Kreuzberg&type=Store&options=keyValues",
+					"raw": "http://{{orion}}/v2/entities/?q=name=='Checkpoint Markt'&type=Store&options=keyValues",
 					"protocol": "http",
 					"host": [
 						"{{orion}}"
@@ -208,7 +203,7 @@
 					"query": [
 						{
 							"key": "q",
-							"value": "address.addressLocality==Kreuzberg"
+							"value": "name=='Checkpoint Markt'"
 						},
 						{
 							"key": "type",
@@ -228,7 +223,81 @@
 						}
 					]
 				},
-				"description": "## Filter context data by comparing the values of an attribute\n\nThis example returns the data of all `Store` entities found in the **Kreuzberg** district of Berlin."
+				"description": "## Filter context data by comparing the values of an attribute\n\nThis example returns the data of all `Store` entities found with the name *Checkpoint Markt*. \n\nFiltering can be done using the `q` parameter - if a string has spaces in it, it can be URL encoded and held within single quote characters `'` = `%27`\n\nBecause of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and `metadata` elements."
+			},
+			"response": []
+		},
+		{
+			"name": "Filter context data by sub-attribute value",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{orion}}/v2/entities/?q=address.addressLocality=='Kreuzberg'&type=Store&options=keyValues",
+					"protocol": "http",
+					"host": [
+						"{{orion}}"
+					],
+					"path": [
+						"v2",
+						"entities",
+						""
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "address.addressLocality=='Kreuzberg'"
+						},
+						{
+							"key": "type",
+							"value": "Store",
+							"description": "Entity type, to avoid ambiguity in case there are several entities with the same entity id"
+						},
+						{
+							"key": "options",
+							"value": "keyValues",
+							"description": "* `keyValues` option in order to get a more compact and brief representation, including just attribute values\n* `values` option combined with a list of attribute values  `attrs`  for an ordered list of attributes only"
+						}
+					]
+				},
+				"description": "## Filter context data by comparing the values of an attribute\n\nThis example returns the data of all `Store` entities found in the **Kreuzberg** district of Berlin.\n\nFiltering can be done using the `q` parameter - sub-attributes are annotated using the dot syntax e.g. `address.addressLocality`\n\nBecause of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and `metadata` elements."
+			},
+			"response": []
+		},
+		{
+			"name": "Filter context data by querying metadata",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://{{orion}}/v2/entities/?mq=address.verified==true&type=Store&options=keyValues",
+					"protocol": "http",
+					"host": [
+						"{{orion}}"
+					],
+					"path": [
+						"v2",
+						"entities",
+						""
+					],
+					"query": [
+						{
+							"key": "mq",
+							"value": "address.verified==true"
+						},
+						{
+							"key": "type",
+							"value": "Store",
+							"description": "Entity type, to avoid ambiguity in case there are several entities with the same entity id"
+						},
+						{
+							"key": "options",
+							"value": "keyValues",
+							"description": "* `keyValues` option in order to get a more compact and brief representation, including just attribute values\n* `values` option combined with a list of attribute values  `attrs`  for an ordered list of attributes only"
+						}
+					]
+				},
+				"description": "## Filter context data by comparing the values of an metadata attribute\n\nThis example returns the data of all `Store` entities with a verified address.\n\nMetadata queries can be made using the `mq` parameter."
 			},
 			"response": []
 		},
@@ -237,7 +306,6 @@
 			"request": {
 				"method": "GET",
 				"header": [],
-				"body": {},
 				"url": {
 					"raw": "http://{{orion}}/v2/entities/?georel=near;maxDistance:1500&geometry=point&coords=52.5162,13.3777&type=Store&options=keyValues",
 					"protocol": "http",
@@ -312,8 +380,7 @@
 			"id": "df0c7c83-8325-4d8f-8b3f-bea47630872d",
 			"key": "orion",
 			"value": "localhost:1026",
-			"type": "string",
-			"description": ""
+			"type": "string"
 		}
 	]
 }
