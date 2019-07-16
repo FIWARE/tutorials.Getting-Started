@@ -524,8 +524,8 @@ the other tutorials in this series:
 [XACML Rules-based Permissions](https://github.com/FIWARE/tutorials.XACML-Access-Rules)<br/> &nbsp; 406.
 [Administrating XACML via a PAP](https://github.com/FIWARE/tutorials.Administrating-XACML)<br/>
 
-&nbsp; 501. [Creating Application Mashups](https://github.com/FIWARE/tutorials.Application Mashups)<br/>
-&nbsp; 503. [Introduction to Media Streams](https://github.com/FIWARE/tutorials.Media-Streams)<br/>
+&nbsp; 501. [Creating Application Mashups](https://github.com/FIWARE/tutorials.Application Mashups)<br/> &nbsp; 503.
+[Introduction to Media Streams](https://github.com/FIWARE/tutorials.Media-Streams)<br/>
 
 The full documentation can be found [here](https://fiware-tutorials.rtfd.io).
 
