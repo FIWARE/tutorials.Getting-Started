@@ -35,7 +35,7 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
     -   [Checking the service health](#checking-the-service-health)
     -   [Creating Context Data](#creating-context-data)
         -   [Data Model Guidelines](#data-model-guidelines)
-        -   [Attribute Metadata](#attribute metadata)
+        -   [Attribute Metadata](#attribute-metadata)
     -   [Querying Context Data](#querying-context-data)
         -   [Obtain entity data by ID](#obtain-entity-data-by-id)
         -   [Obtain entity data by type](#obtain-entity-data-by-type)
@@ -569,6 +569,24 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
 ```json
 [
     {
+        "id": "urn:ngsi-ld:Store:001",
+        "type": "Store",
+        "address": {
+            "streetAddress": "Bornholmer Straße 65",
+            "addressRegion": "Berlin",
+            "addressLocality": "Prenzlauer Berg",
+            "postalCode": "10439"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.3986,
+                52.5547
+            ]
+        },
+        "name": "Bösebrücke Einkauf"
+    },
+    {
         "id": "urn:ngsi-ld:Store:002",
         "type": "Store",
         "address": {
@@ -579,7 +597,10 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
         },
         "location": {
             "type": "Point",
-            "coordinates": [13.3903, 52.5075]
+            "coordinates": [
+                13.3903,
+                52.5075
+            ]
         },
         "name": "Checkpoint Markt"
     }
@@ -609,21 +630,6 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
 ```json
 [
     {
-        "id": "urn:ngsi-ld:Store:001",
-        "type": "Store",
-        "address": {
-            "streetAddress": "Bornholmer Straße 65",
-            "addressRegion": "Berlin",
-            "addressLocality": "Prenzlauer Berg",
-            "postalCode": "10439"
-        },
-        "location": {
-            "type": "Point",
-            "coordinates": [13.3986, 52.5547]
-        },
-        "name": "Bösebrücke Einkauf"
-    },
-    {
         "id": "urn:ngsi-ld:Store:002",
         "type": "Store",
         "address": {
@@ -634,7 +640,10 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
         },
         "location": {
             "type": "Point",
-            "coordinates": [13.3903, 52.5075]
+            "coordinates": [
+                13.3903,
+                52.5075
+            ]
         },
         "name": "Checkpoint Markt"
     }
