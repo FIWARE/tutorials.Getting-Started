@@ -615,7 +615,7 @@ curl -X GET \
 &nbsp; 406.
 [Administrating XACML via a PAP](https://github.com/FIWARE/tutorials.Administrating-XACML)<br/>
 
-&nbsp; 501. [Creating Application Mashups](https://github.com/FIWARE/tutorials.Application Mashups)<br/>
+&nbsp; 501. [Creating Application Mashups](https://github.com/FIWARE/tutorials.Application-Mashup)<br/>
 &nbsp; 503.
 [Introduction to Media Streams](https://github.com/FIWARE/tutorials.Media-Streams)<br/>
 
