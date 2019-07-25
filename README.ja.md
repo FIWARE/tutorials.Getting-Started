@@ -619,6 +619,8 @@ curl -X GET \
 &nbsp; 503.
 [Introduction to Media Streams](https://github.com/FIWARE/tutorials.Media-Streams)<br/>
 
+&nbsp; 601. [Introduction to Linked Data](https://github.com/FIWARE/tutorials.Linked-Data)<br/>
+
 全てのドキュメントは[ここ](https://www.letsfiware.jp/fiware-tutorials)にあります
 。
 

@@ -525,6 +525,8 @@ lendo os outros tutoriais desta série:
 &nbsp; 501. [Creating Application Mashups](https://github.com/FIWARE/tutorials.Application-Mashup)<br/>
 &nbsp; 503. [Introdução aos fluxos de mídia](https://github.com/FIWARE/tutorials.Media-Streams)<br/>
 
+&nbsp; 601. [Introduction to Linked Data](https://github.com/FIWARE/tutorials.Linked-Data)<br/>
+
 A documentação completa pode ser encontrada [aqui](https://fiware-tutorials.rtfd.io).
 
 ## Desenvolvimento Iterativo

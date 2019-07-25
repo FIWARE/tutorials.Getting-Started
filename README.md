@@ -579,10 +579,7 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
         },
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3986,
-                52.5547
-            ]
+            "coordinates": [13.3986, 52.5547]
         },
         "name": "Bösebrücke Einkauf"
     },
@@ -597,10 +594,7 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
         },
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3903,
-                52.5075
-            ]
+            "coordinates": [13.3903, 52.5075]
         },
         "name": "Checkpoint Markt"
     }
@@ -640,10 +634,7 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
         },
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3903,
-                52.5075
-            ]
+            "coordinates": [13.3903, 52.5075]
         },
         "name": "Checkpoint Markt"
     }
@@ -683,6 +674,8 @@ the other tutorials in this series:
 
 &nbsp; 501. [Creating Application Mashups](https://github.com/FIWARE/tutorials.Application-Mashup)<br/> &nbsp; 503.
 [Introduction to Media Streams](https://github.com/FIWARE/tutorials.Media-Streams)<br/>
+
+&nbsp; 601. [Introduction to Linked Data](https://github.com/FIWARE/tutorials.Linked-Data)<br/>
 
 The full documentation can be found [here](https://fiware-tutorials.rtfd.io).
 
