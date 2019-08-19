@@ -3,7 +3,7 @@
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
-[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](https://fiware-ges.github.io/core.Orion/api/v2/stable/)
+[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](https://fiware-ges.github.io/orion/api/v2/stable/)
 <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
@@ -372,7 +372,7 @@ NGSI-LD は現時点で
 [`Text`](http://schema.org/PostalAddress) と
 [`PostalAddress`](http://schema.org/PostalAddress) タイプ名を意図的に使用してい
 ます。[Open311](http://www.open311.org/) (市政問題追跡用) や
-[Datex II](http://www.datex2.eu/) (輸送システム用) などの既存の標準も使用できま
+[Datex II](https://datex2.eu/) (輸送システム用) などの既存の標準も使用できま
 すが、既存のデータモデルに同じ属性が存在するかどうかを確認して再利用することが重
 要です。
 

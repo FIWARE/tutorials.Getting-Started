@@ -3,7 +3,7 @@
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
-[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](https://fiware-ges.github.io/core.Orion/api/v2/stable/)
+[![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](https://fiware-ges.github.io/orion/api/v2/stable/)
 <br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 Este é um Tutorial Introdutório à Plataforma FIWARE. Começaremos com os dados de uma loja de uma cadeia de supermercados
@@ -314,7 +314,7 @@ no sistema será único
 [Schema.org](http://schema.org/) é uma iniciativa para criar esquemas de dados estruturados comuns. A fim de promover a
 reutilização, nós usaram deliberadamente o [`Text`](http://schema.org/PostalAddress) e o [Endereço Postal]
 (http://schema.org/PostalAddress) digite nomes dentro da nossa entidade **Loja**. Outras normas existentes, tais como as
-[Open311](http://www.open311.org/) (para rastreio de questões cívicas) ou [Datex II](http://www.datex2.eu/) (para
+[Open311](http://www.open311.org/) (para rastreio de questões cívicas) ou [Datex II](https://datex2.eu/) (para
 transporte ) também pode ser usado, mas o objetivo é verificar a existência do mesmo atributo em modelos de dados
 existentes e reutilizá-lo.
 
