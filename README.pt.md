@@ -526,6 +526,7 @@ lendo os outros tutoriais desta série:
 &nbsp; 503. [Introdução aos fluxos de mídia](https://github.com/FIWARE/tutorials.Media-Streams)<br/>
 
 &nbsp; 601. [Introduction to Linked Data](https://github.com/FIWARE/tutorials.Linked-Data)<br/>
+&nbsp; 602. [Linked Data Relationships and Data Models](https://github.com/FIWARE/tutorials.Relationships-Linked-Data)<br/>
 
 A documentação completa pode ser encontrada [aqui](https://fiware-tutorials.rtfd.io).
 
