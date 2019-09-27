@@ -20,7 +20,7 @@ version: "3.5"
 services:
   # Orion is the context broker
   orion:
-    image: fiware/orion:2.2.0
+    image: fiware/orion:${ORION_VERSION}
     hostname: orion
     container_name: fiware-orion
     depends_on:
@@ -28,21 +28,21 @@ services:
     networks:
       - default
     ports:
-      - "1026:1026"
+      - "${ORION_PORT}:${ORION_PORT}" # localhost:1026
     command: -dbhost mongo-db -logLevel DEBUG -noCache
     healthcheck:
-      test: curl --fail -s http://orion:1026/version || exit 1
+      test: curl --fail -s http://orion:${ORION_PORT}/version || exit 1
 
 
   # Databases
   mongo-db:
-    image: mongo:3.6
+    image: mongo:${MONGO_DB_VERSION}
     hostname: mongo-db
     container_name: db-mongo
     expose:
-      - "27017"
+      - "${MONGO_DB_PORT}"
     ports:
-      - "27017:27017"
+      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}" # localhost:27017 # localhost:27017
     networks:
       - default
     command: --bind_ip_all --smallfiles
