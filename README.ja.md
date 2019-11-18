@@ -171,7 +171,7 @@ docker network rm fiware_default
 成してください :
 
 ```console
-git clone git@github.com:FIWARE/tutorials.Getting-Started.git
+git clone https://github.com/FIWARE/tutorials.Getting-Started.git
 cd tutorials.Getting-Started
 
 docker-compose -p fiware up -d

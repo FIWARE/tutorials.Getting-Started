@@ -134,7 +134,7 @@ Todos os serviços podem ser inicializados a partir da linha de comando usando o
 clone o repositório e crie as imagens necessárias executando os comandos como mostrado:
 
 ```console
-git clone git@github.com:FIWARE/tutorials.Getting-Started.git
+git clone https://github.com/FIWARE/tutorials.Getting-Started.git
 cd tutorials.Getting-Started
 
 docker-compose -p fiware up -d
