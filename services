@@ -31,7 +31,7 @@ case "${command}" in
 		;;
 	"start")
 		stoppingContainers
-		echo -e "Starting two containers \033[1;34mOrion\033[0m and a \033[1;30mMongoDB\033[0m database."
+		echo -e "Starting two containers \033[1;34mOrion\033[0m and a \033[1mMongoDB\033[0m database."
 		echo -e "- \033[1;34mOrion\033[0m is the context broker"
 		echo ""
 		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
