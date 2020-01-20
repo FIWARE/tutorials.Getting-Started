@@ -20,9 +20,12 @@ stoppingContainers () {
 
 addDatabaseIndex () {
 	printf "Create \033[1mMongoDB\033[0m database indexes ..."
-	docker exec  db-mongo mongo --eval 'db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true})' > /dev/null
-	docker exec  db-mongo mongo --eval 'db.entities.createIndex({"_id.type": 1})'  > /dev/null
-	docker exec  db-mongo mongo --eval 'db.entities.createIndex({"_id.id": 1})'  > /dev/null
+	docker exec  db-mongo mongo --eval '
+	conn = new Mongo();db.createCollection("orion");
+	db = conn.getDB("orion");
+	db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true});
+	db.entities.createIndex({"_id.type": 1}); 
+	db.entities.createIndex({"_id.id": 1});' > /dev/null
 	echo -e " \033[1;32mdone\033[0m"
 }
 
