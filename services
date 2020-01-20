@@ -18,6 +18,14 @@ stoppingContainers () {
 	docker-compose --log-level ERROR -p fiware down -v --remove-orphans
 }
 
+addDatabaseIndex () {
+	printf "Create \033[1mMongoDB\033[0m database indexes ..."
+	docker exec  db-mongo mongo --eval 'db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true})' > /dev/null
+	docker exec  db-mongo mongo --eval 'db.entities.createIndex({"_id.type": 1})'  > /dev/null
+	docker exec  db-mongo mongo --eval 'db.entities.createIndex({"_id.id": 1})'  > /dev/null
+	echo -e " \033[1;32mdone\033[0m"
+}
+
 displayServices () {
 	echo ""
 	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=fiware-*
@@ -35,6 +43,7 @@ case "${command}" in
 		echo -e "- \033[1;34mOrion\033[0m is the context broker"
 		echo ""
 		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
+		addDatabaseIndex
 		displayServices
 		;;
 	"stop")
