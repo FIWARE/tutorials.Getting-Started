@@ -17,7 +17,8 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 🇯🇵 このチュートリアルは[日本語](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.ja.md)でもご覧い
 ただけます。<br/> 🇵🇹 Este tutorial também está disponível em
-[português](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.pt.md)
+[português](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.pt.md) <br/> 🇪🇸 Este tutorial también está disponible en 
+[español](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.es.md)
 
 ## Contents
 
