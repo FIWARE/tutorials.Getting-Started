@@ -405,7 +405,6 @@ curl -G -X GET \
 
 Debido al uso del modificador `options=keyValues`, la respuesta consta solo de un JSON sin los attributos `type` y sin elementos `metadata`.
 
-
 ```json
 [
     {
