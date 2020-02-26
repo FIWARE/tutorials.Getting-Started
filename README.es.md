@@ -1,4 +1,4 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png)](https://www.fiware.org/developers)
+[![FIWARE Zone logo](https://raw.githubusercontent.com/FIWAREZone/misc/master/Group%400%2C2x.png)](www.fiware.zone)
 
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
@@ -6,7 +6,17 @@
 [![NGSI v2](https://img.shields.io/badge/NGSI-v2-blue.svg)](https://fiware-ges.github.io/orion/api/v2/stable/) <br/>
 [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
-> [![FIWARE Zone logo](https://raw.githubusercontent.com/FIWAREZone/misc/master/Group%400%2C2x.png)](www.fiware.zone)
+
+
+Este es un Tutorial Introductorio a la Plataforma FIWARE. Empezaremos con los datos del buscador de tiendas de una cadena de supermercados 
+y crearemos una aplicación muy sencilla _"Powered by FIWARE"_ pasando la dirección y ubicación de cada tienda 
+como datos de contexto al agente de contexto FIWARE.
+
+El tutorial usa comandos [cUrl](https://ec.haxx.se/) en el, pero también está disponible como
+[documentación Postman](https://fiware.github.io/tutorials.Getting-Started/)
+
+[![Ejecutar en Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
+
 >
 > Este tutorial ha sido traducido por **FIWARE ZONE**, una iniciativa sin ánimo de lucro entre **Telefónica** y la **Junta de Andalucía** cuyo fin es la divulgación, promoción y difusión de la tecnología *FIWARE*, para hacer crecer el ecosistema y generar conocimiento y oportunidades a los desarrolladores y empresas andaluzas. **FIWARE ZONE**, como *iHub* de 3 estrellas ofrece servicios de alto nivel en formación, mentorización y consultoría de forma totalmente **gratuita**. Si necesitas cualquier tipo de ayuda o quieres contarnos tu proyecto, puedes ponerte en contacto con nostros a través de la direción [fiware.zone@fiware.zone](mailto:fiware.zone@fiware.zone), por nuestro [formulario web](https://fiware.zone/contacto/), en cualquiera de nuestras redes sociales o físicamente en [nuestros centros en Málaga y Sevilla](https://fiware.zone/contacto/)
 >
@@ -17,15 +27,6 @@
 [![Instagram](https://raw.githubusercontent.com/FIWAREZone/misc/master/instagram.png)](https://www.instagram.com/fiwarezone/)
 [![Github](https://raw.githubusercontent.com/FIWAREZone/misc/master/github.png)](https://github.com/FIWAREZone)
 [![Facebook](https://raw.githubusercontent.com/FIWAREZone/misc/master/facebook.png)](https://www.facebook.com/FIWAREZone/)
-
-Este es un Tutorial Introductorio a la Plataforma FIWARE. Empezaremos con los datos del buscador de tiendas de una cadena de supermercados 
-y crearemos una aplicación muy sencilla _"Powered by FIWARE"_ pasando la dirección y ubicación de cada tienda 
-como datos de contexto al agente de contexto FIWARE.
-
-El tutorial usa comandos [cUrl](https://ec.haxx.se/) en el, pero también está disponible como
-[documentación Postman](https://fiware.github.io/tutorials.Getting-Started/)
-
-[![Ejecutar en Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
 
 🇯🇵 このチュートリアルは[日本語](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.ja.md)でもご覧い
 ただけます。<br/> 🇵🇹 Este tutorial também está disponível em
