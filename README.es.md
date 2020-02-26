@@ -18,7 +18,6 @@
 [![Github](https://raw.githubusercontent.com/FIWAREZone/misc/master/github.png)](https://github.com/FIWAREZone)
 [![Facebook](https://raw.githubusercontent.com/FIWAREZone/misc/master/facebook.png)](https://www.facebook.com/FIWAREZone/)
 
-
 Este es un Tutorial Introductorio a la Plataforma FIWARE. Empezaremos con los datos del buscador de tiendas de una cadena de supermercados 
 y crearemos una aplicación muy sencilla _"Powered by FIWARE"_ pasando la dirección y ubicación de cada tienda 
 como datos de contexto al agente de contexto FIWARE.
@@ -72,8 +71,7 @@ Actualmente, el Orion Context Broker se basa en la tecnología de código abiert
     -   Utilizada por el Orion Context Broker para mantener información de datos de contexto como los datos de las entidades, suscripciones y
         registros
 
-Dadp que todas las interacciones entre los dos elementos son iniciadas por peticiones HTTP, estos pueden ser conte
-Since all interactions between the two elements are initiated by HTTP Peticións, the entities can be contenedorizado y correr desde los puertos expuestos.
+Dado que todas las interacciones entre los dos elementos son iniciadas por peticiones HTTP, estos pueden ser contenedorizado sy correr desde los puertos expuestos.
 
 ![](https://fiware.github.io/tutorials.Getting-Started/img/architecture.png)
 
