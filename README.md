@@ -17,7 +17,7 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 
 🇯🇵 このチュートリアルは[日本語](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.ja.md)でもご覧い
 ただけます。<br/> 🇵🇹 Este tutorial também está disponível em
-[português](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.pt.md) <br/> 🇪🇸 Este tutorial también está disponible en 
+[português](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.pt.md) <br/> 🇪🇸 Este tutorial también está disponible en
 [español](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.es.md)
 
 ## Contents
@@ -677,7 +677,8 @@ the other tutorials in this series:
 
 &nbsp; 501. [Creating Application Mashups](https://github.com/FIWARE/tutorials.Application-Mashup)<br/> &nbsp; 503.
 [Introduction to Media Streams](https://github.com/FIWARE/tutorials.Media-Streams)<br/> &nbsp; 505.
-[Big Data Analysis (Flink)](https://github.com/FIWARE/tutorials.Big-Data-Analysis)<br/>
+[Big Data Analysis (Flink)](https://github.com/FIWARE/tutorials.Big-Data-Analysis)<br/> &nbsp; 507.
+[Cloud-Edge Computing](https://github.com/FIWARE/tutorials.Edge-Computing)<br/>
 
 &nbsp; 601. [Introduction to Linked Data](https://github.com/FIWARE/tutorials.Linked-Data)<br/> &nbsp; 602.
 [Linked Data Relationships and Data Models](https://github.com/FIWARE/tutorials.Relationships-Linked-Data)<br/>

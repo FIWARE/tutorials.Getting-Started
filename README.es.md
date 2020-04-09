@@ -8,8 +8,8 @@
 
 
 
-Este es un Tutorial Introductorio a la Plataforma FIWARE. Empezaremos con los datos del buscador de tiendas de una cadena de supermercados 
-y crearemos una aplicación muy sencilla _"Powered by FIWARE"_ pasando la dirección y ubicación de cada tienda 
+Este es un Tutorial Introductorio a la Plataforma FIWARE. Empezaremos con los datos del buscador de tiendas de una cadena de supermercados
+y crearemos una aplicación muy sencilla _"Powered by FIWARE"_ pasando la dirección y ubicación de cada tienda
 como datos de contexto al agente de contexto FIWARE.
 
 El tutorial usa comandos [cUrl](https://ec.haxx.se/) en el, pero también está disponible como
@@ -22,7 +22,7 @@ El tutorial usa comandos [cUrl](https://ec.haxx.se/) en el, pero también está 
 >
 >![3 stars iHub](https://badgen.net/badge/iHub/3%20stars/yellow)
 >
->[![Twitter](https://raw.githubusercontent.com/FIWAREZone/misc/master/twitter.png)](https://twitter.com/FIWAREZone) 
+>[![Twitter](https://raw.githubusercontent.com/FIWAREZone/misc/master/twitter.png)](https://twitter.com/FIWAREZone)
 [![Linkedin](https://raw.githubusercontent.com/FIWAREZone/misc/master/linkedin.png)](https://www.linkedin.com/company/fiware-zone)
 [![Instagram](https://raw.githubusercontent.com/FIWAREZone/misc/master/instagram.png)](https://www.instagram.com/fiwarezone/)
 [![Github](https://raw.githubusercontent.com/FIWAREZone/misc/master/github.png)](https://github.com/FIWAREZone)
@@ -337,7 +337,7 @@ Los atributos `streetAddress`, `addressRegion`, `addressLocality` y`postalCode` 
 
 ### Metadatos de atributos
 
-Los metadatos son _"datos acerca de los datos"_, son información adicional usada para describir propiedades de los valores de los atributos como precisión, proveedor del dato, o marca temporal. Existen diveros 
+Los metadatos son _"datos acerca de los datos"_, son información adicional usada para describir propiedades de los valores de los atributos como precisión, proveedor del dato, o marca temporal. Existen diveros
 accuracy, provider, or a timestamp. Ya existen varios atributos de metadatos predefinidos y sus nombres están reservados:
 
 -   `dateCreated` (tipo: DateTime): Fecha de creación del atributo como un string ISO 8601.
@@ -479,7 +479,7 @@ Debido al uso del modificador `options=keyValues`, la respuesta consta solo de u
 ]
 ```
 
-### Filtrar datos de contexto comparando valores de un sub-atributo 
+### Filtrar datos de contexto comparando valores de un sub-atributo
 
 Este ejemplo devuelve todas las tiendas encontradas en Kreuzberg District.
 
@@ -646,7 +646,8 @@ Quieres aprender como añadir más complejidad a tu aplicación añadiendo funci
 
 &nbsp; 501. [Creating Application Mashups](https://github.com/FIWARE/tutorials.Application-Mashup)<br/> &nbsp; 503.
 [Introduction to Media Streams](https://github.com/FIWARE/tutorials.Media-Streams)<br/>
-&nbsp; 505. [Big Data Analysis (Flink)](https://github.com/FIWARE/tutorials.Big-Data-Analysis)<br/>
+&nbsp; 505. [Big Data Analysis (Flink)](https://github.com/FIWARE/tutorials.Big-Data-Analysis)<br/> &nbsp; 507.
+[Cloud-Edge Computing](https://github.com/FIWARE/tutorials.Edge-Computing)<br/>
 
 &nbsp; 601. [Introduction to Linked Data](https://github.com/FIWARE/tutorials.Linked-Data)<br/>
 &nbsp; 602. [Linked Data Relationships and Data Models](https://github.com/FIWARE/tutorials.Relationships-Linked-Data)<br/>
@@ -681,7 +682,7 @@ Hasta aquí, muy sencillo, pero considere los siguientes pasos de esta aplicaci�
     \[[Kurento](https://github.com/FIWARE/catalogue/blob/master/processing/README.md#Kurento)\]
 -   Las imágenes de vídeo podrían ser procesadas para reconocer dónde están los clientes dentro de una tienda
     \[[Kurento](https://github.com/FIWARE/catalogue/blob/master/processing/README.md#Kurento)\]
--   Al mantener y procesar los datos históricos dentro del sistema, se puede calcular el tiempo de permanencia y por donde transitan - estableciendo qué áreas de la tienda son de mayor interés [conexión a través de 
+-   Al mantener y procesar los datos históricos dentro del sistema, se puede calcular el tiempo de permanencia y por donde transitan - estableciendo qué áreas de la tienda son de mayor interés [conexión a través de
     [Cygnus](https://github.com/FIWARE/catalogue/blob/master/core/README.md#Cygnus) o Apache Nifi\]
 -   El reconocimiento de patrones de comportamientos inusuales pueden ser utilizados para disparar una alerta para evitar el robo
     \[[Kurento](https://github.com/FIWARE/catalogue/blob/master/processing/README.md#Kurento)\]
