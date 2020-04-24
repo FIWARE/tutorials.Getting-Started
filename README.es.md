@@ -320,7 +320,7 @@ NGSI-LD ha sido recientemente publicado como una [especificación](https://www.e
 #### Los nombres de los tipos de datos deben reutilizar los tipos de datos de schema.org siempre que sea posible
 
 [Schema.org](http://schema.org/) es una iniciativa para crear esquemas de datos estructurados comunes. Para promover la reutilización hemos utilizado deliberadamente el los tipos de atributo [`Text`](http://schema.org/PostalAddress) y
-[`PostalAddress`](http://schema.org/PostalAddress) con nuestra entidad **Store** . Otros estándares existentes como [Open311](http://www.open311.org/) (para el seguimiento de problemas de ciudad) o [Datex II](https://datex2.eu/) (para sistemas de tranposte) tambine pueden ser usado, pero la clave es comprobar la existencia de el mismo atributo en modelos de datos existentes y reusarlo.
+[`PostalAddress`](http://schema.org/PostalAddress) con nuestra entidad **Store** . Otros estándares existentes como [Open311](http://www.open311.org/) (para el seguimiento de problemas de ciudad) o [Datex II](https://datex2.eu/) (para sistemas de transporte) también pueden ser usado, pero la clave es comprobar la existencia de el mismo atributo en modelos de datos existentes y reusarlo.
 
 #### Uso de la sintaxis camel case para el nombre de los atributos
 
