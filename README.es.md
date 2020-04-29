@@ -67,7 +67,7 @@ para que una aplicación califique como _"Powered by FIWARE"_.
 Actualmente, el Orion Context Broker se basa en la tecnología de código abierto [MongoDB](https://www.mongodb.com/) para la persistencia de los datos de contexto que contiene. Por lo tanto, la Arquitectura constará de dos elementos:
 
 -   El [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) quien recibirá las peticiones usando
-    [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
+    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
 -   La base de datos que hay por debajo [MongoDB](https://www.mongodb.com/) :
     -   Utilizada por el Orion Context Broker para mantener información de datos de contexto como los datos de las entidades, suscripciones y
         registros

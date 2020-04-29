@@ -59,7 +59,7 @@ FIWARE"_ と認定するには、Orion Context Broker を使用するだけで�
 [MongoDB](https://www.mongodb.com/) 技術を利用して、コンテキスト・データの永続性
 を維持しています。したがって、アーキテクチャは 2 つの要素で構成されます :
 
--   [NGSI](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリ
+-   [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2) を使用してリ
     クエストを受信する
     [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)
 -   バックエンドの [MongoDB](https://www.mongodb.com/) データベース
