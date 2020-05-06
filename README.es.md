@@ -1,4 +1,4 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png)](https://www.fiware.org/developers)  [<img src="https://raw.githubusercontent.com/FIWAREZone/misc/master/Group%400%2C2x.png" align="right">](http://www.fiware.zone)
+[![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png)](https://www.fiware.org/developers)  [<img src="https://raw.githubusercontent.com/FIWAREZone/misc/master/Group%400%2C36x.png" align="right">](http://www.fiware.zone)
 
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
