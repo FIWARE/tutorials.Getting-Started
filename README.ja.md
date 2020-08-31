@@ -13,7 +13,7 @@
 読み取られます。
 
 このチュートリアルでは、全体で[cUrl](https://ec.haxx.se/) コマンドを使用していますが、
-[Postman ドキュメント](https://fiware.github.io/tutorials.Getting.Started/ngsi-ld)としても利用できます。
+[Postman ドキュメント](https://fiware.github.io/tutorials.Getting.Started/ngsi-ld.html)としても利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/610b7cd32e4b07b8e9c9)
 

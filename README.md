@@ -1,7 +1,7 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.Working-with-At-Context/img/fiware.png)](https://www.fiware.org/developers)
+[![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/fiware.png)](https://www.fiware.org/developers)
 
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
-[![License: MIT](https://img.shields.io/github/license/FIWARE/tutorials.Working-with-At-Context.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/github/license/FIWARE/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
 [![NGSI LD](https://img.shields.io/badge/NGSI-LD-d6604d.svg)](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf)
 [![JSON LD](https://img.shields.io/badge/JSON--LD-1.1-f06f38.svg)](https://w3c.github.io/json-ld-syntax/) <br/>
@@ -12,7 +12,7 @@ generated in the [previous tutorial](https://github.com/FIWARE/tutorials.Underst
 underlying data model for inputting context data and context information is queries and read back in different formats.
 
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as
-[Postman documentation](https://fiware.github.io/tutorials.Working-with-At-Context/)
+[Postman documentation](https://fiware.github.io/tutorials.Getting-Started/ngsi-ld.html)
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/610b7cd32e4b07b8e9c9)
 
@@ -76,7 +76,7 @@ Which means that every `address` attribute follows the definition as defined by 
 
 `https://schema.org/address` :
 
-![](https://fiware.github.io/tutorials.Working-with-At-Context/img/address.png)
+![](https://fiware.github.io/tutorials.Getting-Started/img/address.png)
 
 A program written by a third party would therefore be able to extract information such the fact an `address` attribute
 holds a JSON object with a sub-attribute containing the `streetAddress` by referring to the full
@@ -157,7 +157,7 @@ technology which allows to different components isolated into their respective e
 -   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A
-[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Working-with-At-Context/master/docker-compose/orion-ld.yml)
+[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose/orion-ld.yml)
 is used configure the required services for the application. This means all container services can be brought up in a
 single command. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux
 users will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
@@ -196,7 +196,7 @@ Therefore, the architecture will consist of three elements:
 Since all interactions between the three elements are initiated by HTTP requests, the elements can be containerized and
 run from exposed ports.
 
-![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture.png)
+![](https://fiware.github.io/tutorials.Getting-Started/img/architecture-ld.png)
 
 The necessary configuration information can be seen in the services section of the associated `orion-ld.yml` file:
 
@@ -251,12 +251,12 @@ being part of the same network. The command-line initialization should be self e
 # Start Up
 
 All services can be initialised from the command-line by running the
-[services](https://github.com/FIWARE/tutorials.Working-with-At-Context/blob/master/services) Bash script provided within
+[services](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/services) Bash script provided within
 the repository. Please clone the repository and create the necessary images by running the commands as shown:
 
 ```bash
-git clone https://github.com/FIWARE/tutorials.Working-with-At-Context.git
-cd tutorials.Working-with-At-Context
+git clone https://github.com/FIWARE/tutorials.Getting-Started.git
+cd tutorials.Getting-Started
 git checkout NGSI-LD
 
 ./services orion|scorpio
