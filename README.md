@@ -1,162 +1,311 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png)](https://www.fiware.org/developers)
+[![FIWARE Banner](https://fiware.github.io/tutorials.Working-with-At-Context/img/fiware.png)](https://www.fiware.org/developers)
 
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
-[![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/github/license/FIWARE/tutorials.Working-with-At-Context.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
-[![NGSI v2](https://img.shields.io/badge/NGSI-v2-5dc0cf.svg)](https://fiware-ges.github.io/orion/api/v2/stable/) <br/>
-[![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
+[![NGSI LD](https://img.shields.io/badge/NGSI-LD-d6604d.svg)](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf)
+[![JSON LD](https://img.shields.io/badge/JSON--LD-1.1-f06f38.svg)](https://w3c.github.io/json-ld-syntax/) <br/>
+[![Documentation](https://img.shields.io/readthedocs/ngsi-ld-tutorials.svg)](https://ngsi-ld-tutorials.rtfd.io)
 
-This is an Introductory Tutorial to the FIWARE Platform. We will start with the data from a supermarket chain’s store
-finder and create a very simple _“Powered by FIWARE”_ application by passing in the address and location of each store
-as context data to the FIWARE context broker.
+This tutorial examines the interaction between **NGSI-LD** and **JSON-LD** `@context` files. The `@context` files
+generated in the [previous tutorial](https://github.com/FIWARE/tutorials.Understanding-At-Context) are used as the
+underlying data model for inputting context data and context information is queries and read back in different formats.
 
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as
-[Postman documentation](https://fiware.github.io/tutorials.Getting-Started/)
+[Postman documentation](https://fiware.github.io/tutorials.Working-with-At-Context/)
 
-[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/610b7cd32e4b07b8e9c9)
 
-🇯🇵 このチュートリアルは[日本語](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.ja.md)でもご覧い
-ただけます。<br/> 🇵🇹 Este tutorial também está disponível em
-[português](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.pt.md) <br/> 🇪🇸 Este tutorial también
-está disponible en [español](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.es.md)
+-   このチュートリアルは[日本語](README.ja.md)でもご覧いただけます。
 
 ## Contents
 
 <details>
 <summary><strong>Details</strong></summary>
 
--   [Architecture](#architecture)
+-   [Working with `@context` files](#working-with-context-files)
+    -   [NGSI-LD Rules](#ngsi-ld-rules)
+    -   [Content Negotiation and the `Content-Type` and `Accept` Headers](#content-negotiation-and-the-content-type-and-accept-headers)
 -   [Prerequisites](#prerequisites)
     -   [Docker](#docker)
-    -   [Docker Compose (Optional)](#docker-compose-optional)
--   [Starting the containers](#starting-the-containers)
-    -   [Option 1) Using Docker commands directly](#option-1-using-docker-commands-directly)
-    -   [Option 2) Using Docker Compose](#option-2-using-docker-compose)
--   [Creating your first "Powered by FIWARE" app](#creating-your-first-powered-by-fiware-app)
-    -   [Checking the service health](#checking-the-service-health)
-    -   [Creating Context Data](#creating-context-data)
-        -   [Data Model Guidelines](#data-model-guidelines)
-        -   [Attribute Metadata](#attribute-metadata)
+    -   [Cygwin](#cygwin)
+-   [Architecture](#architecture)
+-   [Start Up](#start-up)
+-   [Creating NGSI-LD data entities.](#creating-ngsi-ld-data-entities)
+    -   [Prerequisites](#prerequisites-1)
+        -   [Reading `@context` files](#reading-context-files)
+        -   [Checking the service health](#checking-the-service-health)
+        -   [Creating Data entities](#creating-data-entities)
+        -   [Using core `@context` - defining NGSI-LD entities](#using-core-context---defining-ngsi-ld-entities)
+        -   [Defining Properties-of-Properties within the NGSI-LD entity definition](#defining-properties-of-properties-within-the-ngsi-ld-entity-definition)
     -   [Querying Context Data](#querying-context-data)
+        -   [Obtain entity data by FQN Type](#obtain-entity-data-by-fqn-type)
         -   [Obtain entity data by ID](#obtain-entity-data-by-id)
         -   [Obtain entity data by type](#obtain-entity-data-by-type)
         -   [Filter context data by comparing the values of an attribute](#filter-context-data-by-comparing-the-values-of-an-attribute)
+        -   [Using an alternative `@context`](#using-an-alternative-context)
+        -   [Filter context data by comparing the values of an attribute in an Array](#filter-context-data-by-comparing-the-values-of-an-attribute-in-an-array)
+        -   [Filter context data by comparing the values of a sub-attribute](#filter-context-data-by-comparing-the-values-of-a-sub-attribute)
+        -   [Filter context data by querying metadata](#filter-context-data-by-querying-metadata)
         -   [Filter context data by comparing the values of a geo:json attribute](#filter-context-data-by-comparing-the-values-of-a-geojson-attribute)
--   [Next Steps](#next-steps)
-    -   [Iterative Development](#iterative-development)
 
 </details>
 
-# Architecture
+# Working with `@context` files
 
-Our demo application will only make use of one FIWARE component - the
-[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). Usage of the Orion Context Broker is sufficient
-for an application to qualify as _“Powered by FIWARE”_.
+> “Some quotations are greatly improved by lack of context.”
+>
+> ― John Wyndham, The Midwich Cuckoos
 
-Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
-persistence of the context data it holds. Therefore, the architecture will consist of two elements:
+From the [previous tutorial](https://github.com/FIWARE/tutorials.Understanding-At-Context) we have generated two
+`@context` files defining the context data entities which will be offered in our simple Smart Farm Management System.
+This means that we have defined an agreed set of unique IDs (URNs or URLs) for all the data entities and every single
+attribute within those entities so that other external applications will be able to programmatically understand the data
+held within our broker.
 
--   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using
-    [NGSI-v2](https://fiware.github.io/specifications/OpenAPI/ngsiv2)
--   The underlying [MongoDB](https://www.mongodb.com/) database :
-    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and
-        registrations
+For example, the attribute `address` is within our smart application is defined as follows:
 
-Since all interactions between the two elements are initiated by HTTP requests, the entities can be containerized and
-run from exposed ports.
+```jsonld
+"@context": {
+    "schema": "https://schema.org/",
+    "address": "schema:address"
+}
+```
 
-![](https://fiware.github.io/tutorials.Getting-Started/img/architecture.png)
+Which means that every `address` attribute follows the definition as defined by `schema.org`:
+
+`https://schema.org/address` :
+
+![](https://fiware.github.io/tutorials.Working-with-At-Context/img/address.png)
+
+A program written by a third party would therefore be able to extract information such the fact an `address` attribute
+holds a JSON object with a sub-attribute containing the `streetAddress` by referring to the full
+[schema.org **JSON-LD** schema](https://schema.org/version/latest/schemaorg-current-http.jsonld)
+
+```jsonld
+{
+  "@id": "http://schema.org/streetAddress",
+  "@type": "rdf:Property",
+  "http://schema.org/domainIncludes": {
+    "@id": "http://schema.org/PostalAddress"
+  },
+  "http://schema.org/rangeIncludes": {
+    "@id": "http://schema.org/Text"
+  },
+  "rdfs:comment": "The street address. For example, 1600 Amphitheatre Pkwy.",
+  "rdfs:label": "streetAddress"
+}
+```
+
+This is the **JSON-LD** programmatic syntax allowing computers to extract meaningful data. _The attribute
+`address.streetAddress` is a street_ directly without the need for human intervention.
+
+Imagine the case where a company is contracting agricultural labourers. The farmer will need to be billed for the work
+done. If such a system is built on JSON-LD, it does not matter if the farmer's Farm Management Information System
+assigns different names to the attributes of the billing address provided that the farmer and contractor can agree on
+the well-defined URNs for each attribute as **JSON-LD** can easily translate between the two formats using common
+expansion and compaction algorithms.
+
+## NGSI-LD Rules
+
+**NGSI-LD** is a formally structured _extended subset_ of **JSON-LD**. Therefore **NGSI-LD** offers all the
+interoperability and flexibility of **JSON-LD** itself. It also defines its own core `@context` which cannot be
+overridden for **NGSI-LD** operations. This means that **NGSI-LD** users agree to a common well-defined set of rules for
+structuring their data, and then supplement this with the rest of the **JSON-LD** specification.
+
+Whilst interacting directly with **NGSI-LD** interface of the context broker the additional **NGSI-LD** rules must be
+respected. However after the data has been extracted it is possible to loosen this requirement and pass the results to
+third parties as **JSON-LD**.
+
+This tutorial is a simple introduction to the rules and restrictions behind **NGSI-LD** and will create some **NGSI-LD**
+entities and then extract the data in different formats. The two main data formats are _normalized_ and
+_key-value-pairs_. Data returned in the _normalised_ format respects the **NGSI-LD** rules and may be used directly by
+another context broker (or any other component offering an **NGSI-LD** interface). Data returned in the
+_key-value-pairs_ format is by definition not **NGSI-LD**.
+
+## Content Negotiation and the `Content-Type` and `Accept` Headers
+
+During content negotiation, **NGSI-LD** offers data in one of three formats, these effect the structure of the payload
+body.
+
+-   `Accept: application/json` - the response is in **JSON** format
+-   `Accept: application/ld+json` - the response is in **JSON-LD** format
+-   `Accept: application/geo+json` - the response is in **GeoJSON** or **GeoJSON-LD** format
+
+The major difference between **JSON** format and **JSON-LD** format, is that if **JSON-LD** format is chosen, then the
+`@context` is found as an additional attribute within the body of the response. If the **JSON** only format is used the
+`@context` is passed as an additional `Link` Header element and is not found in the response body.
+
+Similarly when sending **NGSI-LD** data to the context broker, an application may choose to send a payload including an
+additional `@context` attribute (in which case `Content-Type: application/ld+json`) or the application may send NGSI-LD
+data without an additional `@context` attribute (in which case `Content-Type: application/json` and the `Link` header
+must also be present).
+
+The **GeoJSON** format is only used when querying a context broker for existing data and returns the context in a format
+suitable for GIS systems. It is a recent addition to the **NGSI-LD** specification and therefore will not be discussed
+further here.
 
 # Prerequisites
 
 ## Docker
 
-To keep things simple both components will be run using [Docker](https://www.docker.com). **Docker** is a container
+To keep things simple all components will be run using [Docker](https://www.docker.com). **Docker** is a container
 technology which allows to different components isolated into their respective environments.
 
 -   To install Docker on Windows follow the instructions [here](https://docs.docker.com/docker-for-windows/)
 -   To install Docker on Mac follow the instructions [here](https://docs.docker.com/docker-for-mac/)
 -   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
 
-## Docker Compose (Optional)
-
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A
-[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) is used
-configure the required services for the application. This means all container services can be brought up in a single
-command. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux users
-will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
+[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Working-with-At-Context/master/docker-compose/orion-ld.yml)
+is used configure the required services for the application. This means all container services can be brought up in a
+single command. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux
+users will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
 
-You can check your current **Docker** and **Docker Compose** versions using the following commands:
+## Cygwin
 
-```console
-docker-compose -v
-docker version
+We will start up our services using a simple bash script. Windows users should download [cygwin](http://www.cygwin.com/)
+to provide a command-line functionality similar to a Linux distribution on Windows.
+
+# Architecture
+
+The demo application will send and receive NGSI-LD calls to a compliant context broker. Since the standardized NGSI-LD
+interface is available across multiple context brokers, so we only need to pick one - for example the
+[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). The application will therefore only make use of
+one FIWARE component.
+
+Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
+persistence of the context data it holds.
+
+To promote interoperability of data exchange, NGSI-LD context brokers explicitly expose a
+[JSON-LD `@context` file](https://json-ld.org/spec/latest/json-ld/#the-context) to define the data held within the
+context entities. This defines a unique URI for every entity type and every attribute so that other services outside of
+the NGSI domain are able to pick and choose the names of their data structures. Every `@context` file must be available
+on the network. In our case the tutorial application will be used to host a series of static files.
+
+Therefore, the architecture will consist of three elements:
+
+-   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using
+    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)
+-   The underlying [MongoDB](https://www.mongodb.com/) database :
+    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and
+        registrations
+-   The **Tutorial Application** does the following:
+    -   Offers static `@context` files defining the context entities within the system.
+
+Since all interactions between the three elements are initiated by HTTP requests, the elements can be containerized and
+run from exposed ports.
+
+![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture.png)
+
+The necessary configuration information can be seen in the services section of the associated `orion-ld.yml` file:
+
+```yaml
+orion:
+    image: fiware/orion-ld
+    hostname: orion
+    container_name: fiware-orion
+    depends_on:
+        - mongo-db
+    networks:
+        - default
+    ports:
+        - "1026:1026"
+    command: -dbhost mongo-db -logLevel DEBUG
+    healthcheck:
+        test: curl --fail -s http://orion:1026/version || exit 1
 ```
 
-Please ensure that you are using Docker version 18.03 or higher and Docker Compose 1.21 or higher and upgrade if
-necessary.
-
-# Starting the containers
-
-## Option 1) Using Docker commands directly
-
-First pull the necessary Docker images from Docker Hub and create a network for our containers to connect to:
-
-```console
-docker pull mongo:3.6
-docker pull fiware/orion
-docker network create fiware_default
+```yaml
+mongo-db:
+    image: mongo:3.6
+    hostname: mongo-db
+    container_name: db-mongo
+    expose:
+        - "27017"
+    ports:
+        - "27017:27017"
+    networks:
+        - default
+    command: --nojournal
 ```
 
-A Docker container running a [MongoDB](https://www.mongodb.com/) database can be started and connected to the network
-with the following command:
-
-```console
-docker run -d --name=mongo-db --network=fiware_default \
-  --expose=27017 mongo:3.6 --bind_ip_all --smallfiles
+```yaml
+tutorial:
+    image: fiware/tutorials.ngsi-ld
+    hostname: tutorial
+    container_name: fiware-tutorial
+    networks:
+        default:
+            aliases:
+                - context
+    expose:
+        - 3000
 ```
 
-The Orion Context Broker can be started and connected to the network with the following command:
+All containers are residing on the same network - the Orion Context Broker is listening on Port `1026` and MongoDB is
+listening on the default port `27017` and the tutorial app is listening on port `3000`. All containers are also exposing
+the same ports externally - this is purely for the tutorial access - so that cUrl or Postman can access them without
+being part of the same network. The command-line initialization should be self explanatory.
 
-```console
-docker run -d --name fiware-orion -h orion --network=fiware_default \
-  -p 1026:1026  fiware/orion -dbhost mongo-db
+# Start Up
+
+All services can be initialised from the command-line by running the
+[services](https://github.com/FIWARE/tutorials.Working-with-At-Context/blob/master/services) Bash script provided within
+the repository. Please clone the repository and create the necessary images by running the commands as shown:
+
+```bash
+git clone https://github.com/FIWARE/tutorials.Working-with-At-Context.git
+cd tutorials.Working-with-At-Context
+git checkout NGSI-LD
+
+./services orion|scorpio
 ```
 
-> **Note:** If you want to clean up and start again you can do so with the following commands
+> **Note:** If you want to clean up and start over again you can do so with the following command:
 >
 > ```
-> docker stop fiware-orion
-> docker rm fiware-orion
-> docker stop mongo-db
-> docker rm mongo-db
-> docker network rm fiware_default
+> ./services stop
 > ```
 
-## Option 2) Using Docker Compose
+---
 
-All services can be initialised from the command-line using the `docker-compose` command. Please clone the repository
-and create the necessary images by running the commands as shown:
+# Creating NGSI-LD data entities.
 
-```console
-git clone https://github.com/FIWARE/tutorials.Getting-Started.git
-git checkout NGSI-v2
-cd tutorials.Getting-Started
+This tutorial creates some initial farm building entities to be used by the Farm Management system.
 
-docker-compose -p fiware up -d
-```
+## Prerequisites
 
-> **Note:** If you want to clean up and start again you can do so with the following command:
->
-> ```
-> docker-compose -p fiware down
-> ```
+Once the services have started up, and before interacting with the context broker itself, it is useful to check that the
+necessary prerequisites are in place.
 
-# Creating your first "Powered by FIWARE" app
+### Reading `@context` files
 
-## Checking the service health
+Three `@context` files have been generated and hosted on the tutorial application. They serve different roles.
 
-You can check if the Orion Context Broker is running by making an HTTP request to the exposed port:
+-   [`ngsi-context.jsonld`](http://localhost:3000/data-models/ngsi-context.jsonld) -The **NGSI-LD** `@context` serves to
+    define all attributes when sending data to the context broker or retrieving data in _normalized_ format. This
+    `@context` must be used for all **NGSI-LD** to **NGSI-LD** interactions
+
+-   The **JSON-LD** `@context` can be used when querying the data and returning _key-values_ data. Responses are
+    **JSON** or **JSON-LD** and the data can be easily ingested and processed further by the receiving application.
+
+    -   [`json-context.jsonld`](http://localhost:3000/data-models/json-context.jsonld) is a richer **JSON-LD**
+        definition of the attributes of the data models.
+    -   [`alternate-context.jsonld`](http://localhost:3000/data-models/alternate-context.jsonld) is an alternative
+        **JSON-LD** definition of the attributes of the data models used by a third-party (the German sub-contractor of
+        farm labourers). Internally their billing application used different short names for attributes. Their
+        `@context` file reflects the agreed mapping between attribute names.
+
+The full data model description for a **Building** entity as used in this tutorial can be found
+[here](https://ngsi-ld-tutorials.readthedocs.io/en/latest/datamodels.html#building) it is based on the standard Smart
+Data Models definition. A
+[Swagger Specification](https://petstore.swagger.io/?url=https://smart-data-models.github.io/dataModel.Building/Building/swagger.yaml)
+of the same model is also available, and would be use to generate code stubs in a full application.
+
+### Checking the service health
+
+As usual, you can check if the Orion Context Broker is running by making an HTTP request to the exposed port:
 
 #### :one: Request:
 
@@ -172,473 +321,771 @@ The response will look similar to the following:
 ```json
 {
     "orion": {
-        "version": "1.12.0-next",
-        "uptime": "0 d, 0 h, 3 m, 21 s",
-        "git_hash": "e2ff1a8d9515ade24cf8d4b90d27af7a616c7725",
-        "compile_time": "Wed Apr 4 19:08:02 UTC 2018",
+        "version": "1.15.0-next",
+        "uptime": "0 d, 3 h, 1 m, 51 s",
+        "git_hash": "af440c6e316075266094c2a5f3f4e4f8e3bb0668",
+        "compile_time": "Tue Jul 16 15:46:18 UTC 2019",
         "compiled_by": "root",
-        "compiled_in": "2f4a69bdc191",
-        "release_date": "Wed Apr 4 19:08:02 UTC 2018",
+        "compiled_in": "51b4d802385a",
+        "release_date": "Tue Jul 16 15:46:18 UTC 2019",
         "doc": "https://fiware-orion.readthedocs.org/en/master/"
     }
 }
 ```
 
-> **What if I get a `Failed to connect to localhost port 1026: Connection refused` Response?**
->
-> If you get a `Connection refused` response, the Orion Content Broker cannot be found where expected for this
-> tutorial - you will need to substitute the URL and port in each cUrl command with the corrected IP address. All the
-> cUrl commands tutorial assume that orion is available on `localhost:1026`.
->
-> Try the following remedies:
->
-> -   To check that the docker containers are running try the following:
->
-> ```console
-> docker ps
-> ```
->
-> You should see two containers running. If orion is not running, you can restart the containers as necessary. This
-> command will also display open port information.
->
-> -   If you have installed [`docker-machine`](https://docs.docker.com/machine/) and
->     [Virtual Box](https://www.virtualbox.org/), the orion docker container may be running from another IP address -
->     you will need to retrieve the virtual host IP as shown:
->
-> ```console
-> curl -X GET \
->  'http://$(docker-machine ip default):1026/version'
-> ```
->
-> Alternatively run all your cUrl commands from within the container network:
->
-> ```console
-> docker run --network fiware_default --rm appropriate/curl -s \
->  -X GET 'http://orion:1026/version'
-> ```
+The format of the version response has not changed. The `release_date` must be 16th July 2019 or later to be able to
+work with the requests defined below.
 
-## Creating Context Data
+### Creating Data entities
 
-At its heart, FIWARE is a system for managing context information, so lets add some context data into the system by
-creating two new entities (stores in **Berlin**). Any entity must have a `id` and `type` attributes, additional
-attributes are optional and will depend on the system being described. Each additional attribute should also have a
-defined `type` and a `value` attribute.
+New context data entities can be created by making a POST request to the `/ngsi-ld/v1/entities` endpoint and supply an
+`@context` along with structured **NGSI-LD** data.
 
 #### :two: Request:
 
 ```console
-curl -iX POST \
-  'http://localhost:1026/v2/entities' \
-  -H 'Content-Type: application/json' \
-  -d '
-{
-    "id": "urn:ngsi-ld:Store:001",
-    "type": "Store",
+curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
+-H 'Content-Type: application/ld+json' \
+--data-raw '{
+    "id": "urn:ngsi-ld:Building:farm001",
+    "type": "Building",
+    "category": {
+        "type": "Property",
+        "value": ["farm"]
+    },
     "address": {
-        "type": "PostalAddress",
+        "type": "Property",
         "value": {
-            "streetAddress": "Bornholmer Straße 65",
+            "streetAddress": "Großer Stern 1",
             "addressRegion": "Berlin",
-            "addressLocality": "Prenzlauer Berg",
-            "postalCode": "10439"
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
-        "metadata": {
-            "verified": {
-                "value": true,
-                "type": "Boolean"
-            }
+        "verified": {
+            "type": "Property",
+            "value": true
         }
     },
     "location": {
-        "type": "geo:json",
+        "type": "GeoProperty",
         "value": {
              "type": "Point",
-             "coordinates": [13.3986, 52.5547]
+             "coordinates": [13.3505, 52.5144]
         }
     },
     "name": {
-        "type": "Text",
-        "value": "Bösebrücke Einkauf"
-    }
+        "type": "Property",
+        "value": "Victory Farm"
+    },
+    "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
 }'
 ```
+
+The first request will take some time, as the context broker must navigate and load all of the files mentioned in the
+`@context`.
+
+Since the `Content-Type: application/ld+json` the `@context` is supplied in the body of the request. As with all
+**NGSI-LD** interactions, the core **NGSI-LD** `@context`
+([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld))
+is implicitly included as well.
+
+This means that the actual `@context` is:
+
+```jsonld
+{
+    "@context": [
+        "http://context-provider:3000/data-models/ngsi-context.jsonld",
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
+    ]
+}
+```
+
+with the core `@context` being processed **last** and therefore overriding any terms previously defined with the same
+`@id`.
 
 #### :three: Request:
 
 Each subsequent entity must have a unique `id` for the given `type`
 
 ```console
-curl -iX POST \
-  'http://localhost:1026/v2/entities' \
-  -H 'Content-Type: application/json' \
-  -d '
-{
-    "type": "Store",
-    "id": "urn:ngsi-ld:Store:002",
+curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
+-H 'Content-Type: application/json' \
+-H 'Link: <http://context-provider:3000/data-models/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+--d '{
+    "id": "urn:ngsi-ld:Building:barn002",
+    "type": "Building",
+    "category": {
+        "type": "Property",
+        "value": ["barn"]
+    },
     "address": {
-        "type": "PostalAddress",
+        "type": "Property",
         "value": {
-            "streetAddress": "Friedrichstraße 44",
+            "streetAddress": "Straße des 17. Juni",
             "addressRegion": "Berlin",
-            "addressLocality": "Kreuzberg",
-            "postalCode": "10969"
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
-        "metadata": {
-            "verified": {
-                "value": true,
-                "type": "Boolean"
-            }
+        "verified": {
+            "type": "Property",
+            "value": true
         }
     },
-    "location": {
-        "type": "geo:json",
+     "location": {
+        "type": "GeoProperty",
         "value": {
              "type": "Point",
-             "coordinates": [13.3903, 52.5075]
+              "coordinates": [13.3698, 52.5163]
         }
     },
     "name": {
-        "type": "Text",
-        "value": "Checkpoint Markt"
+        "type": "Property",
+        "value": "Big Red Barn"
     }
 }'
 ```
 
-### Data Model Guidelines
+In this second case the `Content-Type: application/json` so the `@context` is supplied in the associated `Link` header
+of the request and not in the payload body.
 
-Although the each data entity within your context will vary according to your use case, the common structure within each
-data entity should be standardized order to promote reuse. The full FIWARE data model guidelines can be found
-[here](https://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html). This tutorial demonstrates the usage
-of the following recommendations:
+### Using core `@context` - defining NGSI-LD entities
 
-#### All terms are defined in American English
+The core `@context` supplies the vocabulary for creating **NGSI-LD** data entities. Attributes such as `id` and `type` (
+which should be familiar to anyone who has used NGSI v2) are mapped to the standard **JSON-LD** `@id` and `@type`
+[keywords](https://w3c.github.io/json-ld-syntax/#syntax-tokens-and-keywords). The `type` should refer to an included
+data model, in this case `Building` is being used as a short name for the included URN
+`https://uri.fiware.org/ns/data-models#Building`. Thereafter each _property_ is defined as a JSON element containing two
+attributes, a `type` and a `value`.
 
-Although the `value` fields of the context data may be in any language, all attributes and types are written using the
-English language.
+The `type` of a _property_ attribute must be one of the following:
 
-#### Entity type names must start with a Capital letter
+-   `"GeoProperty"`: `"http://uri.etsi.org/ngsi-ld/GeoProperty"` for locations. Locations should be specified as
+    Longitude-Latitude pairs in [GeoJSON format](https://tools.ietf.org/html/rfc7946). The preferred name for the
+    primary location attribute is `location`
+-   `"Property"`: `"http://uri.etsi.org/ngsi-ld/Property"` - for everything else.
+-   For time-based values, `"Property"` shall be used as well, but the property value should be Date, Time or DateTime
+    strings encoded in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) - e.g. `YYYY-MM-DDThh:mm:ssZ`
 
-In this case we only have one entity type - **Store**
+> **Note:** that for simplicity, this data entity has no relationships defined. Relationships must be given the
+> `type=Relationship`. Relationships will be discussed in a subsequent tutorial.
 
-#### Entity IDs should be a URN following NGSI-LD guidelines
+### Defining Properties-of-Properties within the NGSI-LD entity definition
 
-NGSI-LD has recently been published as a full ETSI
-[specification](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf), the proposal is
-that each `id` is a URN follows a standard format: `urn:ngsi-ld:<entity-type>:<entity-id>`. This will mean that every
-`id` in the system will be unique
+_Properties-of-Properties_ is the NGSI-LD equivalent of metadata (i.e. _"data about data"_), it is use to describe
+properties of the attribute value itself like accuracy, provider, or the units to be used. Some built-in metadata
+attributes already exist and these names are reserved:
 
-#### Data type names should reuse schema.org data types where possible
+-   `createdAt` (type: DateTime): attribute creation date as an ISO 8601 string.
+-   `modifiedAt` (type: DateTime): attribute modification date as an ISO 8601 string.
 
-[Schema.org](http://schema.org/) is an initiative to create common structured data schemas. In order to promote reuse we
-have deliberately used the [`Text`](http://schema.org/PostalAddress) and
-[`PostalAddress`](http://schema.org/PostalAddress) type names within our **Store** entity. Other existing standards such
-as [Open311](http://www.open311.org/) (for civic issue tracking) or [Datex II](https://datex2.eu/) (for transport
-systems) can also be used, but the point is to check for the existence of the same attribute on existing data models and
-reuse it.
+Additionally `observedAt`, `datasetId` and `instanceId` may optionally be added in some cases, and `location`,
+`observationSpace` and `operationSpace` have special meaning for Geoproperties.
 
-#### Use camel case syntax for attribute names
-
-The `streetAddress`, `addressRegion`, `addressLocality` and `postalCode` are all examples of attributes using camel
-casing
-
-#### Location information should be defined using `address` and `location` attributes
-
--   We have used an `address` attribute for civic locations as per [schema.org](http://schema.org/)
--   We have used a `location` attribute for geographical coordinates.
-
-#### Use GeoJSON for codifying geospatial properties
-
-[GeoJSON](http://geojson.org) is an open standard format designed for representing simple geographical features. The
-`location` attribute has been encoded as a geoJSON `Point` location.
-
-### Attribute Metadata
-
-Metadata is _"data about data"_, it is additionl data used to describe properties of the attribute value itself like
-accuracy, provider, or a timestamp. Several built-in metadata attribute already exist and these names are reserved
-
--   `dateCreated` (type: DateTime): attribute creation date as an ISO 8601 string.
--   `dateModified` (type: DateTime): attribute modification date as an ISO 8601 string.
--   `previousValue` (type: any): only in notifications. The value of this
--   `actionType` (type: Text): only in notifications.
-
-One element of metadata can be found within the `address` attribute. a `verified` flag indicates whether the address has
-been confirmed.
+In the examples given above, one element of metadata (i.e. a _property-of-a-property_) can be found within the `address`
+attribute. a `verified` flag indicates whether the address has been confirmed. The commonest _property-of-a-property_ is
+`unitCode` which should be used to hold the UN/CEFACT
+[Common Codes](http://wiki.goodrelations-vocabulary.org/Documentation/UN/CEFACT_Common_Codes) for Units of Measurement.
 
 ## Querying Context Data
 
-A consuming application can now request context data by making HTTP requests to the Orion Context Broker. The existing
-NGSI interface enables us to make complex queries and filter results.
+A consuming application can now request context data by making **NGSI-LD** HTTP requests to the Orion Context Broker.
+The existing NGSI-LD interface enables us to make complex queries and filter results and retrieve data with FQNs or with
+short names.
 
-At the moment, for the store finder demo all the context data is being added directly via HTTP requests, however in a
-more complex smart solution, the Orion Context Broker will also retrieve context directly from attached sensors
-associated to each entity.
+### Obtain entity data by FQN Type
 
-Here are a few examples, in each case the `options=keyValues` query parameter has been used shorten the responses by
-stripping out the type elements from each attribute
-
-### Obtain entity data by ID
-
-This example returns the data of `urn:ngsi-ld:Store:001`
+This example returns the data of all `Building` entities within the context data The `type` parameter is mandatory for
+NGSI-LD and is used to filter the response. The Accept HTTP header is needed to retrieve JSON-LD content in the response
+body.
 
 #### :four: Request:
 
 ```console
 curl -G -X GET \
-   'http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001' \
-   -d 'options=keyValues'
+  'http://localhost:1026/ngsi-ld/v1/entities' \
+  -H 'Accept: application/ld+json' \
+  -d 'type=https://uri.fiware.org/ns/data-models%23Building'
 ```
 
 #### Response:
 
-Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
-`metadata` elements.
+Since no explicit `@context` was sent in the request, the response returns the Core `@context` by default
+(`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`) and all attributes are expanded whenever possible.
 
-```json
+-   `id`, `type`, `location` and `name` are defined in the core context and are not expanded.
+-   `address` has been mapped to `http://schema.org/address`
+-   `category` has been mapped to `https://uri.fiware.org/ns/data-models#category`
+
+Note that if an attribute has not been associated to an FQN when the entity was created, the short name will **always**
+be displayed.
+
+```jsonld
+[
+    {
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+        "id": "urn:ngsi-ld:Building:farm001",
+        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "https://schema.org/address": {
+            "type": "Property",
+            "value": {
+                "streetAddress": "Großer Stern 1",
+                "addressRegion": "Berlin",
+                "addressLocality": "Tiergarten",
+                "postalCode": "10557"
+            },
+            "verified": {
+                "type": "Property",
+                "value": true
+            }
+        },
+        "name": {
+            "type": "Property",
+            "value": "Victory Farm"
+        },
+        "https://uri.fiware.org/ns/data-models#category": {
+            "type": "Property",
+            "value": "farm"
+        },
+        "location": {
+            "type": "GeoProperty",
+            "value": {
+                "type": "Point",
+                "coordinates": [
+                    13.3505,
+                    52.5144
+                ]
+            }
+        }
+    },
+    {
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "https://schema.org/address": {
+            "type": "Property",
+            "value": {
+                "streetAddress": "Straße des 17. Juni",
+                "addressRegion": "Berlin",
+                "addressLocality": "Tiergarten",
+                "postalCode": "10557"
+            },
+            "verified": {
+                "type": "Property",
+                "value": true
+            }
+        },
+        "name": {
+            "type": "Property",
+            "value": "Big Red Barn"
+        },
+        "https://uri.fiware.org/ns/data-models#category": {
+            "type": "Property",
+            "value": "barn"
+        },
+        "location": {
+            "type": "GeoProperty",
+            "value": {
+                "type": "Point",
+                "coordinates": [
+                    13.3698,
+                    52.5163
+                ]
+            }
+        }
+    }
+]
+```
+
+### Obtain entity data by ID
+
+This example returns the data of `urn:ngsi-ld:Building:farm001`. The NGSI-LD `@context` is supplied as a
+[`Link` header](https://www.w3.org/wiki/LinkHeader) to define the entities returned. The `ngsi-context.jsonld`
+`@context` file is just supplying short names for every attribute.
+
+The full link header syntax can be seen below:
+
+```text
+Link: <https://fiware.github.io/data-models/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json
+```
+
+The standard HTTP `Link` header allows metadata (in this case the `@context`) to be passed in without actually touching
+the resource in question. In the case of NGSI-LD, the metadata is a file in `application/ld+json` format.
+
+#### :five: Request:
+
+```console
+curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001' \
+-H 'Accept: application/ld+json' \
+-H 'Link: <http://context-provider:3000/data-models/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+```
+
+#### Response:
+
+Because an `@context` file was supplied in the request, short names now are returned throughout the response. This
+reduces the size of the payload and makes the data easier to manipulate.
+
+Note that the inclusion of the core `@context` is always implied. It would be also possible to include both `@context`
+files explicitly as element in the array of `@context` sent. The response is normalized **NGSI-LD** and therefore valid
+**JSON-LD** as well, and the `@context` can be used by the receiving program for **JSON-LD** operations.
+
+```jsonld
 {
-    "id": "urn:ngsi-ld:Store:001",
-    "type": "Store",
+    "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld",
+    "id": "urn:ngsi-ld:Building:farm001",
+    "type": "Building",
     "address": {
-        "streetAddress": "Bornholmer Straße 65",
-        "addressRegion": "Berlin",
-        "addressLocality": "Prenzlauer Berg",
-        "postalCode": "10439"
+        "type": "Property",
+        "value": {
+            "streetAddress": "Großer Stern 1",
+            "addressRegion": "Berlin",
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
+        },
+        "verified": {
+            "type": "Property",
+            "value": true
+        }
+    },
+    "name": {
+        "type": "Property",
+        "value": "Victory Farm"
+    },
+    "category": {
+        "type": "Property",
+        "value": "farm"
     },
     "location": {
-        "type": "Point",
-        "coordinates": [13.3986, 52.5547]
-    },
-    "name": "Bösebrücke Einkauf"
+        "type": "GeoProperty",
+        "value": {
+            "type": "Point",
+            "coordinates": [
+                13.3505,
+                52.5144
+            ]
+        }
+    }
 }
 ```
 
 ### Obtain entity data by type
 
-This example returns the data of all `Store` entities within the context data The `type` parameter limits the response
-to store entities only.
+When filtering by `type`, a [`Link` header](https://www.w3.org/wiki/LinkHeader) must be supplied to associate the short
+form `type="Building"` with the FQN `https://uri.fiware.org/ns/data-models/Building`.
 
-#### :five: Request:
+If a reference to the supplied data is supplied, it is possible to return short name data and limit responses to a
+specific `type` of data. For example, the request below returns the data of all `Building` entities within the context
+data. Use of the `type` parameter limits the response to `Building` entities only, use of the `options=keyValues` query
+parameter reduces the response down to standard JSON-LD.
+
+#### :six: Request:
 
 ```console
 curl -G -X GET \
-    'http://localhost:1026/v2/entities' \
-    -d 'type=Store' \
+    'http://localhost:1026/ngsi-ld/v1/entities' \
+-H 'Link: <http://context-provider:3000/data-models/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Accept: application/ld+json' \
+    -d 'type=Building' \
     -d 'options=keyValues'
 ```
 
 #### Response:
 
-Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
-`metadata` elements.
+Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute definitions
+`type="Property"` or any _properties-of-properties_ elements. You can see that `Link` header from the request has been
+used as the `@context` returned in the response.
 
-```json
+```jsonld
 [
     {
-        "id": "urn:ngsi-ld:Store:001",
-        "type": "Store",
+        "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld",
+        "id": "urn:ngsi-ld:Building:farm001",
+        "type": "Building",
         "address": {
-            "streetAddress": "Bornholmer Straße 65",
+            "streetAddress": "Großer Stern 1",
             "addressRegion": "Berlin",
-            "addressLocality": "Prenzlauer Berg",
-            "postalCode": "10439"
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
+        "name": "Victory Farm",
+        "category": "farm",
         "location": {
             "type": "Point",
-            "coordinates": [13.3986, 52.5547]
-        },
-        "name": "Bose Brucke Einkauf"
+            "coordinates": [
+                13.3505,
+                52.5144
+            ]
+        }
     },
     {
-        "id": "urn:ngsi-ld:Store:002",
-        "type": "Store",
+        "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "Building",
         "address": {
-            "streetAddress": "Friedrichstraße 44",
+            "streetAddress": "Straße des 17. Juni",
             "addressRegion": "Berlin",
-            "addressLocality": "Kreuzberg",
-            "postalCode": "10969"
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
+        "name": "Big Red Barn",
+        "category": "barn",
         "location": {
             "type": "Point",
-            "coordinates": [13.3903, 52.5075]
-        },
-        "name": "Checkpoint Markt"
+            "coordinates": [
+                13.3698,
+                52.5163
+            ]
+        }
     }
 ]
 ```
 
 ### Filter context data by comparing the values of an attribute
 
-This example returns all stores with the `name` attribute _Checkpoint Markt_. Filtering can be done using the `q`
-parameter - if a string has spaces in it, it can be URL encoded and held within single quote characters `'` = `%27`
+This example returns all `Building` entities with the `name` attribute _Big Red Barn_. Filtering can be done using the
+`q` parameter - if a string has spaces in it, it can be URL encoded and held within double quote characters `"` = `%22`.
+Since `options=keyValues` is sent, this will effect the structure of the payload and we will need to supply a different
+`@context` file - `json-context.jsonld`
 
-#### :six: Request:
+#### :seven: Request:
 
 ```console
 curl -G -X GET \
-    'http://localhost:1026/v2/entities' \
-    -d 'type=Store' \
-    -d 'q=name==%27Checkpoint%20Markt%27' \
+  'http://localhost:1026/ngsi-ld/v1/entities/' \
+-H 'Link: <http://context-provider:3000/data-models/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Accept: application/ld+json' \
+    -d 'type=Building' \
+    -d 'q=name==%22Big%20Red%20Barn%22' \
     -d 'options=keyValues'
 ```
 
 #### Response:
 
-Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
-`metadata` elements.
+The use of the `Link` header and the `options=keyValues` parameter reduces the response to short form key-values
+**JSON-LD** as shown:
 
-```json
+```jsonld
 [
     {
-        "id": "urn:ngsi-ld:Store:002",
-        "type": "Store",
+        "@context": "http://context-provider:3000/data-models/json-context.jsonld",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "Building",
         "address": {
-            "streetAddress": "Friedrichstraße 44",
+            "streetAddress": "Straße des 17. Juni",
             "addressRegion": "Berlin",
-            "addressLocality": "Kreuzberg",
-            "postalCode": "10969"
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
+        "name": "Big Red Barn",
+        "category": "barn",
         "location": {
             "type": "Point",
-            "coordinates": [13.3903, 52.5075]
+            "coordinates": [
+                13.3698,
+                52.5163
+            ]
+        }
+    }
+]
+```
+
+This **JSON-LD** is no longer **NGSI-LD** (since the `type` and `value` elements have been removed) and the `@context`
+used reflects this. The `json-context.jsonld` file does not merely define the attribute names, it also includes
+additional **JSON-LD** information within it such as the following:
+
+```json-ld
+{
+    "barn": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn",
+    "category": {
+        "@id": "https://uri.fiware.org/ns/data-models#category",
+        "@type": "@vocab"
+    }
+}
+```
+
+This indicates the `category` in this **JSON-LD** response holds an enumerated value (`@vocab`) and that the value
+`barn` is defined by a full URL. This differs compared to the `ngsi-context.jsonld` `@context` file where all we can say
+is that there is an attribute with the full URL `https://uri.fiware.org/ns/data-models#category`, because in a
+normalized **NGSI-LD** response the `category` attribute would hold a JSON object (with a `type` and `value`) not a
+string.
+
+### Using an alternative `@context`
+
+The simple **NGSI-LD** `@context` is merely a mechanism for mapping URNs. It is therefore possible to retrieve _the same
+data_ using a different set of short names.
+
+The `alternate-context.jsonld` maps the names of various attributes to their equivalents in German. If it is supplied in
+the request a query can be made using alternate short names (e.g. `type=Building` becomes `type=Gebäude`)
+
+#### :eight: Request:
+
+```console
+curl -G -X GET \
+    'http://localhost:1026/ngsi-ld/v1/entities/' \
+-H 'Link: <http://context-provider:3000/data-models/alternate-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Accept: application/ld+json' \
+    -d 'type=Geb%C3%A4ude' \
+    -d 'q=name==%22Big%20Red%20Barn%22' \
+    -d 'options=keyValues'
+```
+
+#### Response:
+
+The response is returned in JSON-LD format with short form attribute names (`addresse`, `katagorie`) which correspond to
+the short names provided in the alternate context. Note that core context terms (`id`, `type` etc.) cannot be overridden
+directly but would require an additional **JSON-LD** expansion/compaction operation.
+
+```jsonld
+[
+    {
+        "@context": "http://context-provider:3000/data-models/alternate-context.jsonld",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "Gebäude",
+        "adresse": {
+            "streetAddress": "Straße des 17. Juni",
+            "addressRegion": "Berlin",
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
-        "name": "Checkpoint Markt"
+        "name": "Big Red Barn",
+        "kategorie": "barn",
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.3698,
+                52.5163
+            ]
+        }
+    }
+]
+```
+
+It should also be noted that the sub-attributes of the `addrese` have also not been amended, since `address` = `addrese`
+=`http://schema.org/address` and this definition defines the sub-attributes.
+
+### Filter context data by comparing the values of an attribute in an Array
+
+Within the standard `Building` model, the `category` attribute refers to an array of strings. This example returns all
+`Building` entities with a `category` attribute which contains either `commercial` or `office` strings. Filtering can be
+done using the `q` parameter, comma separating the acceptable values.
+
+#### :nine: Request:
+
+```console
+curl -G -X GET \
+    'http://localhost:1026/ngsi-ld/v1/entities/' \
+-H 'Link: <http://context-provider:3000/data-models/nsgi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Accept: application/ld+json' \
+    -d 'type=Building' \
+    -d 'q=category==%22barn%22,%22farm_auxiliary%22' \
+    -d 'options=keyValues'
+```
+
+#### Response:
+
+The response is returned in JSON-LD format with short form attribute names:
+
+```jsonld
+[
+    {
+        "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "Building",
+        "address": {
+            "streetAddress": "Straße des 17. Juni",
+            "addressRegion": "Berlin",
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
+        },
+        "name": "Big Red Barn",
+        "category": "barn",
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.3698,
+                52.5163
+            ]
+        }
     }
 ]
 ```
 
 ### Filter context data by comparing the values of a sub-attribute
 
-This example returns all stores found in the Kreuzberg District.
+This example returns all stores found in the Tiergarten District.
 
-Filtering can be done using the `q` parameter - sub-attributes are annotated using the dot syntax e.g.
-`address.addressLocality`
+Filtering can be done using the `q` parameter - sub-attributes are annotated using the bracket syntax e.g.
+`q=address[addressLocality]=="Tiergarten"`.
 
-#### :seven: Request:
+#### :one::zero: Request:
 
 ```console
-curl -G -X GET \
-    'http://localhost:1026/v2/entities' \
-    -d 'type=Store' \
-    -d 'q=address.addressLocality==Kreuzberg' \
+curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
+-H 'Link: <http://context-provider:3000/data-models/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Accept: application/ld+json' \
+    -d 'type=Building' \
+    -d 'q=address%5BaddressLocality%5D==%22Tiergarten%22' \
     -d 'options=keyValues'
 ```
 
 #### Response:
 
-Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
-`metadata` elements.
+Use of the `Link` header and the `options=keyValues` parameter reduces the response to JSON-LD.
 
-```json
+```jsonld
 [
     {
-        "id": "urn:ngsi-ld:Store:002",
-        "type": "Store",
+        "@context": "http://context-provider:3000/data-models/json-context.jsonld",
+        "id": "urn:ngsi-ld:Building:farm001",
+        "type": "Building",
         "address": {
-            "streetAddress": "Friedrichstraße 44",
+            "streetAddress": "Großer Stern 1",
             "addressRegion": "Berlin",
-            "addressLocality": "Kreuzberg",
-            "postalCode": "10969"
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
+        "name": "Victory Farm",
+        "category": "farm",
         "location": {
             "type": "Point",
-            "coordinates": [13.3903, 52.5075]
+            "coordinates": [
+                13.3505,
+                52.5144
+            ]
+        }
+    },
+    {
+        "@context": "http://context-provider:3000/data-models/json-context.jsonld",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "Building",
+        "address": {
+            "streetAddress": "Straße des 17. Juni",
+            "addressRegion": "Berlin",
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
-        "name": "Checkpoint Markt"
+        "name": "Big Red Barn",
+        "category": "barn",
+        "location": {
+            "type": "Point",
+            "coordinates": [
+                13.3698,
+                52.5163
+            ]
+        }
     }
 ]
 ```
 
 ### Filter context data by querying metadata
 
-This example returns the data of all `Store` entities with a verified address.
+This example returns the data of all `Building` entities with a verified address. The `verified` attribute is an example
+of a _Property-of-a-Property_
 
-Metadata queries can be made using the `mq` parameter.
+Metadata queries (i.e. Properties of Properties) are annotated using the dot syntax e.g. `q=address.verified==true`.
 
-#### :eight: Request:
+#### :one::one: Request:
 
 ```console
 curl -G -X GET \
-    'http://localhost:1026/v2/entities' \
-    -d 'type=Store' \
-    -d 'mq=address.verified==true' \
+    'http://localhost:1026/ngsi-ld/v1/entities' \
+    -H 'Link: <http://context-provider:3000/data-models/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+    -H 'Accept: application/json' \
+    -d 'type=Building' \
+    -d 'q=address.verified==true' \
     -d 'options=keyValues'
 ```
 
 #### Response:
 
-Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
-`metadata` elements.
+Because of the use of the `options=keyValues` together with the Accept HTTP header (`application/json`), the response
+consists of JSON only without the attribute `type` and `metadata` elements.
 
 ```json
 [
     {
-        "id": "urn:ngsi-ld:Store:001",
-        "type": "Store",
+        "id": "urn:ngsi-ld:Building:farm001",
+        "type": "Building",
         "address": {
-            "streetAddress": "Bornholmer Straße 65",
+            "streetAddress": "Großer Stern 1",
             "addressRegion": "Berlin",
-            "addressLocality": "Prenzlauer Berg",
-            "postalCode": "10439"
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
+        "name": "Victory Farm",
+        "category": "farm",
         "location": {
             "type": "Point",
-            "coordinates": [13.3986, 52.5547]
-        },
-        "name": "Bösebrücke Einkauf"
+            "coordinates": [13.3505, 52.5144]
+        }
     },
     {
-        "id": "urn:ngsi-ld:Store:002",
-        "type": "Store",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "Building",
         "address": {
-            "streetAddress": "Friedrichstraße 44",
+            "streetAddress": "Straße des 17. Juni",
             "addressRegion": "Berlin",
-            "addressLocality": "Kreuzberg",
-            "postalCode": "10969"
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
+        "name": "Big Red Barn",
+        "category": "barn",
         "location": {
             "type": "Point",
-            "coordinates": [13.3903, 52.5075]
-        },
-        "name": "Checkpoint Markt"
+            "coordinates": [13.3698, 52.5163]
+        }
     }
 ]
 ```
 
+Note that the `@context` element has not been lost. It is still returned in the form of a `Link` header in the response.
+
 ### Filter context data by comparing the values of a geo:json attribute
 
-This example return all Stores within 1.5km the **Brandenburg Gate** in **Berlin** (_52.5162N 13.3777W_)
+This example returns all buildings within 800m the **Brandenburg Gate** in **Berlin** (_52.5162N 13.3777W_). To make a
+geo-query request, three parameters must be specified, `geometry`, `coordinates` and `georel`.
 
-#### :nine: Request:
+The `coordinates` parameter is represented in [geoJSON](https://tools.ietf.org/html/rfc7946) including the square
+brackets.
+
+Note that by default the geo-query will be applied to the `location` attribute, as this is default specified in NGSI-LD.
+If another attribute is to be used, an additional `geoproperty` parameter is required.
+
+#### :one::two: Request:
 
 ```console
 curl -G -X GET \
-  'http://localhost:1026/v2/entities' \
-  -d 'type=Store' \
-  -d 'georel=near;maxDistance:1500' \
-  -d 'geometry=point' \
-  -d 'coords=52.5162,13.3777'
+  'http://localhost:1026/ngsi-ld/v1/entities' \
+  -H 'Link: <https://fiware.github.io/data-models/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+  -H 'Accept: application/json' \
+  -d 'type=Building' \
+  -d 'geometry=Point' \
+  -d 'coordinates=%5B13.3777,52.5162%5D' \
+  -d 'georel=near;maxDistance==800' \
+  -d 'options=keyValues'
 ```
 
 #### Response:
 
-Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute `type` and
-`metadata` elements.
+Because of the use of the `options=keyValues` together with the Accept HTTP header (`application/json`), the response
+consists of JSON only without the attribute `type` and `metadata` elements.
 
 ```json
 [
     {
-        "id": "urn:ngsi-ld:Store:002",
-        "type": "Store",
+        "id": "urn:ngsi-ld:Building:barn002",
+        "type": "Building",
         "address": {
-            "streetAddress": "Friedrichstraße 44",
+            "streetAddress": "Straße des 17. Juni",
             "addressRegion": "Berlin",
-            "addressLocality": "Kreuzberg",
-            "postalCode": "10969"
+            "addressLocality": "Tiergarten",
+            "postalCode": "10557"
         },
+        "name": "Big Red Barn",
+        "category": "barn",
         "location": {
             "type": "Point",
-            "coordinates": [13.3903, 52.5075]
-        },
-        "name": "Checkpoint Markt"
+            "coordinates": [13.3698, 52.5163]
+        }
     }
 ]
 ```
@@ -646,93 +1093,10 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
 # Next Steps
 
 Want to learn how to add more complexity to your application by adding advanced features? You can find out by reading
-the other tutorials in this series:
-
-&nbsp; 101. [Getting Started](https://github.com/FIWARE/tutorials.Getting-Started)<br/> &nbsp; 102.
-[Entity Relationships](https://github.com/FIWARE/tutorials.Entity-Relationships)<br/> &nbsp; 103.
-[CRUD Operations](https://github.com/FIWARE/tutorials.CRUD-Operations)<br/> &nbsp; 104.
-[Context Providers](https://github.com/FIWARE/tutorials.Context-Providers)<br/> &nbsp; 105.
-[Altering the Context Programmatically](https://github.com/FIWARE/tutorials.Accessing-Context)<br/> &nbsp; 106.
-[Subscribing to Changes in Context](https://github.com/FIWARE/tutorials.Subscriptions)<br/>
-
-&nbsp; 201. [Introduction to IoT Sensors](https://github.com/FIWARE/tutorials.IoT-Sensors)<br/> &nbsp; 202.
-[Provisioning an IoT Agent](https://github.com/FIWARE/tutorials.IoT-Agent)<br/> &nbsp; 203.
-[IoT over MQTT](https://github.com/FIWARE/tutorials.IoT-over-MQTT)<br/> &nbsp; 204.
-[Using an alternative IoT Agent](https://github.com/FIWARE/tutorials.IoT-Agent-JSON)<br/> &nbsp; 205.
-[Creating a Custom IoT Agent](https://github.com/FIWARE/tutorials.Custom-IoT-Agent)<br/> &nbsp; 250.
-[Introduction to Fast-RTPS and Micro-RTPS](https://github.com/FIWARE/tutorials.Fast-RTPS-Micro-RTPS)<br/>
-
-&nbsp; 301.
-[Persisting Context Data using Apache Flume (MongoDB, MySQL, PostgreSQL)](https://github.com/FIWARE/tutorials.Historic-Context-Flume)<br/>
-&nbsp; 302.
-[Persisting Context Data using Apache NIFI (MongoDB, MySQL, PostgreSQL)](https://github.com/FIWARE/tutorials.Historic-Context-NIFI)<br/>
-&nbsp; 303. [Querying Time Series Data (MongoDB)](https://github.com/FIWARE/tutorials.Short-Term-History)<br/>
-&nbsp; 304. [Querying Time Series Data (CrateDB)](https://github.com/FIWARE/tutorials.Time-Series-Data)<br/> &nbsp; 305.
-[Big Data Analysis (Flink)](https://github.com/FIWARE/tutorials.Big-Data-Analysis)<br/>
-
-&nbsp; 401. [Managing Users and Organizations](https://github.com/FIWARE/tutorials.Identity-Management)<br/> &nbsp; 402.
-[Roles and Permissions](https://github.com/FIWARE/tutorials.Roles-Permissions)<br/> &nbsp; 403.
-[Securing Application Access](https://github.com/FIWARE/tutorials.Securing-Access)<br/> &nbsp; 404.
-[Securing Microservices with a PEP Proxy](https://github.com/FIWARE/tutorials.PEP-Proxy)<br/> &nbsp; 405.
-[XACML Rules-based Permissions](https://github.com/FIWARE/tutorials.XACML-Access-Rules)<br/> &nbsp; 406.
-[Administrating XACML via a PAP](https://github.com/FIWARE/tutorials.Administrating-XACML)<br/>
-
-&nbsp; 501. [Creating Application Mashups](https://github.com/FIWARE/tutorials.Application-Mashup)<br/> &nbsp; 503.
-[Introduction to Media Streams](https://github.com/FIWARE/tutorials.Media-Streams)<br/> &nbsp; 507.
-[Cloud-Edge Computing](https://github.com/FIWARE/tutorials.Edge-Computing)<br/>
-
-&nbsp; 601. [Introduction to Linked Data](https://github.com/FIWARE/tutorials.Linked-Data)<br/> &nbsp; 602.
-[Linked Data Relationships and Data Models](https://github.com/FIWARE/tutorials.Relationships-Linked-Data)<br/>
-&nbsp; 603. [Traversing Linked Data Programmatically](https://github.com/FIWARE/tutorials.Accessing-Linked-Data)<br/>
-&nbsp; 604.
-[Linked Data Subscriptions and Registrations](https://github.com/FIWARE/tutorials.LD-Subscriptions-Registrations)<br/>
-
-The full documentation can be found [here](https://fiware-tutorials.rtfd.io).
-
-## Iterative Development
-
-The context of the store finder demo is very simple, it could easily be expanded to hold the whole of a stock management
-system by passing in the current stock count of each store as context data to the
-[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/).
-
-So far, so simple, but consider how this Smart application could be iterated:
-
--   Real-time dashboards could be created to monitor the state of the stock across each store using a visualization
-    component. \[[Wirecloud](https://github.com/FIWARE/catalogue/blob/master/processing/README.md#Wirecloud)\]
--   The current layout of both the warehouse and store could be passed to the context broker so the location of the
-    stock could be displayed on a map
-    \[[Wirecloud](https://github.com/FIWARE/catalogue/blob/master/processing/README.md#Wirecloud)\]
--   User Management components \[[Wilma](https://github.com/FIWARE/catalogue/blob/master/security/README.md#Wilma),
-    [AuthZForce](https://github.com/FIWARE/catalogue/blob/master/security/README.md#Authzforce),
-    [Keyrock](https://github.com/FIWARE/catalogue/blob/master/security/README.md#Keyrock)\] could be added so that only
-    store managers are able to change the price of items
--   A threshold alert could be raised in the warehouse as the goods are sold to ensure the shelves are not left empty
-    [publish/subscribe function of [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/)]
--   Each generated list of items to be loaded from the warehouse could be calculated to maximize the efficiency of
-    replenishment
-    \[[Complex Event Processing - CEP](https://github.com/FIWARE/catalogue/blob/master/processing/README.md#new-perseo-incubated)\]
--   A motion sensor could be added at the entrance to count the number of customers
-    \[[IDAS](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)\]
--   The motion sensor could ring a bell whenever a customer enters
-    \[[IDAS](https://github.com/FIWARE/catalogue/blob/master/iot-agents/README.md)\]
--   A series of video cameras could be added to introduce a video feed in each store
-    \[[Kurento](https://github.com/FIWARE/catalogue/blob/master/processing/README.md#Kurento)\]
--   The video images could be processed to recognize where customers are standing within a store
-    \[[Kurento](https://github.com/FIWARE/catalogue/blob/master/processing/README.md#Kurento)\]
--   By maintaining and processing historical data within the system, footfall and dwell time can be calculated -
-    establishing which areas of the store attract the most interest \[connection through
-    [Cygnus](https://github.com/FIWARE/catalogue/blob/master/core/README.md#Cygnus) to Apache Nifi\]
--   Patterns recognizing unusual behaviour could be used to raise an alert to avoid theft
-    \[[Kurento](https://github.com/FIWARE/catalogue/blob/master/processing/README.md#Kurento)\]
--   Data on the movement of crowds would be useful for scientific research - data about the state of the store could be
-    published externally.
-    \[[extensions to CKAN](https://github.com/FIWARE/catalogue/tree/master/data-publication#extensions-to-ckan)\]
-
-Each iteration adds value to the solution through existing components with standard interfaces and therefore minimizes
-development time.
+the other [tutorials in this series](https://ngsi-ld-tutorials.rtfd.io)
 
 ---
 
 ## License
 
-[MIT](LICENSE) © 2018-2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2020 FIWARE Foundation e.V.

@@ -9,13 +9,42 @@ set -e
 
 if (( $# != 1 )); then
 	echo "Illegal number of parameters"
-	echo "usage: services [create|start|stop]"
+	echo "usage: services [create|orion|scorpio|stop]"
 	exit 1
 fi
 
+waitForOrion () {
+	echo -e "\n⏳ Waiting for \033[1;34mOrion-LD\033[0m to be available\n"
+	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://orion:1026/version'` -eq 000 ]
+	do 
+	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:1026/version'` " (waiting for 200)"
+	  sleep 1
+	done
+}
+
+waitForScorpio () {
+	echo -e "\n⏳ Waiting for \033[1;34mScorpio\033[0m to respond\n"
+	waitSeconds=30
+	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://scorpio:9090/scorpio/v1/info/'` -eq 000 ]
+	do 
+	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:9090/scorpio/v1/info/'` " (waiting for 500)"
+	  echo -e "Waiting for ${waitSeconds} seconds ..."
+	  sleep ${waitSeconds}
+	done
+	echo -e "\n⏳ Waiting for all \033[1;34mScorpio\033[0m services to be fully available\n"
+	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://scorpio:9090/scorpio/v1/info/'` -eq 500 ]
+	do 
+	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:9090/scorpio/v1/info/'` " (waiting for 200)"
+	  waitSeconds=$((waitSeconds+5))
+	  echo -e "Waiting for ${waitSeconds} seconds ..."
+	  sleep ${waitSeconds}
+	done
+}
+
 stoppingContainers () {
 	echo "Stopping containers"
-	docker-compose --log-level ERROR -p fiware down -v --remove-orphans
+	docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware down -v --remove-orphans
+	docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware down -v --remove-orphans
 }
 
 addDatabaseIndex () {
@@ -32,45 +61,44 @@ addDatabaseIndex () {
 
 displayServices () {
 	echo ""
-	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=fiware-*
+	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=$1-*
 	echo ""
-}
-
-waitForOrion () {
-	echo -e "\n⏳ Waiting for \033[1;34mOrion\033[0m to be available\n"
-	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://orion:1026/version'` -eq 000 ]
-	do 
-	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:1026/version'` " (waiting for 200)"
-	  sleep 1
-	done
 }
 
 command="$1"
 case "${command}" in
 	"help")
-		echo "usage: services [create|start|stop]"
+		echo "usage: services [create|orion|scorpio|stop]"
 		;;
-	"start")
+	"orion")
 		stoppingContainers
-		echo -e "Starting two containers \033[1;34mOrion\033[0m and a \033[1mMongoDB\033[0m database."
-		echo -e "- \033[1;34mOrion\033[0m is the context broker"
+		echo -e "Starting two containers \033[1;34mOrion-LD\033[0m and a \033[1;30mMongoDB\033[0m database."
+		echo -e "- \033[1;34mOrion-LD\033[0m is the context broker"
 		echo ""
-		docker-compose --log-level ERROR -p fiware up -d --remove-orphans
+		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware up -d --remove-orphans
 		addDatabaseIndex
 		displayServices
+		waitForOrion
+		;;
+	"scorpio")
+		stoppingContainers 
+		echo -e "Starting four containers \033[1;34mScorpio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m and a \033[1mPostgres\033[0m database."
+		echo -e "- \033[1;34mScorpio\033[0m is the context broker\n"
+		docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware up -d --remove-orphans
+		displayServices scorpio
+		waitForScorpio
 		;;
 	"stop")
 		stoppingContainers
 		;;
 	"create")
-		echo "Obtaining Mongo DB image"
-		docker pull mongo:3.6
-		echo "Obtaining Latest Orion Image"
-		docker pull fiware/orion
+		echo "Pulling Docker images"
+		docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull
+		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml pull
 		;;
 	*)
 		echo "Command not Found."
-		echo "usage: services [create|start|stop]"
+		echo "usage: services [create|orion|scorpio|stop]"
 		exit 127;
 		;;
 esac
