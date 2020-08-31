@@ -1,7 +1,7 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.Working-with-At-Context/img/fiware.png)](https://www.fiware.org/developers)
+[![FIWARE Banner](https://fiware.github.io/tutorials.Getting.Started/img/fiware.png)](https://www.fiware.org/developers)
 
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
-[![License: MIT](https://img.shields.io/github/license/FIWARE/tutorials.Working-with-At-Context.svg)](https://opensource.org/licenses/MIT)
+[![License: MIT](https://img.shields.io/github/license/FIWARE/tutorials.Getting.Started.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://nexus.lab.fiware.org/repository/raw/public/badges/stackoverflow/fiware.svg)](https://stackoverflow.com/questions/tagged/fiware)
 [![NGSI LD](https://img.shields.io/badge/NGSI-LD-d6604d.svg)](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf)
 [![JSON LD](https://img.shields.io/badge/JSON--LD-1.1-f06f38.svg)](https://w3c.github.io/json-ld-syntax/) <br/>
@@ -13,7 +13,7 @@
 読み取られます。
 
 このチュートリアルでは、全体で[cUrl](https://ec.haxx.se/) コマンドを使用していますが、
-[Postman ドキュメント](https://fiware.github.io/tutorials.Working-with-At-Context/)としても利用できます。
+[Postman ドキュメント](https://fiware.github.io/tutorials.Getting.Started/ngsi-ld)としても利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/610b7cd32e4b07b8e9c9)
 
@@ -76,7 +76,7 @@
 
 `https://schema.org/address` :
 
-![](https://fiware.github.io/tutorials.Working-with-At-Context/img/address.png)
+![](https://fiware.github.io/tutorials.Getting.Started/img/address.png)
 
 したがって、サードパーティによって作成されたプログラムは、完全な
 [schema.org **JSON-LD** schema](https://schema.org/version/latest/schemaorg-current-http.jsonld) を参照することにより、
@@ -161,7 +161,7 @@ _normalised_ 形式で返されるデータは **NGSI-LD** ルールを尊重し
 -   Linux に Docker をインストールするには、[こちら](https://docs.docker.com/install/)の手順に従ってください
 
 **Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行するためのツールです。
-[YAMLファイル](https://raw.githubusercontent.com/Fiware/tutorials.Working-with-At-Context/master/docker-compose/orion-ld.yml)
+[YAMLファイル](https://raw.githubusercontent.com/Fiware/tutorials.Getting.Started/master/docker-compose/orion-ld.yml)
 を使用して、アプリケーションに必要なサービスを設定します。これは、すべてのコンテナ・サービスを単一のコマンドで起動
 できることを意味します。Docker Compose は、Docker for Windows および Docker for Mac の一部としてデフォルトでインストール
 されますが、Linux ユーザは[こちら](https://docs.docker.com/compose/install/)にある手順に従う必要があります。
@@ -205,7 +205,7 @@ NGSI ドメイン外の他のサービスは、データ構造の名前を選択
 3つの要素間のすべての対話は HTTP リクエストによって開始されるため、要素をコンテナ化して、公開されたポートから
 実行できます。
 
-![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture.png)
+![](https://fiware.github.io/tutorials.Getting.Started/img/architecture-ld.png)
 
 必要な設定情報は、関連する `orion-ld.yml` ファイルの services セクションで確認できます:
 
@@ -262,13 +262,13 @@ tutorial:
 # 起動
 
 すべてのサービスは、リポジトリ内で提供される
-[services](https://github.com/FIWARE/tutorials.Working-with-At-Context/blob/master/services) Bash スクリプトを実行して、
+[services](https://github.com/FIWARE/tutorials.Getting.Started/blob/master/services) Bash スクリプトを実行して、
 コマンドラインから初期化できます。以下のようにコマンドを実行して、リポジトリのクローンを作成して必要なイメージを
 作成してください :
 
 ```bash
-git clone https://github.com/FIWARE/tutorials.Working-with-At-Context.git
-cd tutorials.Working-with-At-Context
+git clone https://github.com/FIWARE/tutorials.Getting.Started.git
+cd tutorials.Getting.Started
 git checkout NGSI-LD
 
 ./services orion|scorpio
