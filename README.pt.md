@@ -136,6 +136,7 @@ clone o repositório e crie as imagens necessárias executando os comandos como 
 ```console
 git clone https://github.com/FIWARE/tutorials.Getting-Started.git
 cd tutorials.Getting-Started
+git checkout NGSI-v2
 
 docker-compose -p fiware up -d
 ```

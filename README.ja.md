@@ -172,6 +172,7 @@ docker network rm fiware_default
 
 ```console
 git clone https://github.com/FIWARE/tutorials.Getting-Started.git
+git checkout NGSI-v2
 cd tutorials.Getting-Started
 
 docker-compose -p fiware up -d
