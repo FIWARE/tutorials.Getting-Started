@@ -830,7 +830,7 @@ curl -G -X GET \
 
 #### Response:
 
-The response is returned in JSON-LD format with short form attribute names (`addresse`, `katagorie`) which correspond to
+The response is returned in JSON-LD format with short form attribute names (`addresse`, `kategorie`) which correspond to
 the short names provided in the alternate context. Note that core context terms (`id`, `type` etc.) cannot be overridden
 directly but would require an additional **JSON-LD** expansion/compaction operation.
 
@@ -859,8 +859,8 @@ directly but would require an additional **JSON-LD** expansion/compaction operat
 ]
 ```
 
-It should also be noted that the sub-attributes of the `addrese` have also not been amended, since `address` = `addrese`
-=`http://schema.org/address` and this definition defines the sub-attributes.
+It should also be noted that the sub-attributes of the `addresse` have also not been amended, since `address` =
+`addresse` = `http://schema.org/address` and this definition defines the sub-attributes.
 
 ### Filter context data by comparing the values of an attribute in an Array
 
