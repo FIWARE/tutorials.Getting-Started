@@ -386,7 +386,7 @@ The first request will take some time, as the context broker must navigate and l
 
 Since the `Content-Type: application/ld+json` the `@context` is supplied in the body of the request. As with all
 **NGSI-LD** interactions, the core **NGSI-LD** `@context`
-([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld))
+([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld))
 is implicitly included as well.
 
 This means that the actual `@context` is:
@@ -395,7 +395,7 @@ This means that the actual `@context` is:
 {
     "@context": [
         "http://context-provider:3000/data-models/ngsi-context.jsonld",
-        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld"
     ]
 }
 ```
@@ -510,7 +510,7 @@ curl -G -X GET \
 #### Response:
 
 Since no explicit `@context` was sent in the request, the response returns the Core `@context` by default
-(`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`) and all attributes are expanded whenever possible.
+(`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`) and all attributes are expanded whenever possible.
 
 -   `id`, `type`, `location` and `name` are defined in the core context and are not expanded.
 -   `address` has been mapped to `http://schema.org/address`
@@ -522,7 +522,7 @@ be displayed.
 ```jsonld
 [
     {
-        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
         "type": "https://uri.fiware.org/ns/data-models#Building",
         "https://schema.org/address": {
@@ -558,7 +558,7 @@ be displayed.
         }
     },
     {
-        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "https://uri.fiware.org/ns/data-models#Building",
         "https://schema.org/address": {
