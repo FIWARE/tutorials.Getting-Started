@@ -1,11 +1,15 @@
 #!/bin/bash
 #
-#  Command Line Interface to start all services associated with the Getting-Started Tutorial
+#	Command Line Interface to start all services associated with the Getting-Started Tutorial
 #
-#  For this tutorial the commands are merely a convenience script to run docker-compose
+#	For this tutorial the commands are merely a convenience script to run docker-compose
 #
 
 set -e
+
+SCORPIO="http://scorpio:9090/scorpio/v1/info/"
+ORION="http://orion:1026/version"
+CONTEXT="http://context-provider:3000/data-models/ngsi-context.jsonld"
 
 if (( $# != 1 )); then
 	echo "Illegal number of parameters"
@@ -13,31 +17,60 @@ if (( $# != 1 )); then
 	exit 1
 fi
 
+pause(){
+	printf " "
+	count="$1"
+	[ "$count" -gt 59 ] && printf "Waiting one minute " || printf " Waiting a few seconds ";
+	while [ "$count" -gt 0 ]
+	do
+		printf "."
+		sleep 3
+		count=$((count - 3))
+	done
+	echo ""
+}
+
+getHeartbeat(){
+	eval "response=$(docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w "%{http_code}" "$1")"
+}
+
 waitForOrion () {
 	echo -e "\n⏳ Waiting for \033[1;34mOrion-LD\033[0m to be available\n"
-	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://orion:1026/version'` -eq 000 ]
-	do 
-	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:1026/version'` " (waiting for 200)"
-	  sleep 1
+	getHeartbeat "${ORION}"
+	while [ "${response}" -eq 000 ]
+	do
+		echo -e "\nContext Broker HTTP state: ${response} (waiting for 200)"
+		pause 6
+		getHeartbeat "${ORION}"
 	done
 }
 
 waitForScorpio () {
 	echo -e "\n⏳ Waiting for \033[1;34mScorpio\033[0m to respond\n"
-	waitSeconds=30
-	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://scorpio:9090/scorpio/v1/info/'` -eq 000 ]
-	do 
-	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:9090/scorpio/v1/info/'` " (waiting for 500)"
-	  echo -e "Waiting for ${waitSeconds} seconds ..."
-	  sleep ${waitSeconds}
+	getHeartbeat "${SCORPIO}"
+	while [ "${response}" -eq 000 ]
+	do
+		echo -e "Context Broker HTTP state: ${response} (waiting for 500)"
+		pause 60
+		getHeartbeat "${SCORPIO}"
 	done
 	echo -e "\n⏳ Waiting for all \033[1;34mScorpio\033[0m services to be fully available\n"
-	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://scorpio:9090/scorpio/v1/info/'` -eq 500 ]
-	do 
-	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:9090/scorpio/v1/info/'` " (waiting for 200)"
-	  waitSeconds=$((waitSeconds+5))
-	  echo -e "Waiting for ${waitSeconds} seconds ..."
-	  sleep ${waitSeconds}
+	while [ "$response" -eq 500 ]
+	do
+		echo -e "Context Broker HTTP state: ${response} (waiting for 200)"
+		pause 60
+		getHeartbeat "${SCORPIO}"
+	done
+}
+
+waitForContext () {
+	echo -e "\n⏳ Waiting for \033[1m@context\033[0m to be available\n"
+	getHeartbeat "${CONTEXT}"
+	while [ "${response}" -eq 000 ]
+	do
+		echo -e "\n@context HTTP state: ${response} (waiting for 200)"
+		pause 3
+		getHeartbeat "${CONTEXT}"
 	done
 }
 
@@ -49,19 +82,19 @@ stoppingContainers () {
 
 addDatabaseIndex () {
 	printf "Create \033[1mMongoDB\033[0m database indexes ..."
-	docker exec  db-mongo mongo --eval '
+	docker exec db-mongo mongo --eval '
 	conn = new Mongo();db.createCollection("orion");
 	db = conn.getDB("orion");
 	db.createCollection("entities");
 	db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true});
-	db.entities.createIndex({"_id.type": 1}); 
+	db.entities.createIndex({"_id.type": 1});
 	db.entities.createIndex({"_id.id": 1});' > /dev/null
 	echo -e " \033[1;32mdone\033[0m"
 }
 
 displayServices () {
 	echo ""
-	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=$1-*
+	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name="$1"-*
 	echo ""
 }
 
@@ -79,14 +112,16 @@ case "${command}" in
 		addDatabaseIndex
 		displayServices
 		waitForOrion
+		waitForContext
 		;;
 	"scorpio")
-		stoppingContainers 
+		stoppingContainers
 		echo -e "Starting four containers \033[1;34mScorpio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m and a \033[1mPostgres\033[0m database."
 		echo -e "- \033[1;34mScorpio\033[0m is the context broker\n"
 		docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware up -d --remove-orphans
 		displayServices scorpio
 		waitForScorpio
+		waitForContext
 		;;
 	"stop")
 		stoppingContainers
