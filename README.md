@@ -218,7 +218,7 @@ orion:
 
 ```yaml
 mongo-db:
-    image: mongo:3.6
+    image: mongo:4.2
     hostname: mongo-db
     container_name: db-mongo
     expose:
@@ -227,7 +227,6 @@ mongo-db:
         - "27017:27017"
     networks:
         - default
-    command: --nojournal
 ```
 
 ```yaml
