@@ -157,8 +157,8 @@ technology which allows to different components isolated into their respective e
 -   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)
 
 **Docker Compose** is a tool for defining and running multi-container Docker applications. A
-[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose/orion-ld.yml)
-is used configure the required services for the application. This means all container services can be brought up in a
+[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose/orion-ld.yml) is
+used configure the required services for the application. This means all container services can be brought up in a
 single command. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux
 users will need to follow the instructions found [here](https://docs.docker.com/compose/install/)
 
@@ -250,8 +250,8 @@ being part of the same network. The command-line initialization should be self e
 # Start Up
 
 All services can be initialised from the command-line by running the
-[services](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/services) Bash script provided within
-the repository. Please clone the repository and create the necessary images by running the commands as shown:
+[services](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/services) Bash script provided within the
+repository. Please clone the repository and create the necessary images by running the commands as shown:
 
 ```bash
 git clone https://github.com/FIWARE/tutorials.Getting-Started.git
