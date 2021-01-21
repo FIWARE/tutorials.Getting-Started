@@ -117,7 +117,7 @@ Para iniciar un contenedor Docker corriendo una base de datos [MongoDB](https://
 
 ```console
 docker run -d --name=mongo-db --network=fiware_default \
-  --expose=27017 mongo:3.6 --bind_ip_all --smallfiles
+  --expose=27017 mongo:4.2 --bind_ip_all
 ```
 
 El Orion Context Broker se puede iniciar y conectar a la red empleando el siguiente comando:

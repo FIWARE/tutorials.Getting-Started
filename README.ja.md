@@ -138,7 +138,7 @@ docker network create fiware_default
 
 ```console
 docker run -d --name=mongo-db --network=fiware_default \
-  --expose=27017 mongo:3.6 --bind_ip_all --smallfiles
+  --expose=27017 mongo:4.2 --bind_ip_all
 ```
 
 Orion Context Broker は、次のコマンドを使用して起動し、ネットワークに接続できま

@@ -109,7 +109,7 @@ com o seguinte comando:
 
 ```console
 docker run -d --name=mongo-db --network=fiware_default \
-  --expose=27017 mongo:3.6 --bind_ip_all --smallfiles
+  --expose=27017 mongo:4.2 --bind_ip_all
 ```
 
 O Orion Context Broker pode ser iniciado e ligado à rede com o seguinte comando:
