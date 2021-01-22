@@ -74,6 +74,14 @@ waitForContext () {
 	done
 }
 
+waitForMongo () {
+	echo -e "\n⏳ Waiting for \033[1mMongoDB\033[0m to be available\n"
+	while ! [ `docker inspect --format='{{.State.Health.Status}}' db-mongo` == "healthy" ]
+	do 
+		sleep 1
+	done
+}
+
 stoppingContainers () {
 	echo "Stopping containers"
 	docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware down -v --remove-orphans
@@ -109,6 +117,7 @@ case "${command}" in
 		echo -e "- \033[1;34mOrion-LD\033[0m is the context broker"
 		echo ""
 		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware up -d --remove-orphans
+		waitForMongo
 		addDatabaseIndex
 		displayServices
 		waitForOrion
