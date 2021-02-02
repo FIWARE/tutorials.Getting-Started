@@ -73,10 +73,8 @@ case "${command}" in
 		stoppingContainers
 		;;
 	"create")
-		echo "Obtaining Mongo DB image"
-		docker pull mongo:3.6
-		echo "Obtaining Latest Orion Image"
-		docker pull fiware/orion
+		echo "Pulling Docker images"
+		docker-compose --log-level ERROR -p fiware pull
 		;;
 	*)
 		echo "Command not Found."
