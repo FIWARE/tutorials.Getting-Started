@@ -135,6 +135,9 @@ case "${command}" in
 	"stop")
 		stoppingContainers
 		;;
+	"start")
+		./services orion
+		;;
 	"create")
 		echo "Pulling Docker images"
 		docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull
