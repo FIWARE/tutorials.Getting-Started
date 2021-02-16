@@ -84,8 +84,8 @@ waitForMongo () {
 
 stoppingContainers () {
 	echo "Stopping containers"
-	docker-compose --env-file=.env --log-level ERROR -f docker-compose/orion-ld.yml -p fiware down -v --remove-orphans
-	docker-compose --env-file=.env --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware down -v --remove-orphans
+	docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware down -v --remove-orphans
+	docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware down -v --remove-orphans
 }
 
 addDatabaseIndex () {
@@ -116,7 +116,7 @@ case "${command}" in
 		echo -e "Starting two containers \033[1;34mOrion-LD\033[0m and a \033[1;30mMongoDB\033[0m database."
 		echo -e "- \033[1;34mOrion-LD\033[0m is the context broker"
 		echo ""
-		docker-compose --env-file=.env --log-level ERROR -f docker-compose/orion-ld.yml -p fiware up -d --remove-orphans
+		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware up -d --remove-orphans
 		waitForMongo
 		addDatabaseIndex
 		displayServices
@@ -127,21 +127,24 @@ case "${command}" in
 		stoppingContainers
 		echo -e "Starting four containers \033[1;34mScorpio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m and a \033[1mPostgres\033[0m database."
 		echo -e "- \033[1;34mScorpio\033[0m is the context broker\n"
-		docker-compose --env-file=.env --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware up -d --remove-orphans
+		docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware up -d --remove-orphans
 		displayServices scorpio
 		waitForScorpio
 		waitForContext
 		;;
 	"stop")
+		export $(cat .env | grep "#" -v)
 		stoppingContainers
 		;;
 	"start")
+		export $(cat .env | grep "#" -v)
 		./services orion
 		;;
 	"create")
+		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
-		docker-compose --env-file=.env --log-level ERROR -f docker-compose/scorpio-aaio.yml pull
-		docker-compose --env-file=.env --log-level ERROR -f docker-compose/orion-ld.yml pull
+		docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml pull
+		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml pull
 		;;
 	*)
 		echo "Command not Found."
