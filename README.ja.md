@@ -346,7 +346,7 @@ curl -iX POST \
 コンテキスト内の各データ・エンティティは、ユースケースによって異なりますが、各デ
 ータ・エンティティ内の共通構造は、再利用を促進するために標準化された順序にする必
 要があります。完全な FIWARE データモデルのガイドラインは
-、[ここ](https://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html)に
+、[ここ](https://smartdatamodels.org/)に
 あります。このチュートリアルでは、次の推奨事項の使用方法を示します :
 
 #### すべての用語はアメリカ英語で定義されています

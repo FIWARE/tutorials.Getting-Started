@@ -307,8 +307,8 @@ curl -iX POST \
 ### Data Model Guidelines
 
 Although the each data entity within your context will vary according to your use case, the common structure within each
-data entity should be standardized order to promote reuse. The full FIWARE data model guidelines can be found
-[here](https://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html). This tutorial demonstrates the usage
+data entity should be standardized order to promote reuse. The full Smart Data model guidelines can be found
+[here](https://smartdatamodels.org/). This tutorial demonstrates the usage
 of the following recommendations:
 
 #### All terms are defined in American English

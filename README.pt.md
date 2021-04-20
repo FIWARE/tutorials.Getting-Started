@@ -292,7 +292,7 @@ curl -iX POST \
 
 Embora cada entidade de dados dentro do contexto do usuário varie de acordo com o caso de uso, a estrutura comum dentro
 de cada A entidade de dados deve ser padronizada para promover a reutilização. As diretrizes completas do modelo de
-dados FIWARE podem ser encontradas [aqui](https://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html).
+dados FIWARE podem ser encontradas [aqui](https://smartdatamodels.org/).
 Este tutorial demonstra o uso de das seguintes recomendações:
 
 #### Todos os termos são definidos em Inglês Americano

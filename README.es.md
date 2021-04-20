@@ -305,7 +305,7 @@ curl -iX POST \
 ### Directrices de los modelos de datos
 
 Aunque cada entidad de datos dentro de su contexto variará según su caso de uso, la estructura común dentro de cada entidad de datos debe ser estandarizada para promover la reutilización. Las directrices completas de los modelos de datos de FIWARE se pueden encontrar
-[aquí](https://fiware-datamodels.readthedocs.io/en/latest/guidelines/index.html). Este tutorial demuestra el uso
+[aquí](https://smartdatamodels.org/). Este tutorial demuestra el uso
 de las siguientes recomendaciones:
 
 #### Todos los terminos están definidos en inglés americano
