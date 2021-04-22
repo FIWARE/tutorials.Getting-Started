@@ -317,7 +317,7 @@ En este caso sólo tenemos un tipo de entidad - **Store**
 
 #### Los ID de las entidades deben ser una URN siguiendo las directrices de NGSI-LD
 
-NGSI-LD ha sido recientemente publicado como una [especificación](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf)completa de la ETSI, la propuesta es que cada `id` es una URN que sigue un formato estándar: `urn:ngsi-ld:<entity-type>:<entity-id>`. Esto significará que cada `id` en el sistema será único.
+NGSI-LD ha sido recientemente publicado como una [especificación](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf)completa de la ETSI, la propuesta es que cada `id` es una URN que sigue un formato estándar: `urn:ngsi-ld:<entity-type>:<entity-id>`. Esto significará que cada `id` en el sistema será único.
 
 #### Los nombres de los tipos de datos deben reutilizar los tipos de datos de schema.org siempre que sea posible
 

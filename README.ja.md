@@ -361,7 +361,7 @@ curl -iX POST \
 #### エンティティ ID は、NGSI-LD のガイドラインに従った URN でなければなりません
 
 NGSI-LD は現時点で
-は[ドラフトの勧告](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.03.01_60/gs_cim009v010301p.pdf)で
+は[ドラフトの勧告](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf)で
 すが、各 `id` は 標準フォーマットに従った URN という提案があります :
 `urn:ngsi-ld:<entity-type>:<entity-id>`。これは、システム内のすべての `id` がユ
 ニークであることを意味します。
