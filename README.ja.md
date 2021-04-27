@@ -1,11 +1,10 @@
 [![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png)](https://www.letsfiware.jp/)
+[![NGSI v2](https://img.shields.io/badge/NGSI-v2-5dc0cf.svg)](https://fiware-ges.github.io/orion/api/v2/stable/)
 
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
-
-<br/>
-[![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
+<br/> [![Documentation](https://img.shields.io/readthedocs/fiware-tutorials.svg)](https://fiware-tutorials.rtfd.io)
 
 <!-- prettier-ignore -->
 これは、FIWARE Platform のチュートリアルです。スーパーマーケット・チェーンのスト
@@ -40,6 +39,8 @@ FIWARE context broker に渡して、非常に単純な _"Powered by FIWARE"_ �
         -   [id でエンティティ・データを取得](#obtain-entity-data-by-id)
         -   [タイプ別にエンティティ・データを取得](#obtain-entity-data-by-type)
         -   [属性の値を比較してコンテキスト・データをフィルタリング](#filter-context-data-by-comparing-the-values-of-an-attribute)
+        -   [サブ属性の値を比較してコンテキスト・データをフィルタリング](#filter-context-data-by-comparing-the-values-of-a-sub-attribute)
+        -   [メタデータをクエリしてコンテキスト・データをフィルタリング](#filter-context-data-by-querying-metadata)
         -   [geo:json 属性の値を比較してコンテキスト・データをフィルタリング](#filter-context-data-by-comparing-the-values-of-a-geojson-attribute)
 -   [次のステップ](#next-steps)
     -   [反復型開発](#iterative-development)
@@ -128,7 +129,7 @@ Docker バージョン 18.03 以降と Docker Compose 1.21 以上を使用して
 ークを作成します :
 
 ```console
-docker pull mongo:3.6
+docker pull mongo:4.4
 docker pull fiware/orion
 docker network create fiware_default
 ```
@@ -138,7 +139,7 @@ docker network create fiware_default
 
 ```console
 docker run -d --name=mongo-db --network=fiware_default \
-  --expose=27017 mongo:4.2 --bind_ip_all
+  --expose=27017 mongo:4.4 --bind_ip_all
 ```
 
 Orion Context Broker は、次のコマンドを使用して起動し、ネットワークに接続できま
@@ -172,8 +173,8 @@ docker network rm fiware_default
 
 ```console
 git clone https://github.com/FIWARE/tutorials.Getting-Started.git
-git checkout NGSI-v2
 cd tutorials.Getting-Started
+git checkout NGSI-v2
 
 docker-compose -p fiware up -d
 ```
@@ -211,16 +212,26 @@ curl -X GET \
 
 ```json
 {
-    "orion": {
-        "version": "1.12.0-next",
-        "uptime": "0 d, 0 h, 3 m, 21 s",
-        "git_hash": "e2ff1a8d9515ade24cf8d4b90d27af7a616c7725",
-        "compile_time": "Wed Apr 4 19:08:02 UTC 2018",
-        "compiled_by": "root",
-        "compiled_in": "2f4a69bdc191",
-        "release_date": "Wed Apr 4 19:08:02 UTC 2018",
-        "doc": "https://fiware-orion.readthedocs.org/en/master/"
-    }
+"orion" : {
+  "version" : "3.0.0",
+  "uptime" : "0 d, 0 h, 17 m, 19 s",
+  "git_hash" : "d6f8f4c6c766a9093527027f0a4b3f906e7f04c4",
+  "compile_time" : "Mon Apr 12 14:48:44 UTC 2021",
+  "compiled_by" : "root",
+  "compiled_in" : "f307ca0746f5",
+  "release_date" : "Mon Apr 12 14:48:44 UTC 2021",
+  "machine" : "x86_64",
+  "doc" : "https://fiware-orion.rtfd.io/en/3.0.0/",
+  "libversions": {
+     "boost": "1_66",
+     "libcurl": "libcurl/7.61.1 OpenSSL/1.1.1g zlib/1.2.11 nghttp2/1.33.0",
+     "libmicrohttpd": "0.9.70",
+     "openssl": "1.1",
+     "rapidjson": "1.1.0",
+     "mongoc": "1.17.4",
+     "bson": "1.17.4"
+  }
+}
 }
 ```
 
@@ -288,6 +299,12 @@ curl -iX POST \
             "addressRegion": "Berlin",
             "addressLocality": "Prenzlauer Berg",
             "postalCode": "10439"
+        },
+        "metadata": {
+            "verified": {
+                "value": true,
+                "type": "Boolean"
+            }
         }
     },
     "location": {
@@ -323,6 +340,12 @@ curl -iX POST \
             "addressRegion": "Berlin",
             "addressLocality": "Kreuzberg",
             "postalCode": "10969"
+        },
+        "metadata": {
+            "verified": {
+                "value": true,
+                "type": "Boolean"
+            }
         }
     },
     "location": {
@@ -360,11 +383,10 @@ curl -iX POST \
 
 #### エンティティ ID は、NGSI-LD のガイドラインに従った URN でなければなりません
 
-NGSI-LD は現時点で
-は[ドラフトの勧告](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf)で
-すが、各 `id` は 標準フォーマットに従った URN という提案があります :
-`urn:ngsi-ld:<entity-type>:<entity-id>`。これは、システム内のすべての `id` がユ
-ニークであることを意味します。
+NGSI-LD は最近、完全な ESTI
+[仕様](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.02_60/gs_cim009v010402p.pdf)
+として公開されました。提案では、各 `id` は URN であり、標準フォーマット `urn:ngsi-ld:<entity-type>:<entity-id>`
+に従います。これは、システム内のすべての `id` がユニークであることを意味します。
 
 #### データ・タイプ名は、可能であれば schema.org データ・タイプを再利用する必要があります
 
@@ -394,6 +416,19 @@ NGSI-LD は現時点で
 フォーマットです。`location` 属性が GeoJSON `Point` location としてエンコードさ
 れています。
 
+### 属性メタデータ
+
+メタデータは、データに関するデータ (_"data about data"_) であり、精度, プロバイダ, タイムスタンプなどの属性値自体の
+プロパティを記述するために使用される追加データです。いくつかの組み込みメタデータ属性がすでに存在し、これらの名前は
+予約されています。
+
+-   `dateCreated` (type: DateTime): 属性作成日 (ISO8601 文字列)
+-   `dateModified` (type: DateTime): 属性変更日 (ISO8601 文字列)
+-   `previousValue` (type: any): 以前の値。通知時のみ
+-   `actionType` (type: Text): アクションタイプ。通知時のみ
+
+メタデータの1つの要素は、`address` 属性内にあります。`verified` フラグは、アドレスが確認されたかどうかを示します。
+
 <a name="querying-context-data"></a>
 
 ## コンテキスト・データのクエリ
@@ -420,11 +455,15 @@ NGSI-LD は現時点で
 #### :four: リクエスト :
 
 ```console
-curl -X GET \
-   'http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001?options=keyValues'
+curl -G -X GET \
+   'http://localhost:1026/v2/entities/urn:ngsi-ld:Store:001' \
+   -d 'options=keyValues'
 ```
 
 #### レスポンス :
+
+`options=keyValues` を使用しているため、レスポンスは属性 `type` 要素と `metadata` 要素を含まない JSON のみで
+構成されます。
 
 ```json
 {
@@ -448,17 +487,22 @@ curl -X GET \
 
 ### タイプ別にエンティティ・データを取得
 
-この例では、コンテキスト・データ内のすべての `Store` エンティティのデータを返し
-ます
+この例では、コンテキスト・データ内のすべての `Store` エンティティのデータを返します。`type` パラメータは、レスポンスを
+`Store` エンティティのみに制限します。
 
 #### :five: リクエスト :
 
 ```console
-curl -X GET \
-    'http://localhost:1026/v2/entities?type=Store&options=keyValues'
+curl -G -X GET \
+    'http://localhost:1026/v2/entities' \
+    -d 'type=Store' \
+    -d 'options=keyValues'
 ```
 
 #### レスポンス :
+
+`options=keyValues` を使用しているため、レスポンスは属性 `type` 要素と `metadata` 要素を含まない JSON のみで
+構成されます。
 
 ```json
 [
@@ -499,19 +543,128 @@ curl -X GET \
 
 ### 属性の値を比較してコンテキスト・データをフィルタリング
 
-この例では、Kreuzberg 地区にあるすべてのストアを返します
+この例では、`name` 属性 _CheckpointMarkt_ を持つすべてのストアを返します。フィルタリングは `q` パラメータを使用して
+実行できます。文字列にスペースが含まれている場合は、URL エンコードして、一重引用符 `'` = `%27` で囲むことができます。
 
-#### :six: リクエスト :
+#### :six: リクエスト:
 
 ```console
-curl -X GET \
-http://localhost:1026/v2/entities?type=Store&q=address.addressLocality==Kreuzberg&options=keyValues
+curl -G -X GET \
+    'http://localhost:1026/v2/entities' \
+    -d 'type=Store' \
+    -d 'q=name==%27Checkpoint%20Markt%27' \
+    -d 'options=keyValues'
+```
+
+#### レスポンス:
+
+`options=keyValues` を使用しているため、レスポンスは属性 `type` 要素と `metadata` 要素を含まない JSON のみで
+構成されます。
+
+```json
+[
+    {
+        "id": "urn:ngsi-ld:Store:002",
+        "type": "Store",
+        "address": {
+            "streetAddress": "Friedrichstraße 44",
+            "addressRegion": "Berlin",
+            "addressLocality": "Kreuzberg",
+            "postalCode": "10969"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3903, 52.5075]
+        },
+        "name": "Checkpoint Markt"
+    }
+]
+```
+
+<a name="filter-context-data-by-comparing-the-values-of-a-sub-attribute"></a>
+
+### サブ属性の値を比較してコンテキスト・データをフィルタリング
+
+この例では、Kreuzberg 地区にあるすべてのストアを返します
+
+フィルタリングは `q` パラメータを使用して実行できます-サブ属性はドット構文を使用して注釈が付けられます。例えば
+`address.addressLocality`
+
+#### :seven: リクエスト :
+
+```console
+curl -G -X GET \
+    'http://localhost:1026/v2/entities' \
+    -d 'type=Store' \
+    -d 'q=address.addressLocality==Kreuzberg' \
+    -d 'options=keyValues'
 ```
 
 #### レスポンス :
 
+`options=keyValues` を使用しているため、レスポンスは属性 `type` 要素と `metadata` 要素を含まない JSON のみで
+構成されます。
+
 ```json
 [
+    {
+        "id": "urn:ngsi-ld:Store:002",
+        "type": "Store",
+        "address": {
+            "streetAddress": "Friedrichstraße 44",
+            "addressRegion": "Berlin",
+            "addressLocality": "Kreuzberg",
+            "postalCode": "10969"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3903, 52.5075]
+        },
+        "name": "Checkpoint Markt"
+    }
+]
+```
+
+<a name="filter-context-data-by-querying-metadata"></a>
+
+### メタデータをクエリしてコンテキスト・データをフィルタリング
+
+この例では、確認済みのアドレス (verified address) を持つすべての `Store` エンティティのデータを返します。
+
+メタデータのクエリは、`mq` パラメータを使用して行うことができます。
+
+#### :eight: リクエスト :
+
+```console
+curl -G -X GET \
+    'http://localhost:1026/v2/entities' \
+    -d 'type=Store' \
+    -d 'mq=address.verified==true' \
+    -d 'options=keyValues'
+```
+
+#### レスポンス :
+
+`options=keyValues` を使用しているため、レスポンスは属性 `type` 要素と `metadata` 要素を含まない JSON のみで
+構成されます。
+
+```json
+[
+    {
+        "id": "urn:ngsi-ld:Store:001",
+        "type": "Store",
+        "address": {
+            "streetAddress": "Bornholmer Straße 65",
+            "addressRegion": "Berlin",
+            "addressLocality": "Prenzlauer Berg",
+            "postalCode": "10439"
+        },
+        "location": {
+            "type": "Point",
+            "coordinates": [13.3986, 52.5547]
+        },
+        "name": "Bösebrücke Einkauf"
+    },
     {
         "id": "urn:ngsi-ld:Store:002",
         "type": "Store",
@@ -537,14 +690,22 @@ http://localhost:1026/v2/entities?type=Store&q=address.addressLocality==Kreuzber
 この例 では、ベルリンの**ブランデンブルク門**から 1.5km 以内のすべてのストアを返
 却します (_52.5162N 13.3777W_)
 
-#### :seven: リクエスト :
+#### :nine リクエスト :
 
 ```console
-curl -X GET \
-  'http://localhost:1026/v2/entities?type=Store&georel=near;maxDistance:1500&geometry=point&coords=52.5162,13.3777'
+curl -G -X GET \
+  'http://localhost:1026/v2/entities' \
+  -d 'type=Store' \
+  -d 'georel=near;maxDistance:1500' \
+  -d 'geometry=point' \
+  -d 'coords=52.5162,13.3777' \
+  -d 'options=keyValues'
 ```
 
 #### レスポンス :
+
+`options=keyValues` を使用しているため、レスポンスは属性 `type` 要素と `metadata` 要素を含まない JSON のみで
+構成されます。
 
 ```json
 [
@@ -668,4 +829,4 @@ curl -X GET \
 
 ## License
 
-[MIT](LICENSE) © 2018-2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2018-2021 FIWARE Foundation e.V.
