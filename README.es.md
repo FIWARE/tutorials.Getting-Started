@@ -54,6 +54,8 @@ El tutorial usa comandos [cUrl](https://ec.haxx.se/) en el, pero también está 
         -   [Obteniendo datos de la entidad por ID](#obteniendo-datos-de-la-entidad-por-id)
         -   [Obteniendo datos de la entidad por tipo](#obteniendo-datos-de-la-entidad-por-tipo)
         -   [Filtrando datos de contexto comparando los valores de los atributos](#filtrando-datos-de-contexto-comparando-los-valores-de-los-atributos)
+        -   [Filtrar datos de contexto comparando valores de un sub-atributo](#filtrar-datos-de-contexto-comparando-valores-de-un-sub-atributo)
+        -   [Filtrar datos de contexto buscando por metadato](#filtrar-datos-de-contexto-buscando-por-metadato)
         -   [Filtrando datos de contexto comparando los valores de un atributo geo:json](#filtrando-datos-de-contexto-comparando-los-valores-de-un-atributo-geojson)
 -   [Proximos pasos](#proximos-pasos)
     -   [Desarrollo iterativo](#desarrollo-iterativo)
@@ -108,7 +110,7 @@ Por favor, asegúrese de que está utilizando la versión 18.03 o superior de Do
 Primero haga pull de las imágenes necesarias de Docker Hub y cree una red para que nuestros contenedores se conecten a ella:
 
 ```console
-docker pull mongo:3.6
+docker pull mongo:4.4
 docker pull fiware/orion
 docker network create fiware_default
 ```
@@ -117,7 +119,7 @@ Para iniciar un contenedor Docker corriendo una base de datos [MongoDB](https://
 
 ```console
 docker run -d --name=mongo-db --network=fiware_default \
-  --expose=27017 mongo:4.2 --bind_ip_all
+  --expose=27017 mongo:4.4 --bind_ip_all
 ```
 
 El Orion Context Broker se puede iniciar y conectar a la red empleando el siguiente comando:
@@ -143,8 +145,8 @@ Todos los servicios pueden ser inicializados desde la línea de comandos usando 
 
 ```console
 git clone https://github.com/FIWARE/tutorials.Getting-Started.git
-git checkout NGSI-v2
 cd tutorials.Getting-Started
+git checkout NGSI-v2
 
 docker-compose -p fiware up -d
 ```
@@ -174,16 +176,26 @@ La respuesta debe parecerse a la siguiente:
 
 ```json
 {
-    "orion": {
-        "version": "1.12.0-next",
-        "uptime": "0 d, 0 h, 3 m, 21 s",
-        "git_hash": "e2ff1a8d9515ade24cf8d4b90d27af7a616c7725",
-        "compile_time": "Wed Apr 4 19:08:02 UTC 2018",
-        "compiled_by": "root",
-        "compiled_in": "2f4a69bdc191",
-        "release_date": "Wed Apr 4 19:08:02 UTC 2018",
-        "doc": "https://fiware-orion.readthedocs.org/en/master/"
-    }
+"orion" : {
+  "version" : "3.0.0",
+  "uptime" : "0 d, 0 h, 17 m, 19 s",
+  "git_hash" : "d6f8f4c6c766a9093527027f0a4b3f906e7f04c4",
+  "compile_time" : "Mon Apr 12 14:48:44 UTC 2021",
+  "compiled_by" : "root",
+  "compiled_in" : "f307ca0746f5",
+  "release_date" : "Mon Apr 12 14:48:44 UTC 2021",
+  "machine" : "x86_64",
+  "doc" : "https://fiware-orion.rtfd.io/en/3.0.0/",
+  "libversions": {
+     "boost": "1_66",
+     "libcurl": "libcurl/7.61.1 OpenSSL/1.1.1g zlib/1.2.11 nghttp2/1.33.0",
+     "libmicrohttpd": "0.9.70",
+     "openssl": "1.1",
+     "rapidjson": "1.1.0",
+     "mongoc": "1.17.4",
+     "bson": "1.17.4"
+  }
+}
 }
 ```
 
@@ -317,7 +329,7 @@ En este caso sólo tenemos un tipo de entidad - **Store**
 
 #### Los ID de las entidades deben ser una URN siguiendo las directrices de NGSI-LD
 
-NGSI-LD ha sido recientemente publicado como una [especificación](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf)completa de la ETSI, la propuesta es que cada `id` es una URN que sigue un formato estándar: `urn:ngsi-ld:<entity-type>:<entity-id>`. Esto significará que cada `id` en el sistema será único.
+NGSI-LD ha sido recientemente publicado como una [especificación](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.02_60/gs_cim009v010402p.pdf)completa de la ETSI, la propuesta es que cada `id` es una URN que sigue un formato estándar: `urn:ngsi-ld:<entity-type>:<entity-id>`. Esto significará que cada `id` en el sistema será único.
 
 #### Los nombres de los tipos de datos deben reutilizar los tipos de datos de schema.org siempre que sea posible
 
@@ -588,7 +600,8 @@ curl -G -X GET \
   -d 'type=Store' \
   -d 'georel=near;maxDistance:1500' \
   -d 'geometry=point' \
-  -d 'coords=52.5162,13.3777'
+  -d 'coords=52.5162,13.3777' \
+  -d 'options=keyValues'
 ```
 
 #### Respuesta:
@@ -699,4 +712,4 @@ Cada iteración añade valor a la solución a través de los componentes existen
 
 ## License
 
-[MIT](LICENSE) © 2018-2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2018-2021 FIWARE Foundation e.V.

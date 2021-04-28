@@ -41,6 +41,8 @@ está disponible en [español](https://github.com/FIWARE/tutorials.Getting-Start
         -   [Obtain entity data by ID](#obtain-entity-data-by-id)
         -   [Obtain entity data by type](#obtain-entity-data-by-type)
         -   [Filter context data by comparing the values of an attribute](#filter-context-data-by-comparing-the-values-of-an-attribute)
+        -   [Filter context data by comparing the values of a sub-attribute](#filter-context-data-by-comparing-the-values-of-a-sub-attribute)
+        -   [Filter context data by querying metadata](#filter-context-data-by-querying-metadata)
         -   [Filter context data by comparing the values of a geo:json attribute](#filter-context-data-by-comparing-the-values-of-a-geojson-attribute)
 -   [Next Steps](#next-steps)
     -   [Iterative Development](#iterative-development)
@@ -103,7 +105,7 @@ necessary.
 First pull the necessary Docker images from Docker Hub and create a network for our containers to connect to:
 
 ```console
-docker pull mongo:3.6
+docker pull mongo:4.4
 docker pull fiware/orion
 docker network create fiware_default
 ```
@@ -113,7 +115,7 @@ with the following command:
 
 ```console
 docker run -d --name=mongo-db --network=fiware_default \
-  --expose=27017 mongo:4.2 --bind_ip_all
+  --expose=27017 mongo:4.4 --bind_ip_all
 ```
 
 The Orion Context Broker can be started and connected to the network with the following command:
@@ -140,8 +142,8 @@ and create the necessary images by running the commands as shown:
 
 ```console
 git clone https://github.com/FIWARE/tutorials.Getting-Started.git
-git checkout NGSI-v2
 cd tutorials.Getting-Started
+git checkout NGSI-v2
 
 docker-compose -p fiware up -d
 ```
@@ -171,16 +173,26 @@ The response will look similar to the following:
 
 ```json
 {
-    "orion": {
-        "version": "1.12.0-next",
-        "uptime": "0 d, 0 h, 3 m, 21 s",
-        "git_hash": "e2ff1a8d9515ade24cf8d4b90d27af7a616c7725",
-        "compile_time": "Wed Apr 4 19:08:02 UTC 2018",
-        "compiled_by": "root",
-        "compiled_in": "2f4a69bdc191",
-        "release_date": "Wed Apr 4 19:08:02 UTC 2018",
-        "doc": "https://fiware-orion.readthedocs.org/en/master/"
-    }
+"orion" : {
+  "version" : "3.0.0",
+  "uptime" : "0 d, 0 h, 17 m, 19 s",
+  "git_hash" : "d6f8f4c6c766a9093527027f0a4b3f906e7f04c4",
+  "compile_time" : "Mon Apr 12 14:48:44 UTC 2021",
+  "compiled_by" : "root",
+  "compiled_in" : "f307ca0746f5",
+  "release_date" : "Mon Apr 12 14:48:44 UTC 2021",
+  "machine" : "x86_64",
+  "doc" : "https://fiware-orion.rtfd.io/en/3.0.0/",
+  "libversions": {
+     "boost": "1_66",
+     "libcurl": "libcurl/7.61.1 OpenSSL/1.1.1g zlib/1.2.11 nghttp2/1.33.0",
+     "libmicrohttpd": "0.9.70",
+     "openssl": "1.1",
+     "rapidjson": "1.1.0",
+     "mongoc": "1.17.4",
+     "bson": "1.17.4"
+  }
+}
 }
 ```
 
@@ -323,7 +335,7 @@ In this case we only have one entity type - **Store**
 #### Entity IDs should be a URN following NGSI-LD guidelines
 
 NGSI-LD has recently been published as a full ETSI
-[specification](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf), the proposal is
+[specification](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.02_60/gs_cim009v010402p.pdf), the proposal is
 that each `id` is a URN follows a standard format: `urn:ngsi-ld:<entity-type>:<entity-id>`. This will mean that every
 `id` in the system will be unique
 
@@ -615,7 +627,8 @@ curl -G -X GET \
   -d 'type=Store' \
   -d 'georel=near;maxDistance:1500' \
   -d 'geometry=point' \
-  -d 'coords=52.5162,13.3777'
+  -d 'coords=52.5162,13.3777' \
+  -d 'options=keyValues'
 ```
 
 #### Response:
@@ -735,4 +748,4 @@ development time.
 
 ## License
 
-[MIT](LICENSE) © 2018-2020 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2018-2021 FIWARE Foundation e.V.
