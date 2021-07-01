@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "37a6dc59-bcbb-4813-b1b3-5b088f4e3bdd",
-		"name": "FIWARE Working with @context",
+		"name": "NGSI-LD Working with @context",
 		"description": "This tutorial examines the interaction between **NGSI-LD** and **JSON-LD** `@context` files. The `@context` files generated in the [previous tutorial](https://github.com/FIWARE/tutorials.Understanding-At-Context) are used as the underlying data model for inputing context data and context information is queries and read back in different formats.\n\nThe `docker-compose` file for this tutorial can be found on GitHub: \n\n![GitHub](https://fiware.github.io/tutorials.Getting-Started/icon/GitHub-Mark-32px.png) [FIWARE-LD 102: Working with `@context` ](https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-LD)\n\n# Working with `@context` files\n\n> “Some quotations are greatly improved by lack of context.”\n>\n> ― John Wyndham, The Midwich Cuckoos\n\nFrom the [previous tutorial](https://github.com/FIWARE/tutorials.Understanding-At-Context) we have generated two `@context` files defining the context data entities which will be offered in our simple Smart Farm Management System. This means that we have defined an agreed set of unique IDs (URNs or URLs) for all the\ndata entities and every single attribute within those entities so that other external applications will be able to programmatically understand the data held within our broker.\n\nFor example the attribute `address` is within our smart application is defined as follows:\n\n```jsonld\n\"@context\": {\n    \"schema\": \"https://schema.org/\",\n    \"address\": \"schema:address\"\n}\n```\n\nWhich means that every `address` attribute follows the definition as defined by `schema.org`:\n\n`https://schema.org/address` :\n\n![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture-ld.png)\n\nA program written by a third party would therefore be able to extract information such the fact an `address` attribute holds a JSON object with a sub-attribute containing the `streetAddress`  by referring to the full [schema.org **JSON-LD** schema](https://schema.org/version/latest/schemaorg-current-http.jsonld)\n\n```jsonld\n{\n  \"@id\": \"http://schema.org/streetAddress\",\n  \"@type\": \"rdf:Property\",\n  \"http://schema.org/domainIncludes\": {\n    \"@id\": \"http://schema.org/PostalAddress\"\n  },\n  \"http://schema.org/rangeIncludes\": {\n    \"@id\": \"http://schema.org/Text\"\n  },\n  \"rdfs:comment\": \"The street address. For example, 1600 Amphitheatre Pkwy.\",\n  \"rdfs:label\": \"streetAddress\"\n}\n```\n\nThis is the **JSON-LD** programmatic syntax allowing computers to extract meaningful data _The attribute `address.streetAddress` is a street_ directly without the need for human intervention.\n\nImagine the case where a company is contracting agricultural labourers. The farmer will need to be billed for the work done. If such a system is built on JSON-LD, it does not matter if the farmer's Farm Management Information System assigns different names to the attributes of the billing address provided that the farmer and contractor can agree on the well-defined URNS for each attribute as **JSON-LD** can easily translate between the two formats using common expansion and compaction algorithms.\n\n## NGSI-LD Rules\n\n**NGSI-LD** is a formally structured _extended subset_ of **JSON-LD**. Therefore **NGSI-LD** offers all the interoperability and flexibility of **JSON-LD** itself. It also defines its own core `@context` which cannot be overridden for **NGSI-LD** operations. This means that **NGSI-LD** users agree to a common well defined set of rules for structuring their data, and then supplement this with the rest of the **JSON-LD** specification.\n\nWhilst interacting directly with **NGSI-LD** interface of the context broker the additional **NGSI-LD** rules must be respected. However after the data has been extracted it is possible to loosen this requirement and pass the results to third parties as **JSON-LD**.\n\nThis tutorial is a simple introduction to the rules and restrictions behind **NGSI-LD** and  will create some **NGSI-LD** entities and then extract the data in different formats. The two main data formats are _normalized_ and _key-value-pairs_. Data returned in the  _normalised_ format respects the **NGSI-LD** rules and may be used directly by another context broker (or any other component offering an **NGSI-LD** interface). Data returned in the  _key-value-pairs_ format is by definition not **NGSI-LD**.\n\n## Content negociation and the `Content-Type` and `Accept` Headers\n\nDuring content negociation, **NGSI-LD** offers data in one of three formats, these effect the structure of the payload body.\n\n- `Accept: application/json` - the response is in **JSON** format\n- `Accept: application/ld+json` - the response is in **JSON-LD** format\n- `Accept: application/geo+json` - the response is in **GeoJSON** or **GeoJSON-LD** format\n\nThe major difference between **JSON** format and **JSON-LD** format, is that if **JSON-LD** format is chosen, then the `@context` is found as an additional attribute within the body of the response. if the **JSON** only format is used the `@context` is passed as an additional `Link` Header element and is not found in the response body.\n\nSimilarly when sending **NGSI-LD** data to the context broker, an application may choose to send a payload including an additional `@context` attribute (in which case `Content-Type: application/ld+json`) or the application may send NGSI-LD data without an additional `@context` attribute (in which case `Content-Type: application/json` and the `Link` header must also be present).\n\nThe **GeoJSON** format is only used when querying a context broker for existing data and returns the context in a format suitable for GIS systems. It is a recent addition to the **NGSI-LD** specification and therefore will not be discussed further here.\n\n# Prerequisites\n\n## Docker\n\nTo keep things simple all components will be run using [Docker](https://www.docker.com). **Docker** is a container\ntechnology which allows to different components isolated into their respective environments.\n\n-   To install Docker on Windows follow the instructions [here](https://docs.docker.com/docker-for-windows/)\n-   To install Docker on Mac follow the instructions [here](https://docs.docker.com/docker-for-mac/)\n-   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)\n\n**Docker Compose** is a tool for defining and running multi-container Docker applications. A\n[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Working-with-At-Context/master/docker-compose/orion-ld.yml) is used\nconfigure the required services for the application. This means all container services can be brought up in a single\ncommand. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux users\nwill need to follow the instructions found [here](https://docs.docker.com/compose/install/)\n\n## Cygwin\n\nWe will start up our services using a simple bash script. Windows users should download [cygwin](http://www.cygwin.com/)\nto provide a command-line functionality similar to a Linux distribution on Windows.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -51,8 +51,7 @@
 					},
 					"response": []
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Linked Data using Orion-LD",
@@ -89,7 +88,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"id\": \"urn:ngsi-ld:Building:farm001\",\n    \"type\": \"Building\",\n    \"category\": {\n    \t\"type\": \"Property\",\n        \"value\": [\"farm\"]\n    },\n    \"address\": {\n        \"type\": \"Property\",\n        \"value\": {\n            \"streetAddress\": \"Großer Stern 1\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Tiergarten\",\n            \"postalCode\": \"10557\"\n        },\n        \"verified\": {\n\t\t\t\"type\": \"Property\",\n\t\t\t\"value\": true\n\t\t}\n    },\n    \"location\": {\n        \"type\": \"GeoProperty\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3505, 52.5144]\n        }\n    },\n    \"name\": {\n        \"type\": \"Property\",\n        \"value\": \"Victory Farm\"\n    },\n    \"@context\": \"http://context-provider:3000/data-models/ngsi-context.jsonld\"\n}"
+							"raw": "{\n    \"id\": \"urn:ngsi-ld:Building:farm001\",\n    \"type\": \"Building\",\n    \"category\": {\n    \t\"type\": \"Property\",\n        \"value\": [\"farm\"]\n    },\n    \"address\": {\n        \"type\": \"Property\",\n        \"value\": {\n            \"streetAddress\": \"Großer Stern 1\",\n            \"addressRegion\": \"Berlin\",\n            \"addressLocality\": \"Tiergarten\",\n            \"postalCode\": \"10557\"\n        },\n        \"verified\": {\n\t\t\t\"type\": \"Property\",\n\t\t\t\"value\": true\n\t\t}\n    },\n    \"location\": {\n        \"type\": \"GeoProperty\",\n        \"value\": {\n             \"type\": \"Point\",\n             \"coordinates\": [13.3505, 52.5144]\n        }\n    },\n    \"name\": {\n        \"type\": \"Property\",\n        \"value\": \"Victory Farm\"\n    },\n    \"@context\": \"http://context/ngsi-context.jsonld\"\n}"
 						},
 						"url": {
 							"raw": "http://{{orion}}/ngsi-ld/v1/entities/",
@@ -104,7 +103,7 @@
 								""
 							]
 						},
-						"description": "New context data entities can be created by making a POST request to the `/ngsi-ld/v1/entities` endpoint and supply an `@context` along with structured **NGSI-LD** data.\n\nThe first request will take some time, as the context broker must navigate and load all of the files mentioned in the\n`@context`.\n\nSince the `Content-Type: application/ld+json` the `@context` is supplied in the body of the request. As with all **NGSI-LD** interactions, the core **NGSI-LD** `@context` ([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld) is implicitly included as well.)\n\nThis means that the actual `@context` is:\n\n```jsonld\n{\n    \"@context\": [\n        \"http://context-provider:3000/data-models/ngsi-context.jsonld\",\n        \"https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld\"\n    ]\n}\n```\n\nwith the core `@context` being processed **last** and therefore overriding any terms previously defined with the same `@id`."
+						"description": "New context data entities can be created by making a POST request to the `/ngsi-ld/v1/entities` endpoint and supply an `@context` along with structured **NGSI-LD** data.\n\nThe first request will take some time, as the context broker must navigate and load all of the files mentioned in the\n`@context`.\n\nSince the `Content-Type: application/ld+json` the `@context` is supplied in the body of the request. As with all **NGSI-LD** interactions, the core **NGSI-LD** `@context` ([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld) is implicitly included as well.)\n\nThis means that the actual `@context` is:\n\n```jsonld\n{\n    \"@context\": [\n        \"http://context-provider:3000/data-models/ngsi-context.jsonld\",\n        \"https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld\"\n    ]\n}\n```\n\nwith the core `@context` being processed **last** and therefore overriding any terms previously defined with the same `@id`."
 					},
 					"response": []
 				},
@@ -179,7 +178,7 @@
 								}
 							]
 						},
-						"description": "This example returns the data of all `Building` entities within the context data The `type` parameter is mandatory for\nNGSI-LD and is used to filter the response. The Accept HTTP header is needed to retrieve JSON-LD content in the response body.\n\nSince no explicit `@context` was sent in the request, the response returns the Core `@context` by default (`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`) and\nall attributes are expanded whenever possible.\n\n-   `id`, `type`, `location` and `name`are defined in the core context and are not expanded.\n-   `address` has been mapped to `http://schema.org/address`\n-   `category` has been mapped to `https://uri.fiware.org/ns/data-models#category`\n\nNote that if an attribute has not been not associated to an FQN when the entity was created, the short name will\n**always** be displayed."
+						"description": "This example returns the data of all `Building` entities within the context data The `type` parameter is mandatory for\nNGSI-LD and is used to filter the response. The Accept HTTP header is needed to retrieve JSON-LD content in the response body.\n\nSince no explicit `@context` was sent in the request, the response returns the Core `@context` by default (`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`) and\nall attributes are expanded whenever possible.\n\n-   `id`, `type`, `location` and `name`are defined in the core context and are not expanded.\n-   `address` has been mapped to `http://schema.org/address`\n-   `category` has been mapped to `https://uri.fiware.org/ns/data-models#category`\n\nNote that if an attribute has not been not associated to an FQN when the entity was created, the short name will\n**always** be displayed."
 					},
 					"response": []
 				},
@@ -579,7 +578,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "391fedfe-2adf-4403-a57a-a5ea43bbbe56",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -589,15 +587,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4114c796-0df5-4d11-9397-de5f68ed1bf2",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Linked Data using Scorpio",
@@ -651,7 +647,7 @@
 								""
 							]
 						},
-						"description": "New context data entities can be created by making a POST request to the `/ngsi-ld/v1/entities` endpoint and supply an `@context` along with structured **NGSI-LD** data.\n\nThe first request will take some time, as the context broker must navigate and load all of the files mentioned in the\n`@context`.\n\nSince the `Content-Type: application/ld+json` the `@context` is supplied in the body of the request. As with all **NGSI-LD** interactions, the core **NGSI-LD** `@context` ([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld) is implicitly included as well.)\n\nThis means that the actual `@context` is:\n\n```jsonld\n{\n    \"@context\": [\n        \"http://context-provider:3000/data-models/ngsi-context.jsonld\",\n        \"https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld\"\n    ]\n}\n```\n\nwith the core `@context` being processed **last** and therefore overriding any terms previously defined with the same `@id`."
+						"description": "New context data entities can be created by making a POST request to the `/ngsi-ld/v1/entities` endpoint and supply an `@context` along with structured **NGSI-LD** data.\n\nThe first request will take some time, as the context broker must navigate and load all of the files mentioned in the\n`@context`.\n\nSince the `Content-Type: application/ld+json` the `@context` is supplied in the body of the request. As with all **NGSI-LD** interactions, the core **NGSI-LD** `@context` ([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld) is implicitly included as well.)\n\nThis means that the actual `@context` is:\n\n```jsonld\n{\n    \"@context\": [\n        \"http://context-provider:3000/data-models/ngsi-context.jsonld\",\n        \"https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld\"\n    ]\n}\n```\n\nwith the core `@context` being processed **last** and therefore overriding any terms previously defined with the same `@id`."
 					},
 					"response": []
 				},
@@ -726,7 +722,7 @@
 								}
 							]
 						},
-						"description": "This example returns the data of all `Building` entities within the context data The `type` parameter is mandatory for\nNGSI-LD and is used to filter the response. The Accept HTTP header is needed to retrieve JSON-LD content in the response body.\n\nSince no explicit `@context` was sent in the request, the response returns the Core `@context` by default (`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`) and\nall attributes are expanded whenever possible.\n\n-   `id`, `type`, `location` and `name`are defined in the core context and are not expanded.\n-   `address` has been mapped to `http://schema.org/address`\n-   `category` has been mapped to `https://uri.fiware.org/ns/data-models#category`\n\nNote that if an attribute has not been not associated to an FQN when the entity was created, the short name will\n**always** be displayed."
+						"description": "This example returns the data of all `Building` entities within the context data The `type` parameter is mandatory for\nNGSI-LD and is used to filter the response. The Accept HTTP header is needed to retrieve JSON-LD content in the response body.\n\nSince no explicit `@context` was sent in the request, the response returns the Core `@context` by default (`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`) and\nall attributes are expanded whenever possible.\n\n-   `id`, `type`, `location` and `name`are defined in the core context and are not expanded.\n-   `address` has been mapped to `http://schema.org/address`\n-   `category` has been mapped to `https://uri.fiware.org/ns/data-models#category`\n\nNote that if an attribute has not been not associated to an FQN when the entity was created, the short name will\n**always** be displayed."
 					},
 					"response": []
 				},
@@ -1126,7 +1122,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "6d90c858-f456-46d7-8c08-31a32e8394a3",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1136,15 +1131,13 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "4431a0db-d58e-4302-a4fe-fb6c2c034a20",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		},
 		{
 			"name": "Linked Data using Stellio",
@@ -1176,7 +1169,7 @@
 								""
 							]
 						},
-						"description": "New context data entities can be created by making a POST request to the `/ngsi-ld/v1/entities` endpoint and supply an `@context` along with structured **NGSI-LD** data.\n\nThe first request will take some time, as the context broker must navigate and load all of the files mentioned in the\n`@context`.\n\nSince the `Content-Type: application/ld+json` the `@context` is supplied in the body of the request. As with all **NGSI-LD** interactions, the core **NGSI-LD** `@context` ([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld) is implicitly included as well.)\n\nThis means that the actual `@context` is:\n\n```jsonld\n{\n    \"@context\": [\n        \"http://context-provider:3000/data-models/ngsi-context.jsonld\",\n        \"https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld\"\n    ]\n}\n```\n\nwith the core `@context` being processed **last** and therefore overriding any terms previously defined with the same `@id`."
+						"description": "New context data entities can be created by making a POST request to the `/ngsi-ld/v1/entities` endpoint and supply an `@context` along with structured **NGSI-LD** data.\n\nThe first request will take some time, as the context broker must navigate and load all of the files mentioned in the\n`@context`.\n\nSince the `Content-Type: application/ld+json` the `@context` is supplied in the body of the request. As with all **NGSI-LD** interactions, the core **NGSI-LD** `@context` ([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld) is implicitly included as well.)\n\nThis means that the actual `@context` is:\n\n```jsonld\n{\n    \"@context\": [\n        \"http://context-provider:3000/data-models/ngsi-context.jsonld\",\n        \"https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld\"\n    ]\n}\n```\n\nwith the core `@context` being processed **last** and therefore overriding any terms previously defined with the same `@id`."
 					},
 					"response": []
 				},
@@ -1251,7 +1244,7 @@
 								}
 							]
 						},
-						"description": "This example returns the data of all `Building` entities within the context data The `type` parameter is mandatory for\nNGSI-LD and is used to filter the response. The Accept HTTP header is needed to retrieve JSON-LD content in the response body.\n\nSince no explicit `@context` was sent in the request, the response returns the Core `@context` by default (`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`) and\nall attributes are expanded whenever possible.\n\n-   `id`, `type`, `location` and `name`are defined in the core context and are not expanded.\n-   `address` has been mapped to `http://schema.org/address`\n-   `category` has been mapped to `https://uri.fiware.org/ns/data-models#category`\n\nNote that if an attribute has not been not associated to an FQN when the entity was created, the short name will\n**always** be displayed."
+						"description": "This example returns the data of all `Building` entities within the context data The `type` parameter is mandatory for\nNGSI-LD and is used to filter the response. The Accept HTTP header is needed to retrieve JSON-LD content in the response body.\n\nSince no explicit `@context` was sent in the request, the response returns the Core `@context` by default (`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`) and\nall attributes are expanded whenever possible.\n\n-   `id`, `type`, `location` and `name`are defined in the core context and are not expanded.\n-   `address` has been mapped to `http://schema.org/address`\n-   `category` has been mapped to `https://uri.fiware.org/ns/data-models#category`\n\nNote that if an attribute has not been not associated to an FQN when the entity was created, the short name will\n**always** be displayed."
 					},
 					"response": []
 				},
@@ -1651,7 +1644,6 @@
 				{
 					"listen": "prerequest",
 					"script": {
-						"id": "8e16c225-652f-4d53-9db6-8244cf1a045d",
 						"type": "text/javascript",
 						"exec": [
 							""
@@ -1661,22 +1653,19 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "30208fd3-e794-4893-b23f-0c583ebf5837",
 						"type": "text/javascript",
 						"exec": [
 							""
 						]
 					}
 				}
-			],
-			"protocolProfileBehavior": {}
+			]
 		}
 	],
 	"event": [
 		{
 			"listen": "prerequest",
 			"script": {
-				"id": "e07470d0-7a28-4627-9421-be92a7e31e7d",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1686,7 +1675,6 @@
 		{
 			"listen": "test",
 			"script": {
-				"id": "2452116b-9c1f-4ee1-a8e6-448aee665991",
 				"type": "text/javascript",
 				"exec": [
 					""
@@ -1696,35 +1684,28 @@
 	],
 	"variable": [
 		{
-			"id": "9acd1fe1-fc6d-4947-868c-6b7cf452eba2",
 			"key": "json-context.jsonld",
-			"value": "http://context-provider:3000/data-models/json-context.jsonld"
+			"value": "http://context/json-context.jsonld"
 		},
 		{
-			"id": "00265cd6-8305-4b58-b557-ecc7646901e3",
 			"key": "ngsi-context.jsonld",
-			"value": "http://context-provider:3000/data-models/ngsi-context.jsonld"
+			"value": "http://context/ngsi-context.jsonld"
 		},
 		{
-			"id": "493eb93c-e33d-418c-baf8-df5fce6467d8",
 			"key": "scorpio",
 			"value": "localhost:9090"
 		},
 		{
-			"id": "91e0e385-9350-4893-8a56-692615a853bd",
 			"key": "orion",
 			"value": "localhost:1026"
 		},
 		{
-			"id": "c38e3764-d377-40e3-bfe8-ac61f5a723a1",
 			"key": "alternate-context.jsonld",
 			"value": "http://context-provider:3000/data-models/alternate-context.jsonld"
 		},
 		{
-			"id": "bb04e66e-33b5-42c5-aecb-8fdb9cadc0d6",
 			"key": "stellio",
 			"value": "localhost:8080"
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }

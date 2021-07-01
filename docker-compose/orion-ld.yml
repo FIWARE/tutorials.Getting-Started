@@ -18,6 +18,15 @@
 #
 version: "3.5"
 services:
+  # @context file is served from here
+  ld-context:
+    image: httpd:alpine
+    hostname: context
+    container_name: fiware-ld-context
+    ports:
+        - "3004:80"
+    volumes:
+        - ../data-models:/usr/local/apache2/htdocs/
   # Orion is the context broker
   orion:
     image: fiware/orion-ld:${ORION_LD_VERSION}
@@ -65,7 +74,6 @@ services:
       default:
         aliases:
           - iot-sensors
-          - context
           - context-provider
     expose:
       - "${TUTORIAL_APP_PORT}"

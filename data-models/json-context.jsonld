@@ -1,0 +1,441 @@
+{
+    "@context": {
+        "type": "@type",
+        "id": "@id",
+        "ngsi-ld": "https://uri.etsi.org/ngsi-ld/",
+        "fiware": "https://uri.fiware.org/ns/data-models#",
+        "schema": "https://schema.org/",
+        "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+        "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "tutorial": "https://ngsi-ld-tutorials.readthedocs.io/en/latest/datamodels.html#",
+        "Building": "fiware:Building",
+        "Device": "fiware:Device",
+        "Animal": "fiware:Animal",
+        "Female": "schema:Female",
+        "FillingLevelSensor": "tutorial:FillingLevelSensor",
+        "Herbicide": "tutorial:Product",
+        "HVAC": "https://w3id.org/saref#HVAC",
+        "Male": "schema:Male",
+        "PartField": "tutorial:PartField",
+        "Person": "fiware:Person",
+        "SoilSensor": "tutorial:SoilSensor",
+        "TemperatureSensor": "tutorial:TemperatureSensor",
+        "Task": "fiware:Activity",
+        "Tractor": "tutorial:Tractor",
+        "Water": "tutorial:Water",
+        "actuator": "https://w3id.org/saref#actuator",
+        "additionalName": {
+            "@id": "schema:additionalName",
+            "@type": "xsd:string"
+        },
+        "address": "schema:address",
+        "airPollution": "https://w3id.org/saref#airPollution",
+        "atmosphericPressure": "https://w3id.org/saref#atmosphericPressure",
+        "barn": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn",
+        "batteryLevel": {
+            "@id": "fiware:batteryLevel",
+            "@type": "xsd:number"
+        },
+        "category": {
+            "@id": "fiware:category",
+            "@type": "@vocab"
+        },
+        "configuration": {
+            "@id": "fiware:configuration",
+            "@type": "xsd:string"
+        },
+        "conservatory": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dconservatory",
+        "containedInPlace": {
+            "@id": "fiware:containedInPlace",
+            "@type": "@id"
+        },
+        "controlledAsset": {
+            "@id": "fiware:controlledAsset",
+            "@type": "@id"
+        },
+        "controlledProperty": {
+            "@id": "fiware:controlledProperty",
+            "@type": "@vocab"
+        },
+        "cowshed": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dcowshed",
+        "dataProvider": {
+            "@id": "fiware:dataProvider",
+            "@type": "xsd:string"
+        },
+        "dateCreated": {
+            "@id": "fiware:dateCreated",
+            "@type": "xs:dateTime"
+        },
+        "dateFirstUsed": {
+            "@id": "fiware:dateFirstUsed",
+            "@type": "xs:dateTime"
+        },
+        "dateInstalled": {
+            "@id": "fiware:dateInstalled",
+            "@type": "xs:dateTime"
+        },
+        "dateLastCalibration": {
+            "@id": "fiware:dateLastCalibration",
+            "@type": "xs:dateTime"
+        },
+        "dateLastValueReported": {
+            "@id": "fiware:dateLastValueReported",
+            "@type": "xs:dateTime"
+        },
+        "dateManufactured": {
+            "@id": "fiware:dateManufactured",
+            "@type": "xs:dateTime"
+        },
+        "dateModified": {
+            "@id": "fiware:dateModified",
+            "@type": "xs:dateTime"
+        },
+        "depth": "https://w3id.org/saref#depth",
+        "description": {
+            "@id": "ngsi-ld:description",
+            "@type": "xsd:string"
+        },
+        "deviceState": {
+            "@id": "fiware:deviceState",
+            "@type": "xsd:string"
+        },
+        "digester": "https://wiki.openstreetmap.org/wiki/Tag:building%3Ddigester",
+        "eatingActivity": "https://w3id.org/saref#eatingActivity",
+        "email": {
+            "@id": "schema:email",
+            "@type": "xsd:string"
+        },
+        "endgun": "https://w3id.org/saref#endgun",
+        "familyName": {
+            "@id": "schema:familyName",
+            "@type": "xsd:string"
+        },
+        "farm": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dfarm",
+        "farm_auxiliary": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dfarm_auxiliary",
+        "faxNumber": {
+            "@id": "schema:faxNumber",
+            "@type": "xsd:string"
+        },
+        "filling": "https://w3id.org/saref#fillingLevel",
+        "firmwareVersion": {
+            "@id": "fiware:firmwareVersion",
+            "@type": "xsd:string"
+        },
+        "floorsAboveGround": {
+            "@id": "fiware:floorsAboveGround",
+            "@type": "xsd:integer"
+        },
+        "floorsBelowGround": {
+            "@id": "fiware:floorsBelowGround",
+            "@type": "xsd:integer"
+        },
+        "gender": {
+            "@id": "schema:gender",
+            "@type": "@vocab"
+        },
+        "givenName": {
+            "@id": "schema:givenName",
+            "@type": "xsd:string"
+        },
+        "greenhouse": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dgreenhouse",
+        "hangar": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dhangar",
+        "hardwareVersion": {
+            "@id": "fiware:hardwareVersion",
+            "@type": "xsd:string"
+        },
+        "honorificPrefix": {
+            "@id": "schema:honorificPrefix",
+            "@type": "xsd:string"
+        },
+        "honorificSuffix": {
+            "@id": "schema:honorificSuffix",
+            "@type": "xsd:string"
+        },
+        "humidity": "https://w3id.org/saref#humidity",
+        "hut": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dhut",
+        "implement": "https://w3id.org/saref#implement",
+        "ipAddress": {
+            "@id": "fiware:ipAddress",
+            "@type": "xsd:string"
+        },
+        "irrSection": "https://w3id.org/saref#irrSection",
+        "irrSystem": "https://w3id.org/saref#irrSystem",
+        "isicV4": {
+            "@id": "schema:isicV4",
+            "@type": "xsd:string"
+        },
+        "jobTitle": {
+            "@id": "schema:jobTitle",
+            "@type": "xsd:string"
+        },
+        "location": "https://w3id.org/saref#location",
+        "macAddress": {
+            "@id": "fiware:macAddress",
+            "@type": "xsd:string"
+        },
+        "mcc": {
+            "@id": "fiware:mcc",
+            "@type": "xsd:string"
+        },
+        "meter": "https://w3id.org/saref#meter",
+        "milking": "https://w3id.org/saref#milking",
+        "mnc": {
+            "@id": "fiware:mnc",
+            "@type": "xsd:string"
+        },
+        "motion": "https://w3id.org/saref#motion",
+        "movementActivity": "https://w3id.org/saref#movementActivity",
+        "multimedia": "https://w3id.org/saref#multimedia",
+        "name": {
+            "@id": "ngsi-ld:name",
+            "@type": "xsd:string"
+        },
+        "network": "https://w3id.org/saref#network",
+        "occupancy": "https://w3id.org/saref#occupancy",
+        "occupier": {
+            "@id": "fiware:occupier",
+            "@type": "@id"
+        },
+        "openingHours": {
+            "@id": "fiware:openingHours",
+            "@type": "xsd:array"
+        },
+        "osVersion": {
+            "@id": "fiware:osVersion",
+            "@type": "xsd:string"
+        },
+        "owner": {
+            "@id": "fiware:owner",
+            "@type": "@id"
+        },
+        "precipitation": "https://w3id.org/saref#precipitation",
+        "pressure": "https://w3id.org/saref#pressure",
+        "provider": {
+            "@id": "fiware:provider",
+            "@type": "xsd:string"
+        },
+        "refDeviceModel": {
+            "@id": "fiware:refDeviceModel",
+            "@type": "@id"
+        },
+        "refMap": {
+            "@id": "fiware:refMap",
+            "@type": "xs:anyURI"
+        },
+        "rssi": {
+            "@id": "fiware:rssi",
+            "@type": "xsd:string"
+        },
+        "sensor": "https://w3id.org/saref#sensor",
+        "serialNumber": {
+            "@id": "fiware:serialNumber",
+            "@type": "xsd:string"
+        },
+        "service": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dservice",
+        "shed": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dshed",
+        "softwareVersion": {
+            "@id": "fiware:softwareVersion",
+            "@type": "xsd:string"
+        },
+        "soilMoisture": "https://w3id.org/saref#soilMoisture",
+        "solarRadiation": "https://w3id.org/saref#solarRadiation",
+        "source": {
+            "@id": "fiware:source",
+            "@type": "xsd:string"
+        },
+        "stable": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dstable",
+        "sty": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dsty",
+        "supportedProtocol": {
+            "@id": "fiware:supportedProtocol",
+            "@type": "@vocab"
+        },
+        "taxID": {
+            "@id": "schema:taxID",
+            "@type": "xsd:string"
+        },
+        "telephone": {
+            "@id": "schema:telephone",
+            "@type": "xsd:string"
+        },
+        "temperature": "https://w3id.org/saref#temperature",
+        "transformer_tower": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dtransformer_tower",
+        "value": {
+            "@id": "fiware:value",
+            "@type": "xsd:string"
+        },
+        "vatID": {
+            "@id": "schema:vatID",
+            "@type": "xsd:string"
+        },
+        "waterConsumption": "https://w3id.org/saref#waterConsumption",
+        "water_tower": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dwater_tower",
+        "weatherConditions": "https://w3id.org/saref#weatherConditions",
+        "weight": "https://w3id.org/saref#weight",
+        "windDirection": "https://w3id.org/saref#windDirection",
+        "windSpeed": "https://w3id.org/saref#windSpeed",
+        "state": "https://saref.etsi.org/core/hasState",
+        "heartRate": "https://purl.bioontology.org/ontology/MESH/D006339",
+        "status": "https://saref.etsi.org/core/status",
+        "product": {
+            "@id": "fiware:refObject",
+            "@type": "@id"
+        },
+
+        "worker": {
+            "@id": "fiware:refAgent",
+            "@type": "@id"
+        },
+        "field": {
+            "@id": "fiware:refTarget",
+            "@type": "@id"
+        },
+        "on": "https://w3id.org/saref#on",
+        "off": "https://w3id.org/saref#off",
+
+        "species": "fiware:species",
+        "sex": "fiware:sex",
+        "legalID": "fiware:legalID"
+    },
+    "@graph": [
+        {
+            "@id": "fiware:Building",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": ""
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "Building"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:TemperatureSensor",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A device that consists of a sensor, has category `saref:Sensor` and is used for the purpose of sensing temperature`."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "TemperatureSensor"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:FillingLevelSensor",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "A device that consists of a sensor, has category `saref:Sensor` and is used for the purpose of sensing filling Level."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "FillingLevelSensor"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:Person",
+            "@type": "rdfs:Class",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": ""
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "Person"
+                }
+            ],
+            "rdfs:subClassOf": {
+                "@id": "schema:Thing"
+            }
+        },
+        {
+            "@id": "fiware:temperature",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Property related to some measurements that are characterized by a certain value that is measured in a temperature unit (degree_Celsius, degree_Fahrenheit, or degree_kelvin)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "temperature"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:fillingLevel",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Property related to some measurements that are characterized by a certain value that is a filling level."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "fillingLevel"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:temperature",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Property related to some measurements that are characterized by a certain value that is measured in a temperature unit (degree_Celsius, degree_Fahrenheit, or degree_kelvin)"
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "temperature"
+                }
+            ]
+        },
+        {
+            "@id": "fiware:fillingLevel",
+            "@type": "ngsi-ld:Property",
+            "rdfs:comment": [
+                {
+                    "@language": "en",
+                    "@value": "Property related to some measurements that are characterized by a certain value that is a filling level."
+                }
+            ],
+            "rdfs:label": [
+                {
+                    "@language": "en",
+                    "@value": "fillingLevel"
+                }
+            ]
+        }
+    ]
+}

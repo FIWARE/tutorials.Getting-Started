@@ -9,7 +9,7 @@ set -e
 
 SCORPIO="http://scorpio:9090/scorpio/v1/info/"
 ORION="http://orion:1026/version"
-CONTEXT="http://context-provider:3000/data-models/ngsi-context.jsonld"
+CONTEXT="http://context/ngsi-context.jsonld"
 
 if (( $# != 1 )); then
 	echo "Illegal number of parameters"
@@ -114,7 +114,7 @@ case "${command}" in
 	"orion")
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
-		echo -e "Starting two containers \033[1;34mOrion-LD\033[0m and a \033[1;30mMongoDB\033[0m database."
+		echo -e "Starting three containers \033[1;34mOrion-LD\033[0m, a linked data \033[1mContext\033[0m and a \033[1;30mMongoDB\033[0m database."
 		echo -e "- \033[1;34mOrion-LD\033[0m is the context broker"
 		echo ""
 		docker-compose --log-level ERROR -f docker-compose/orion-ld.yml -p fiware up -d --remove-orphans
@@ -127,7 +127,7 @@ case "${command}" in
 	"scorpio")
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
-		echo -e "Starting four containers \033[1;34mScorpio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m and a \033[1mPostgres\033[0m database."
+		echo -e "Starting containers:  \033[1;34mScorpio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m, a linked data \033[1mContext\033[0m and a \033[1mPostgres\033[0m database."
 		echo -e "- \033[1;34mScorpio\033[0m is the context broker\n"
 		docker-compose --log-level ERROR -f docker-compose/scorpio-aaio.yml -p fiware up -d --remove-orphans
 		displayServices scorpio
