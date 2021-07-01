@@ -399,7 +399,7 @@ curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
         "type": "Property",
         "value": "Victory Farm"
     },
-    "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld"
+    "@context": "http://context/ngsi-context.jsonld"
 }'
 ```
 
@@ -416,7 +416,7 @@ Context Broker は `@context` で示されているすべてのファイルを�
 ```jsonld
 {
     "@context": [
-        "http://context-provider:3000/data-models/ngsi-context.jsonld",
+        "http://context/ngsi-context.jsonld",
         "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld"
     ]
 }
@@ -431,7 +431,7 @@ Core`@context`が**最後**に処理されるため、以前に同じ `@ id` で
 ```console
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
 -H 'Content-Type: application/json' \
--H 'Link: <http://context-provider:3000/data-models/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 --d '{
     "id": "urn:ngsi-ld:Building:barn002",
     "type": "Building",
@@ -649,7 +649,7 @@ Link: <https://fiware.github.io/data-models/context.jsonld>; rel="http://www.w3.
 ```console
 curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001' \
 -H 'Accept: application/ld+json' \
--H 'Link: <http://context-provider:3000/data-models/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+-H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
 ```
 
 #### レスポンス:
@@ -663,7 +663,7 @@ Core `@context` が含まれることは常に暗示されることに注意し�
 
 ```jsonld
 {
-    "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld",
+    "@context": "http://context/ngsi-context.jsonld",
     "id": "urn:ngsi-ld:Building:farm001",
     "type": "Building",
     "address": {
@@ -717,7 +717,7 @@ Core `@context` が含まれることは常に暗示されることに注意し�
 ```console
 curl -G -X GET \
     'http://localhost:1026/ngsi-ld/v1/entities' \
--H 'Link: <http://context-provider:3000/data-models/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'options=keyValues'
@@ -732,7 +732,7 @@ curl -G -X GET \
 ```jsonld
 [
     {
-        "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld",
+        "@context": "http://context/ngsi-context.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
         "type": "Building",
         "address": {
@@ -752,7 +752,7 @@ curl -G -X GET \
         }
     },
     {
-        "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld",
+        "@context": "http://context/ngsi-context.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {
@@ -927,7 +927,7 @@ curl -G -X GET \
 ```jsonld
 [
     {
-        "@context": "http://context-provider:3000/data-models/ngsi-context.jsonld",
+        "@context": "http://context/ngsi-context.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {
