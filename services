@@ -2,20 +2,23 @@
 #
 #  Command Line Interface to start all services associated with the Getting-Started Tutorial
 #
-#  For this tutorial the commands are merely a convenience script to run docker-compose
-#
+#  For this tutorial the commands are merely a convenience script to run ${dockerCmd}#
 
 set -e
 
-if (( $# != 1 )); then
-	echo "Illegal number of parameters"
+dockerCmd="docker compose"
+if (( $# == 2 )); then
+    dockerCmd="docker-compose"
+fi
+
+if (( $# < 1 )); then	echo "Illegal number of parameters"
 	echo "usage: services [create|start|stop]"
 	exit 1
 fi
 
 stoppingContainers () {
 	echo "Stopping running containers"
-	docker compose -p fiware down -v --remove-orphans
+	${dockerCmd} down -v --remove-orphans
 }
 
 addDatabaseIndex () {
@@ -65,7 +68,7 @@ case "${command}" in
 		echo -e "Starting containers: \033[1;34mOrion\033[0m and a \033[1mMongoDB\033[0m database."
 		echo -e "- \033[1;34mOrion\033[0m is the context broker"
 		echo ""
-		docker compose -p fiware up -d --remove-orphans
+		${dockerCmd} up -d --remove-orphans
 		waitForMongo
 		addDatabaseIndex
 		displayServices
@@ -78,7 +81,7 @@ case "${command}" in
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker pull curlimages/curl
-		docker compose -p fiware pull
+		${dockerCmd} pull
 		;;
 	*)
 		echo "Command not Found."
