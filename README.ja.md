@@ -114,7 +114,7 @@ docker-compose -v
 docker version
 ```
 
-Docker バージョン 18.03 以降と Docker Compose 1.21 以上を使用していることを確認
+Docker バージョン 18.03 以降と Docker Compose 1.29 以上を使用していることを確認
 し、必要に応じてアップグレードしてください。
 
 <a name="starting-the-containers"></a>
@@ -176,14 +176,15 @@ git clone https://github.com/FIWARE/tutorials.Getting-Started.git
 cd tutorials.Getting-Started
 git checkout NGSI-v2
 
-docker-compose -p fiware up -d
+export $(cat .env | grep "#" -v)
+docker compose -p fiware up -d
 ```
 
 > **注** : クリーンアップして再起動する場合は、次のコマンドを使用して再起動でき
 > ます :
 
 ```bash
-docker-compose -p fiware down
+docker compose -p fiware down
 ```
 
 >
