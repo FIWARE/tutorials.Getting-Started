@@ -749,7 +749,7 @@ Since `options=keyValues` is sent, this will effect the structure of the payload
 ```console
 curl -G -X GET \
   'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Link: <http://context//json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=name==%22Big%20Red%20Barn%22' \
@@ -764,7 +764,7 @@ The use of the `Link` header and the `options=keyValues` parameter reduces the r
 ```jsonld
 [
     {
-        "@context": "http://context//json-context.jsonld",
+        "@context": "http://context/json-context.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {
@@ -819,7 +819,7 @@ the request a query can be made using alternate short names (e.g. `type=Building
 ```console
 curl -G -X GET \
     'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Link: <http://context//alternate-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/alternate-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Geb%C3%A4ude' \
     -d 'q=name==%22Big%20Red%20Barn%22' \
@@ -835,7 +835,7 @@ directly but would require an additional **JSON-LD** expansion/compaction operat
 ```jsonld
 [
     {
-        "@context": "http://context//alternate-context.jsonld",
+        "@context": "http://context/alternate-context.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Gebäude",
         "adresse": {
@@ -871,7 +871,7 @@ done using the `q` parameter, comma separating the acceptable values.
 ```console
 curl -G -X GET \
     'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Link: <http://context//nsgi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/nsgi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=category==%22barn%22,%22farm_auxiliary%22' \
@@ -918,7 +918,7 @@ Filtering can be done using the `q` parameter - sub-attributes are annotated usi
 
 ```console
 curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Link: <http://context//json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=address%5BaddressLocality%5D==%22Tiergarten%22' \
@@ -932,7 +932,7 @@ Use of the `Link` header and the `options=keyValues` parameter reduces the respo
 ```jsonld
 [
     {
-        "@context": "http://context//json-context.jsonld",
+        "@context": "http://context/json-context.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
         "type": "Building",
         "address": {
@@ -952,7 +952,7 @@ Use of the `Link` header and the `options=keyValues` parameter reduces the respo
         }
     },
     {
-        "@context": "http://context//json-context.jsonld",
+        "@context": "http://context/json-context.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {
@@ -986,7 +986,7 @@ Metadata queries (i.e. Properties of Properties) are annotated using the dot syn
 ```console
 curl -G -X GET \
     'http://localhost:1026/ngsi-ld/v1/entities' \
-    -H 'Link: <http://context//json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+    -H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
     -H 'Accept: application/json' \
     -d 'type=Building' \
     -d 'q=address.verified==true' \
