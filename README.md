@@ -229,21 +229,17 @@ mongo-db:
 ```
 
 ```yaml
-tutorial:
-    image: fiware/tutorials.ngsi-ld
-    hostname: iot-sensors
-    container_name: fiware-tutorial
-    networks:
-        default:
-            aliases:
-                - context
-    expose:
-        - 3000
+ld-context:
+    image: httpd:alpine
+    hostname: context
+    container_name: fiware-ld-context
+    ports:
+        - "3004:80"
 ```
 
 All containers are residing on the same network - the Orion Context Broker is listening on Port `1026` and MongoDB is
-listening on the default port `27017` and the tutorial app is listening on port `3000`. All containers are also exposing
-the same ports externally - this is purely for the tutorial access - so that cUrl or Postman can access them without
+listening on the default port `27017` and httpd is listening on port `80`. All containers are also exposing
+ports externally - this is purely for the tutorial access - so that cUrl or Postman can access them without
 being part of the same network. The command-line initialization should be self explanatory.
 
 # Start Up

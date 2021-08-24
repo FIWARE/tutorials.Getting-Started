@@ -239,16 +239,12 @@ mongo-db:
 ```
 
 ```yaml
-tutorial:
-    image: fiware/tutorials.ngsi-ld
-    hostname: iot-sensors
-    container_name: fiware-tutorial
-    networks:
-        default:
-            aliases:
-                - context
-    expose:
-        - 3000
+ld-context:
+    image: httpd:alpine
+    hostname: context
+    container_name: fiware-ld-context
+    ports:
+        - "3004:80"
 ```
 
 すべてのコンテナは同じネットワーク上にあります - Orion Context Broker はポート `1026` でリッスンし、MongoDB
