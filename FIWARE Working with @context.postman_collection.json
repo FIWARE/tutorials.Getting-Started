@@ -15,14 +15,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/data-models/ngsi-context.jsonld",
+							"raw": "http://localhost:3004/ngsi-context.jsonld",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3004",
 							"path": [
-								"data-models",
 								"ngsi-context.jsonld"
 							]
 						},
@@ -36,14 +35,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/data-models/json-context.jsonld",
+							"raw": "http://localhost:3004/json-context.jsonld",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3004",
 							"path": [
-								"data-models",
 								"json-context.jsonld"
 							]
 						},
