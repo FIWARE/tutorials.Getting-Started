@@ -9,7 +9,7 @@ set -e
 
 SCORPIO="http://scorpio:9090/scorpio/v1/info/"
 ORION="http://orion:1026/version"
-STELLIO="http://localhost:8080/actuator/health"
+STELLIO="http://stellio:8080/actuator/health"
 CONTEXT="http://context/ngsi-context.jsonld"
 
 dockerCmd="docker compose"
@@ -19,7 +19,7 @@ fi
 
 if (( $# < 1 )); then
 	echo "Illegal number of parameters"
-	echo "usage: services [create|orion|scorpio|stop]"
+	echo "usage: services [create|orion|scorpio|stellio|stop]"
 	exit 1
 fi
 
@@ -74,14 +74,14 @@ waitForStellio () {
 	waitSeconds=30
 	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` -eq 000 ]
 	do 
-	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 500)"
+	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 500)"
 	  echo -e "Waiting for ${waitSeconds} seconds ..."
 	  sleep ${waitSeconds}
 	done
 	echo -e "\n⏳ Waiting for all \033[1;34mStellio\033[0m services to be available\n"
 	while [ `docker run --network fiware_default --rm curlimages/curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` -eq 500 ]
 	do 
-	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://localhost:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 200)"
+	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 200)"
 	  echo -e "Waiting for ${waitSeconds} seconds ..."
 	  sleep ${waitSeconds}
 	done
@@ -108,9 +108,15 @@ waitForMongo () {
 
 stoppingContainers () {
 	echo "Stopping containers"
-	${dockerCmd} -f docker-compose/orion-ld.yml down -v --remove-orphans
-	${dockerCmd} -f docker-compose/scorpio-aaio.yml down -v --remove-orphans
-	${dockerCmd} -f docker-compose/stellio.yml down -v --remove-orphans
+	${dockerCmd} -f docker-compose/orion-ld.yml down --remove-orphans -v
+	${dockerCmd} -f docker-compose/scorpio-aaio.yml down --remove-orphans -v
+	${dockerCmd} -f docker-compose/stellio.yml down --remove-orphans -v
+	VOLUMES=$(docker volume ls -qf dangling=true) 
+	if [[ -n $VOLUMES ]]; then 
+		echo "Removing old volumes"
+		docker volume rm $VOLUMES
+	fi
+	
 }
 
 addDatabaseIndex () {
@@ -142,7 +148,7 @@ case "${command}" in
 		echo -e "Starting containers:  \033[1;34mOrion-LD\033[0m, a linked data \033[1mContext\033[0m and a \033[1;30mMongoDB\033[0m database."
 		echo -e "- \033[1;34mOrion-LD\033[0m is the context broker"
 		echo ""
-		${dockerCmd} -f docker-compose/orion-ld.yml up -d --remove-orphans
+		${dockerCmd} -f docker-compose/orion-ld.yml up -d --remove-orphans --renew-anon-volumes
 		waitForMongo
 		addDatabaseIndex
 		displayServices
@@ -154,7 +160,7 @@ case "${command}" in
 		stoppingContainers
 		echo -e "Starting containers:  \033[1;34mScorpio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m, a linked data \033[1mContext\033[0m and a \033[1mPostgres\033[0m database."
 		echo -e "- \033[1;34mScorpio\033[0m is the context broker\n"
-		${dockerCmd} -f docker-compose/scorpio-aaio.yml up -d --remove-orphans
+		${dockerCmd} -f docker-compose/scorpio-aaio.yml up -d --remove-orphans --renew-anon-volumes
 		displayServices scorpio
 		waitForScorpio
 		waitForContext
@@ -164,7 +170,7 @@ case "${command}" in
 		stoppingContainers
 		echo -e "Starting containers:  \033[1;34mStellio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m, \033[1mNeo4j\033[0m, \033[1mPostgreSQL/TimescaleDB\033[0m, and a linked data \033[1mContext\033[0m."
 		echo -e "- \033[1;34mStellio\033[0m is the context broker\n"
-		${dockerCmd} -f docker-compose/stellio.yml up -d --remove-orphans
+		${dockerCmd} -f docker-compose/stellio.yml up -d --remove-orphans --renew-anon-volumes
 		displayServices stellio
 		waitForStellio
 		waitForContext

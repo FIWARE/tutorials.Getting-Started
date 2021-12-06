@@ -27,7 +27,7 @@ services:
     ports:
         - "3004:80"
     volumes:
-        - ../data-models:/usr/local/apache2/htdocs/
+        - data-models:/usr/local/apache2/htdocs/
     healthcheck:
       test: (wget --server-response --spider --quiet  http://ld-context/ngsi-context.jsonld 2>&1 | awk 'NR==1{print $$2}'|  grep -q -e "200") || exit 1
 
@@ -131,7 +131,8 @@ services:
       - default
     command: --nojournal
     volumes:
-      - mongo-db:/data
+      - mongo-db:/data/db
+      - mongo-config:/data/configdb
     healthcheck:
       test: |
         host=`hostname --ip-address || echo '127.0.0.1'`; 
@@ -141,4 +142,23 @@ networks:
   default: ~
 
 volumes:
-  mongo-db: ~
+  volumes:
+  mongo-db:
+    # https://docs.docker.com/engine/reference/commandline/volume_create/#driver-specific-options
+    driver: local
+    driver_opts:
+      o: size=1m
+      device: tmpfs
+      type: tmpfs
+  mongo-config:
+    driver: local
+    driver_opts:
+      o: size=1m
+      device: tmpfs
+      type: tmpfs
+  data-models:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${PWD}/data-models
