@@ -1,0 +1,168 @@
+version: '3.5'
+services:
+  # @context file is served from here
+  ld-context:
+    image: httpd:alpine
+    hostname: context
+    container_name: fiware-ld-context
+    ports:
+        - "3004:80"
+    volumes:
+        - ../data-models:/usr/local/apache2/htdocs/
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:5.4.1
+    container_name: stellio-zookeeper
+    ports:
+      - 2181:2181
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+  kafka:
+    image: confluentinc/cp-kafka:5.4.1
+    container_name: stellio-kafka
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+  neo4j:
+    image: neo4j:4.2
+    container_name: stellio-neo4j
+    volumes:
+      - stellio-neo4j-storage:/data
+    environment:
+      - NEO4J_dbms_default__database=stellio
+      - NEO4J_AUTH=none
+      - "NEO4J_dbms_security_procedures_unrestricted=apoc.*"
+      - "NEO4J_dbms_security_procedures_allowlist=apoc.*"
+      - NEO4JLABS_PLUGINS=["apoc"]
+    ports:
+      - 7474:7474
+      - 7687:7687
+  postgres:
+    image: stellio/stellio-timescale-postgis:2.3.0-pg13
+    container_name: stellio-postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+      - "POSTGRES_MULTIPLE_DATABASES=stellio_search,stellio_search,stellio_search_db_password: stellio_subscription,stellio_subscription,stellio_subscription_db_password"
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+    volumes:
+      - stellio-postgres-storage:/var/lib/postgresql/data
+  api-gateway:
+    container_name: stellio-api-gateway
+    hostname: stellio
+    image: stellio/stellio-api-gateway:${STELLIO_DOCKER_TAG}
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    ports:
+      - "${STELLIO_PORT}:8080"
+  entity-service:
+    container_name: stellio-entity-service
+    image: stellio/stellio-entity-service:${STELLIO_DOCKER_TAG}
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - APPLICATION_AUTHENTICATION_ENABLED=false
+    ports:
+      - 8082:8082
+    depends_on:
+      - neo4j
+      - kafka
+  search-service:
+    container_name: stellio-search-service
+    image: stellio/stellio-search-service:${STELLIO_DOCKER_TAG}
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_R2DBC_URL=r2dbc:postgresql://postgres/stellio_search
+      - SPRING_FLYWAY_URL=jdbc:postgresql://postgres/stellio_search
+      - SPRING_R2DBC_USERNAME=stellio_search
+      - SPRING_R2DBC_PASSWORD=stellio_search_db_password
+      - APPLICATION_AUTHENTICATION_ENABLED=false
+    ports:
+      - 8083:8083
+    depends_on:
+      - postgres
+      - kafka
+  subscription-service:
+    container_name: stellio-subscription-service
+    image: stellio/stellio-subscription-service:${STELLIO_DOCKER_TAG}
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_R2DBC_URL=r2dbc:postgresql://postgres/stellio_subscription
+      - SPRING_FLYWAY_URL=jdbc:postgresql://postgres/stellio_subscription
+      - SPRING_R2DBC_USERNAME=stellio_subscription
+      - SPRING_R2DBC_PASSWORD=stellio_subscription_db_password
+      - APPLICATION_AUTHENTICATION_ENABLED=false
+    ports:
+      - 8084:8084
+    depends_on:
+      - postgres
+      - kafka
+
+  # Tutorial acts as a series of dummy IoT Sensors over HTTP
+  tutorial:
+    image: fiware/tutorials.ngsi-ld
+    hostname: iot-sensors
+    container_name: fiware-tutorial
+    depends_on:
+      - api-gateway
+      - mongo-db
+    networks:
+      default:
+        aliases:
+          - tutorial
+          - context-provider
+    expose:
+      - "${TUTORIAL_APP_PORT}"
+      - "${TUTORIAL_DUMMY_DEVICE_PORT}"
+    ports:
+      - "${TUTORIAL_APP_PORT}:${TUTORIAL_APP_PORT}" # localhost:3000
+      - "${TUTORIAL_DUMMY_DEVICE_PORT}:${TUTORIAL_DUMMY_DEVICE_PORT}" # localhost:3001
+    environment:
+      - "DEBUG=tutorial:*"
+      - "WEB_APP_PORT=${TUTORIAL_APP_PORT}" # Port used by the content provider proxy and web-app for viewing data
+      - "IOTA_HTTP_HOST=iot-agent"
+      - "IOTA_HTTP_PORT=${IOTA_SOUTH_PORT}"
+      - "IOTA_DEFAULT_RESOURCE=/iot/d"
+      - "DUMMY_DEVICES_PORT=${TUTORIAL_DUMMY_DEVICE_PORT}" # Port used by the dummy IOT devices to receive commands
+      - "DUMMY_DEVICES_TRANSPORT=HTTP" # Default transport used by dummy Io devices
+      - "CONTEXT_BROKER=http://api-gateway:${STELLIO_PORT}/ngsi-ld/v1" # URL of the context broker to update context
+      - "NGSI_LD_PREFIX="
+      - "OPENWEATHERMAP_KEY_ID=<ADD_YOUR_KEY_ID>"
+      - "TWITTER_CONSUMER_KEY=<ADD_YOUR_CONSUMER_KEY>"
+      - "TWITTER_CONSUMER_SECRET=<ADD_YOUR_CONSUMER_SECRET>"
+      - "MONGO_URL=mongodb://mongo-db:27017"
+
+  # Databases for the dummy IoT Sensors
+  mongo-db:
+    image: mongo:${MONGO_DB_VERSION}
+    hostname: mongo-db
+    container_name: db-mongo
+    expose:
+      - "${MONGO_DB_PORT}"
+    ports:
+      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}" # localhost:27017
+    networks:
+      - default
+    command: --nojournal
+    volumes:
+      - mongo-db:/data
+    healthcheck:
+      test: |
+        host=`hostname --ip-address || echo '127.0.0.1'`; 
+        mongo --quiet $host/test --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)' && echo 0 || echo 1    
+
+volumes:
+  stellio-neo4j-storage:
+  stellio-postgres-storage:
+  mongo-db:

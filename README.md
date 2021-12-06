@@ -253,7 +253,7 @@ git clone https://github.com/FIWARE/tutorials.Getting-Started.git
 cd tutorials.Getting-Started
 git checkout NGSI-LD
 
-./services orion|scorpio
+./services orion|scorpio|stellio
 ```
 
 > **Note:** If you want to clean up and start over again you can do so with the following command:
