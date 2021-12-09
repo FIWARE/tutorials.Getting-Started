@@ -18,18 +18,6 @@
 #
 version: "3.5"
 services:
-  # @context file is served from here
-  ld-context:
-    image: httpd:alpine
-    hostname: context
-    container_name: fiware-ld-context
-    ports:
-        - "3004:80"
-    volumes:
-        - data-models:/usr/local/apache2/htdocs/
-    healthcheck:
-      test: (wget --server-response --spider --quiet  http://ld-context/ngsi-context.jsonld 2>&1 | awk 'NR==1{print $$2}'|  grep -q -e "200") || exit 1
-
   # Orion is the context broker
   orion:
     image: fiware/orion-ld:${ORION_LD_VERSION}
@@ -46,84 +34,10 @@ services:
       test: curl --fail -s http://orion:${ORION_LD_PORT}/version || exit 1
       interval: 5s
 
-  # Databases
-  mongo-db:
-    image: mongo:${MONGO_DB_VERSION}
-    hostname: mongo-db
-    container_name: db-mongo
-    expose:
-      - "${MONGO_DB_PORT}"
-    ports:
-      - "${MONGO_DB_PORT}:${MONGO_DB_PORT}" # localhost:27017
-    networks:
-      - default
-    volumes:
-      - mongo-db:/data/db
-      - mongo-config:/data/configdb
-    healthcheck:
-      test: |
-        host=`hostname --ip-address || echo '127.0.0.1'`; 
-        mongo --quiet $host/test --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)' && echo 0 || echo 1    
-      interval: 5s
-
-    # Tutorial acts as a series of dummy IoT Sensors over HTTP
+  # Tutorial acts as a series of dummy IoT Sensors over HTTP and connects to the Orion-LD Broker
   tutorial:
-    image: fiware/tutorials.ngsi-ld
-    hostname: iot-sensors
-    container_name: fiware-tutorial
-    depends_on:
-      - orion
-      - mongo-db
-    networks:
-      default:
-        aliases:
-          - tutorial
-          - context-provider
-    expose:
-      - "${TUTORIAL_APP_PORT}"
-      - "${TUTORIAL_DUMMY_DEVICE_PORT}"
-    ports:
-      - "${TUTORIAL_APP_PORT}:${TUTORIAL_APP_PORT}" # localhost:3000
-      - "${TUTORIAL_DUMMY_DEVICE_PORT}:${TUTORIAL_DUMMY_DEVICE_PORT}" # localhost:3001
     environment:
-      - "DEBUG=tutorial:*"
-      - "WEB_APP_PORT=${TUTORIAL_APP_PORT}" # Port used by the content provider proxy and web-app for viewing data
-      - "IOTA_HTTP_HOST=iot-agent"
-      - "IOTA_HTTP_PORT=${IOTA_SOUTH_PORT}"
       - "IOTA_DEFAULT_RESOURCE=/iot/d"
       - "DUMMY_DEVICES_PORT=${TUTORIAL_DUMMY_DEVICE_PORT}" # Port used by the dummy IOT devices to receive commands
       - "DUMMY_DEVICES_TRANSPORT=HTTP" # Default transport used by dummy Io devices
       - "CONTEXT_BROKER=http://orion:${ORION_LD_PORT}/ngsi-ld/v1" # URL of the context broker to update context
-      - "NGSI_LD_PREFIX="
-      - "OPENWEATHERMAP_KEY_ID=<ADD_YOUR_KEY_ID>"
-      - "TWITTER_CONSUMER_KEY=<ADD_YOUR_CONSUMER_KEY>"
-      - "TWITTER_CONSUMER_SECRET=<ADD_YOUR_CONSUMER_SECRET>"
-      - "MONGO_URL=mongodb://mongo-db:27017"
-
-
-networks:
-  default:
-    ipam:
-      config:
-        - subnet: 172.18.1.0/24
-
-volumes:
-  mongo-db:
-    # https://docs.docker.com/engine/reference/commandline/volume_create/#driver-specific-options
-    driver: local
-    driver_opts:
-      o: size=1m
-      device: tmpfs
-      type: tmpfs
-  mongo-config:
-    driver: local
-    driver_opts:
-      o: size=1m
-      device: tmpfs
-      type: tmpfs
-  data-models:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${PWD}/data-models

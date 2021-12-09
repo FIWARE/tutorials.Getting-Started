@@ -108,9 +108,7 @@ waitForMongo () {
 
 stoppingContainers () {
 	echo "Stopping containers"
-	${dockerCmd} -f docker-compose/orion-ld.yml down --remove-orphans -v
-	${dockerCmd} -f docker-compose/scorpio-aaio.yml down --remove-orphans -v
-	${dockerCmd} -f docker-compose/stellio.yml down --remove-orphans -v
+	${dockerCmd} -f docker-compose/common.yml -f docker-compose/orion-ld.yml -f docker-compose/scorpio-aaio.yml -f docker-compose/stellio.yml down down --remove-orphans -v
 	VOLUMES=$(docker volume ls -qf dangling=true) 
 	if [[ -n $VOLUMES ]]; then 
 		echo "Removing old volumes"
@@ -148,7 +146,7 @@ case "${command}" in
 		echo -e "Starting containers:  \033[1;34mOrion-LD\033[0m, a linked data \033[1mContext\033[0m and a \033[1;30mMongoDB\033[0m database."
 		echo -e "- \033[1;34mOrion-LD\033[0m is the context broker"
 		echo ""
-		${dockerCmd} -f docker-compose/orion-ld.yml up -d --remove-orphans --renew-anon-volumes
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/orion-ld.yml  up -d --remove-orphans --renew-anon-volumes
 		waitForMongo
 		addDatabaseIndex
 		displayServices
@@ -160,7 +158,7 @@ case "${command}" in
 		stoppingContainers
 		echo -e "Starting containers:  \033[1;34mScorpio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m, a linked data \033[1mContext\033[0m and a \033[1mPostgres\033[0m database."
 		echo -e "- \033[1;34mScorpio\033[0m is the context broker\n"
-		${dockerCmd} -f docker-compose/scorpio-aaio.yml up -d --remove-orphans --renew-anon-volumes
+		${dockerCmd} -f docker-compose/common.yml  -f docker-compose/scorpio-aaio.yml up -d --remove-orphans --renew-anon-volumes
 		displayServices scorpio
 		waitForScorpio
 		waitForContext
@@ -170,7 +168,7 @@ case "${command}" in
 		stoppingContainers
 		echo -e "Starting containers:  \033[1;34mStellio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m, \033[1mNeo4j\033[0m, \033[1mPostgreSQL/TimescaleDB\033[0m, and a linked data \033[1mContext\033[0m."
 		echo -e "- \033[1;34mStellio\033[0m is the context broker\n"
-		${dockerCmd} -f docker-compose/stellio.yml up -d --remove-orphans --renew-anon-volumes
+		${dockerCmd}  -f docker-compose/common.yml -f docker-compose/stellio.yml up -d --remove-orphans --renew-anon-volumes
 		displayServices stellio
 		waitForStellio
 		waitForContext
@@ -187,9 +185,7 @@ case "${command}" in
 		export $(cat .env | grep "#" -v)
 		echo "Pulling Docker images"
 		docker pull curlimages/curl
-		${dockerCmd} -f docker-compose/scorpio-aaio.yml pull
-		${dockerCmd} -f docker-compose/orion-ld.yml pull
-		${dockerCmd} -f docker-compose/stellio.yml pull
+		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio-aaio.yml -f docker-compose/orion-ld.yml -f docker-compose/stellio.yml pull
 		;;
 	*)
 		echo "Command not Found."
