@@ -75,7 +75,7 @@ services:
   # Tutorial acts as a series of dummy IoT Sensors over HTTP and connects to the Scorpio Broker
   tutorial:
     environment:
-      - "IOTA_DEFAULT_RESOURCE=/iot/d"
-      - "DUMMY_DEVICES_PORT=${TUTORIAL_DUMMY_DEVICE_PORT}" # Port used by the dummy IOT devices to receive commands
-      - "DUMMY_DEVICES_TRANSPORT=HTTP" # Default transport used by dummy Io devices
-      - "CONTEXT_BROKER=http://scorpio:${SCORPIO_PORT}/ngsi-ld/v1" # URL of the context broker to update context
+      - IOTA_DEFAULT_RESOURCE=/iot/d
+      - DUMMY_DEVICES_PORT=${TUTORIAL_DUMMY_DEVICE_PORT} # Port used by the dummy IOT devices to receive commands
+      - DUMMY_DEVICES_TRANSPORT=HTTP # Default transport used by dummy Io devices
+      - CONTEXT_BROKER=http://scorpio:${SCORPIO_PORT}/ngsi-ld/v1 # URL of the context broker to update context

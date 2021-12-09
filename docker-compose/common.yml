@@ -87,19 +87,8 @@ networks:
         - subnet: 172.18.1.0/24
 
 volumes:
-  mongo-db:
-    # https://docs.docker.com/engine/reference/commandline/volume_create/#driver-specific-options
-    driver: local
-    driver_opts:
-      o: size=1m
-      device: tmpfs
-      type: tmpfs
-  mongo-config:
-    driver: local
-    driver_opts:
-      o: size=1m
-      device: tmpfs
-      type: tmpfs
+  mongo-db: ~
+  mongo-config: ~
   data-models:
     driver: local
     driver_opts:
