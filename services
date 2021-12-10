@@ -107,8 +107,11 @@ waitForMongo () {
 }
 
 stoppingContainers () {
-	echo "Stopping containers"
-	${dockerCmd} -f docker-compose/common.yml -f docker-compose/orion-ld.yml -f docker-compose/scorpio-aaio.yml -f docker-compose/stellio.yml down down --remove-orphans -v
+	CONTAINERS=$(docker ps -aq)
+	if [[ -n $CONTAINERS ]]; then 
+		echo "Stopping containers"
+		docker rm -f $CONTAINERS
+	fi
 	VOLUMES=$(docker volume ls -qf dangling=true) 
 	if [[ -n $VOLUMES ]]; then 
 		echo "Removing old volumes"
