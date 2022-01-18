@@ -137,8 +137,9 @@ docker run -d --name fiware-orion -h orion --network=fiware_default \
 
 ## Option 2) Using Docker Compose
 
-All services can be initialised from the command-line using the `docker compose` command. Please clone the repository
-and create the necessary images by running the commands as shown:
+All services can be initialised from the command-line using the `docker-compose` command or the newer
+`docker compose` command (without the hyphen `-` )found in [Compose V2](https://docs.docker.com/compose/cli-command/)
+Please clone the repository and create the necessary images by running the commands as shown:
 
 ```console
 git clone https://github.com/FIWARE/tutorials.Getting-Started.git
