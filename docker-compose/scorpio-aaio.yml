@@ -16,10 +16,12 @@
 # 
 # see: https://github.com/FIWARE/helm-charts/
 #
-version: "3.5"
+version: "3.8"
 
 services:
   zookeeper:
+    labels:
+      org.fiware: 'tutorial'
     image: zookeeper
     hostname: zookeeper
     container_name: zookeeper
@@ -29,6 +31,8 @@ services:
       - "2181"
 
   kafka:
+    labels:
+      org.fiware: 'tutorial'
     image: wurstmeister/kafka
     hostname: kafka
     container_name: kafka
@@ -46,6 +50,8 @@ services:
       - zookeeper
       
   postgres:
+    labels:
+      org.fiware: 'tutorial'
     image: mdillon/postgis
     hostname: postgres
     container_name: db-postgres
@@ -59,6 +65,8 @@ services:
       POSTGRES_DB: ngb
 
   scorpio:
+    labels:
+      org.fiware: 'tutorial'
     image: scorpiobroker/scorpio:scorpio-aaio_${SCORPIO_VERSION}
     hostname: scorpio
     container_name: fiware-scorpio

@@ -16,10 +16,12 @@
 # 
 # see: https://github.com/FIWARE/helm-charts/
 #
-version: "3.5"
+version: "3.8"
 services:
   # @context file is served from here
   ld-context:
+    labels:
+      org.fiware: 'tutorial'
     image: httpd:alpine
     hostname: context
     container_name: fiware-ld-context
@@ -32,6 +34,8 @@ services:
 
   # Databases
   mongo-db:
+    labels:
+      org.fiware: 'tutorial'
     image: mongo:${MONGO_DB_VERSION}
     hostname: mongo-db
     container_name: db-mongo
@@ -52,6 +56,8 @@ services:
 
     # Tutorial acts as a series of dummy IoT Sensors over HTTP
   tutorial:
+    labels:
+      org.fiware: 'tutorial'
     image: fiware/tutorials.ngsi-ld
     hostname: iot-sensors
     container_name: fiware-tutorial
@@ -82,6 +88,8 @@ services:
 
 networks:
   default:
+    labels:
+      org.fiware: 'tutorial'
     ipam:
       config:
         - subnet: 172.18.1.0/24
