@@ -16,10 +16,12 @@
 # 
 # see: https://github.com/FIWARE/helm-charts/
 #
-version: "3.5"
+version: "3.8"
 services:
   # Orion is the context broker
   orion:
+    labels:
+      org.fiware: 'tutorial'
     image: fiware/orion:${ORION_VERSION}
     hostname: orion
     container_name: fiware-orion
@@ -37,6 +39,8 @@ services:
 
   # Databases
   mongo-db:
+    labels:
+      org.fiware: 'tutorial'
     image: mongo:${MONGO_DB_VERSION}
     hostname: mongo-db
     container_name: db-mongo
@@ -57,6 +61,8 @@ services:
 
 networks:
   default:
+    labels:
+      org.fiware: 'tutorial'
     ipam:
       config:
         - subnet: 172.18.1.0/24
