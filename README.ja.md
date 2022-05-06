@@ -1,5 +1,4 @@
-[![FIWARE Banner](https://fiware.github.io/tutorials.Getting-Started/img/fiware.png)](https://www.fiware.org/developers)
-[![NGSI LD](https://img.shields.io/badge/NGSI-LD-d6604d.svg)](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf)
+# Getting Started[<img src="https://img.shields.io/badge/NGSI-LD-d6604d.svg" width="90"  align="left" />](https://www.etsi.org/deliver/etsi_gs/CIM/001_099/009/01.04.01_60/gs_cim009v010401p.pdf)[<img src="https://fiware.github.io/tutorials.Getting-Started/img/Fiware.png" align="left" width="162">](https://www.fiware.org/)<br/>
 
 [![FIWARE Core Context Management](https://nexus.lab.fiware.org/repository/raw/public/badges/chapters/core.svg)](https://github.com/FIWARE/catalogue/blob/master/core/README.md)
 [![License: MIT](https://img.shields.io/github/license/FIWARE/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
@@ -161,7 +160,7 @@ _normalised_ 形式で返されるデータは **NGSI-LD** ルールを尊重し
 -   Linux に Docker をインストールするには、[こちら](https://docs.docker.com/install/)の手順に従ってください
 
 **Docker Compose** は、マルチコンテナ Docker アプリケーションを定義して実行するためのツールです。
-[YAMLファイル](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose/orion-ld.yml)
+[YAMLファイル](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/NGSI-LD/docker-compose/orion-ld.yml)
 を使用して、アプリケーションに必要なサービスを設定します。これは、すべてのコンテナ・サービスを単一のコマンドで起動
 できることを意味します。Docker Compose は、Docker for Windows および Docker for Mac の一部としてデフォルトでインストール
 されますが、Linux ユーザは[こちら](https://docs.docker.com/compose/install/)にある手順に従う必要があります。
@@ -199,8 +198,7 @@ NGSI ドメイン外の他のサービスは、データ構造の名前を選択
 -   基礎となる [MongoDB](https://www.mongodb.com/) データベース :
     -   データ・エンティティ、サブスクリプション、レジストレーションなどのコンテキスト・データ情報を保持するために
         Orion Context Broker によって使用されます
--   **チュートリアル・アプリケーション**は次のことを行います。
-    -   システム内のコンテキスト・エンティティを定義する静的な `@context` ファイルを提供します
+-   HTTP **Web-Server** は、システム内のコンテキスト・エンティティを定義する静的な `@context` ファイルを提供します
 
 3つの要素間のすべての対話は HTTP リクエストによって開始されるため、要素をコンテナ化して、公開されたポートから
 実行できます。
@@ -248,7 +246,7 @@ ld-context:
 ```
 
 すべてのコンテナは同じネットワーク上にあります - Orion Context Broker はポート `1026` でリッスンし、MongoDB
-はデフォルト・ポート `27017` でリッスンしており、チュートリアル・アプリはポート `3000` でリッスンしています。また、
+はデフォルト・ポート `27017` でリッスンしており、httpd Web サーバはポート `80` で `@context` ファイルを提供しています。
 すべてのコンテナは同じポートを外部に公開しています - これは純粋にチュートリアル・アクセス用です - cUrl または Postman
 が同じネットワークの一部でなくてもアクセスできるようにします。コマンドラインの初期化は自明です。
 
@@ -257,7 +255,7 @@ ld-context:
 # 起動
 
 すべてのサービスは、リポジトリ内で提供される
-[services](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/services) Bash スクリプトを実行して、
+[services](https://github.com/FIWARE/tutorials.Getting-Started/blob/NGSI-LD/services) Bash スクリプトを実行して、
 コマンドラインから初期化できます。以下のようにコマンドを実行して、リポジトリのクローンを作成して必要なイメージを
 作成してください :
 
@@ -266,7 +264,7 @@ git clone https://github.com/FIWARE/tutorials.Getting-Started.git
 cd tutorials.Getting-Started
 git checkout NGSI-LD
 
-./services orion|scorpio
+./services orion|scorpio|stellio
 ```
 
 > **注 :** クリーンアップして最初からやり直す場合は、次のコマンドで実行できます :
