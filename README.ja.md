@@ -114,7 +114,7 @@ docker-compose -v
 docker version
 ```
 
-Docker バージョン 18.03 以降と Docker Compose 1.29 以上を使用していることを確認
+Docker バージョン 20.10 以降と Docker Compose 1.29 以上を使用していることを確認
 し、必要に応じてアップグレードしてください。
 
 <a name="starting-the-containers"></a>
@@ -167,9 +167,10 @@ docker network rm fiware_default
 
 ## オプション 2) Docker Compose を使用
 
-すべてのサービスは、 `docker-compose` コマンドを使ってコマンドラインから初期化す
-ることができます。リポジトリを複製し、以下のコマンドを実行して必要なイメージを作
-成してください :
+すべてのサービスは、`docker compose` コマンド、または、[Compose V2](https://docs.docker.com/compose/cli-command/)
+にある新しい `docker compose` コマンド (ハイフンなし `-`) を使用してコマンドラインから初期化
+できます。次のようにコマンドを実行して、リポジトリのクローンを作成し、必要なイメージを作成
+してください:
 
 ```console
 git clone https://github.com/FIWARE/tutorials.Getting-Started.git
@@ -213,26 +214,26 @@ curl -X GET \
 
 ```json
 {
-"orion" : {
-  "version" : "3.0.0",
-  "uptime" : "0 d, 0 h, 17 m, 19 s",
-  "git_hash" : "d6f8f4c6c766a9093527027f0a4b3f906e7f04c4",
-  "compile_time" : "Mon Apr 12 14:48:44 UTC 2021",
-  "compiled_by" : "root",
-  "compiled_in" : "f307ca0746f5",
-  "release_date" : "Mon Apr 12 14:48:44 UTC 2021",
-  "machine" : "x86_64",
-  "doc" : "https://fiware-orion.rtfd.io/en/3.0.0/",
-  "libversions": {
-     "boost": "1_66",
-     "libcurl": "libcurl/7.61.1 OpenSSL/1.1.1g zlib/1.2.11 nghttp2/1.33.0",
-     "libmicrohttpd": "0.9.70",
-     "openssl": "1.1",
-     "rapidjson": "1.1.0",
-     "mongoc": "1.17.4",
-     "bson": "1.17.4"
-  }
-}
+    "orion": {
+        "version": "3.0.0",
+        "uptime": "0 d, 0 h, 17 m, 19 s",
+        "git_hash": "d6f8f4c6c766a9093527027f0a4b3f906e7f04c4",
+        "compile_time": "Mon Apr 12 14:48:44 UTC 2021",
+        "compiled_by": "root",
+        "compiled_in": "f307ca0746f5",
+        "release_date": "Mon Apr 12 14:48:44 UTC 2021",
+        "machine": "x86_64",
+        "doc": "https://fiware-orion.rtfd.io/en/3.0.0/",
+        "libversions": {
+            "boost": "1_66",
+            "libcurl": "libcurl/7.61.1 OpenSSL/1.1.1g zlib/1.2.11 nghttp2/1.33.0",
+            "libmicrohttpd": "0.9.70",
+            "openssl": "1.1",
+            "rapidjson": "1.1.0",
+            "mongoc": "1.17.4",
+            "bson": "1.17.4"
+        }
+    }
 }
 ```
 
@@ -732,8 +733,8 @@ curl -G -X GET \
 
 # 次のステップ
 
-アドバンス機能を追加するアプリをもっと複雑にする方法を知りたいですか？ このシリ
-ーズの他のチュートリアルを読むことで、学ぶことができます。
+高度な機能を追加することで、アプリケーションに複雑さを加える方法を知りたいですか？
+このシリーズの他のチュートリアルを読むことで見つけることができます :
 
 &nbsp; 101. [Getting Started](https://github.com/FIWARE/tutorials.Getting-Started)<br/> &nbsp; 102.
 [Entity Relationships](https://github.com/FIWARE/tutorials.Entity-Relationships)<br/> &nbsp; 103.
@@ -830,4 +831,4 @@ curl -G -X GET \
 
 ## License
 
-[MIT](LICENSE) © 2018-2021 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2018-2022 FIWARE Foundation e.V.
