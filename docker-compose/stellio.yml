@@ -68,6 +68,40 @@ services:
       kafka:
         condition: service_started
 
+  zookeeper:
+    labels:
+      org.fiware: 'tutorial'
+    image: confluentinc/cp-zookeeper:5.5.7
+    container_name: zookeeper
+    ports:
+      - 2181:2181
+    restart: always
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    labels:
+      org.fiware: 'tutorial'
+    image: confluentinc/cp-kafka:5.5.7
+    container_name: kafka
+    ports:
+      - 29092:29092
+    restart: always
+    environment:
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_BROKER_ID: 1
+      KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    depends_on:
+      - zookeeper
+
+
+
   # Databases
   neo4j:
     labels:

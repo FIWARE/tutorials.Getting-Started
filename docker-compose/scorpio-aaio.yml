@@ -16,7 +16,7 @@
 # 
 # see: https://github.com/FIWARE/helm-charts/
 #
-version: "3.8"
+version: "3.9"
 
 services:
   zookeeper:
@@ -29,11 +29,12 @@ services:
       - default
     ports:
       - "2181"
-
+    logging:
+      driver: none
   kafka:
     labels:
       org.fiware: 'tutorial'
-    image: wurstmeister/kafka
+    image: bitnami/kafka
     hostname: kafka
     container_name: kafka
     networks:
@@ -44,15 +45,19 @@ services:
       KAFKA_ADVERTISED_HOST_NAME: kafka
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_ADVERTISED_PORT: 9092
+      KAFKA_LOG_RETENTION_MS: 10000
+      KAFKA_LOG_RETENTION_CHECK_INTERVAL_MS: 5000
+      ALLOW_PLAINTEXT_LISTENER: "yes"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - zookeeper
-      
+    logging:
+      driver: none
   postgres:
     labels:
       org.fiware: 'tutorial'
-    image: mdillon/postgis
+    image: postgis/postgis
     hostname: postgres
     container_name: db-postgres
     networks:
@@ -63,11 +68,12 @@ services:
       POSTGRES_USER: ngb
       POSTGRES_PASSWORD: ngb
       POSTGRES_DB: ngb
-
+    logging:
+      driver: none
   scorpio:
     labels:
       org.fiware: 'tutorial'
-    image: scorpiobroker/scorpio:scorpio-aaio_${SCORPIO_VERSION}
+    image: scorpiobroker/scorpio:scorpio-aaio-no-eureka_${SCORPIO_VERSION}
     hostname: scorpio
     container_name: fiware-scorpio
     networks:
@@ -75,11 +81,9 @@ services:
     ports:
       - "${SCORPIO_PORT}:9090"
     depends_on:
-      - kafka
       - postgres
-    healthcheck:
-      test: curl --fail -s http://scorpio:${SCORPIO_PORT}/scorpio/v1/info/ || exit 1
-
+      - kafka
+      
   # Tutorial acts as a series of dummy IoT Sensors over HTTP and connects to the Scorpio Broker
   tutorial:
     environment:
