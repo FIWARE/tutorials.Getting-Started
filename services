@@ -11,6 +11,7 @@ SCORPIO="http://scorpio:9090/"
 ORION="http://orion:1026/version"
 STELLIO="http://stellio:8080/actuator/health"
 CONTEXT="http://context/ngsi-context.jsonld"
+CORE_CONTEXT="https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
 
 dockerCmd="docker compose"
 if (( $# == 2 )); then
@@ -80,6 +81,17 @@ waitForStellio () {
 	done
 }
 
+waitForCoreContext () {
+	echo -e "\n⏳ Checking availability of \033[1m core @context\033[0m from ETSI\n"
+	getHeartbeat "${CORE_CONTEXT}"
+	while [ "${response}" -eq 000 ]
+	do
+		echo -e "\n@context HTTP state: ${response} (waiting for 200)"
+		pause 3
+		getHeartbeat "${CORE_CONTEXT}"
+	done
+}
+
 waitForContext () {
 	echo -e "\n⏳ Waiting for \033[1m@context\033[0m to be available\n"
 	getHeartbeat "${CONTEXT}"
@@ -143,6 +155,7 @@ case "${command}" in
 	"orion")
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
+		waitForCoreContext
 		echo -e "Starting containers:  \033[1;34mOrion-LD\033[0m, a linked data \033[1mContext\033[0m and a \033[1;30mMongoDB\033[0m database."
 		echo -e "- \033[1;34mOrion-LD\033[0m is the context broker"
 		echo ""
@@ -156,6 +169,7 @@ case "${command}" in
 	"scorpio")
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
+		waitForCoreContext
 		echo -e "Starting containers:  \033[1;34mScorpio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m, a linked data \033[1mContext\033[0m and a \033[1mPostgres\033[0m database."
 		echo -e "- \033[1;34mScorpio\033[0m is the context broker\n"
 		${dockerCmd} -f docker-compose/common.yml  -f docker-compose/scorpio-aaio.yml up -d --remove-orphans --renew-anon-volumes
@@ -166,6 +180,7 @@ case "${command}" in
 	"stellio")
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
+		waitForCoreContext
 		echo -e "Starting containers:  \033[1;34mStellio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m, \033[1mNeo4j\033[0m, \033[1mPostgreSQL/TimescaleDB\033[0m, and a linked data \033[1mContext\033[0m."
 		echo -e "- \033[1;34mStellio\033[0m is the context broker\n"
 		${dockerCmd}  -f docker-compose/common.yml -f docker-compose/stellio.yml up -d
