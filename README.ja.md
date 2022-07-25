@@ -18,6 +18,7 @@ FIWARE context broker に渡して、非常に単純な _"Powered by FIWARE"_ �
 も利用できます。
 
 [![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-v2)
 
 # コンテンツ
 

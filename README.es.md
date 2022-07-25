@@ -17,6 +17,7 @@ El tutorial usa comandos [cUrl](https://ec.haxx.se/) en el, pero también está 
 [documentación Postman](https://fiware.github.io/tutorials.Getting-Started/)
 
 [![Ejecutar en Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-v2)
 
 >
 > Este tutorial ha sido traducido por **FIWARE ZONE**, una iniciativa sin ánimo de lucro entre **Telefónica** y la **Junta de Andalucía** cuyo fin es la divulgación, promoción y difusión de la tecnología *FIWARE*, para hacer crecer el ecosistema y generar conocimiento y oportunidades a los desarrolladores y empresas andaluzas. **FIWARE ZONE**, como *iHub* de 3 estrellas ofrece servicios de alto nivel en formación, mentorización y consultoría de forma totalmente **gratuita**. Si necesitas cualquier tipo de ayuda o quieres contarnos tu proyecto, puedes ponerte en contacto con nostros a través de la direción [fiware.zone@fiware.zone](mailto:fiware.zone@fiware.zone), por nuestro [formulario web](https://fiware.zone/contacto/), en cualquiera de nuestras redes sociales o físicamente en [nuestros centros en Málaga y Sevilla](https://fiware.zone/contacto/)
@@ -324,7 +325,7 @@ de las siguientes recomendaciones:
 
 Aunque los campos `value` de los datos de contexto pueden estar en cualquier idioma, todos los atributos y tipos se escriben usando el idioma inglés.
 
-####  Los nombres de los tipos de entidad deben comenzar con una letra mayúscula
+#### Los nombres de los tipos de entidad deben comenzar con una letra mayúscula
 En este caso sólo tenemos un tipo de entidad - **Store**
 
 #### Los ID de las entidades deben ser una URN siguiendo las directrices de NGSI-LD

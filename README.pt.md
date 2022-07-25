@@ -15,6 +15,7 @@ O tutorial usa comandos [cUrl](https://ec.haxx.se/), mas também está disponív
 [Postman Documentação](https://fiware.github.io/tutorials.Getting-Started/)
 
 [![executar em Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/d6671a59a7e892629d2b)
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-v2)
 
 ## Conteúdos
 
