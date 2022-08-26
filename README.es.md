@@ -91,9 +91,9 @@ Para mantener las cosas simples, ambos componentes se ejecutarán usando [Docker
 
 ## Docker Compose (Opcional)
 
-**Docker Compose** es una herramienta para definir y ejecutar aplicaciones Docker multi-contenedor. A
+**Docker Compose** es una herramienta para definir y ejecutar aplicaciones Docker multi-contenedor.
 Se utiliza el [archivo YAML](https://raw.githubusercontent.com/Fiware/tutorials.Getting-Started/master/docker-compose.yml) para configurar los servicios requeridos para la aplicación. Esto significa que todos los servicios de los contenedores pueden ser lanzados en un solo comando. Docker Compose se instala de forma predeterminada como parte de Docker para Windows y Docker para Mac, sin embargo los usuarios de Linux
-tendrá que seguir las instrucciones que se encuentran [aquí](https://docs.docker.com/compose/install/)
+tendrán que seguir las instrucciones que se encuentran [aquí](https://docs.docker.com/compose/install/)
 
 Puede comprobar sus versiones actuales de **Docker** y **Docker Compose** usando los siguientes comandos:
 
