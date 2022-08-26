@@ -76,7 +76,7 @@ Actualmente, el Orion Context Broker se basa en la tecnología de código abiert
     -   Utilizada por el Orion Context Broker para mantener información de datos de contexto como los datos de las entidades, suscripciones y
         registros
 
-Dado que todas las interacciones entre los dos elementos son iniciadas por peticiones HTTP, estos pueden ser contenedorizado sy correr desde los puertos expuestos.
+Dado que todas las interacciones entre los dos elementos son iniciadas por peticiones HTTP, estos pueden ser contenedorizados y correr desde los puertos expuestos.
 
 ![](https://fiware.github.io/tutorials.Getting-Started/img/architecture.png)
 
