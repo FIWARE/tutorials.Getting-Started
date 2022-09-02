@@ -215,14 +215,14 @@ La respuesta debe parecerse a la siguiente:
 > Este comando también mostrará la información de los puertos abiertos
 >
 > -   Si tiene instalado  [`docker-machine`](https://docs.docker.com/machine/) y
->     [Virtual Box](https://www.virtualbox.org/), el contenedor de docker de orio quizás corra en otra direccion IP - Con el siguiente comando podrá obtener la IP del host:
+>     [Virtual Box](https://www.virtualbox.org/), el contenedor de docker de Orion quizás corra en otra direccion IP - Con el siguiente comando podrá obtener la IP del host:
 >
 > ```console
 > curl -X GET \
 >  'http://$(docker-machine ip default):1026/version'
 > ```
 >
-> De forma alternativa, ejecute todos los comandos cUrl desde la red de los contenedores:
+> De forma alternativa, ejecute todos los comandos curl desde la red de los contenedores:
 >
 > ```console
 > docker run --network fiware_default --rm appropriate/curl -s \
