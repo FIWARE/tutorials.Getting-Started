@@ -238,9 +238,9 @@ ld-context:
 ```
 
 All containers are residing on the same network - the Orion Context Broker is listening on Port `1026` and MongoDB is
-listening on the default port `27017` and the httpd web server is offering `@context` files on port `80`. All containers are also exposing
-ports externally - this is purely for the tutorial access - so that cUrl or Postman can access them without
-being part of the same network. The command-line initialization should be self explanatory.
+listening on the default port `27017` and the httpd web server is offering `@context` files on port `80`. All containers
+are also exposing ports externally - this is purely for the tutorial access - so that cUrl or Postman can access them
+without being part of the same network. The command-line initialization should be self explanatory.
 
 # Start Up
 
@@ -337,16 +337,24 @@ New context data entities can be created by making a POST request to the `/ngsi-
 
 #### :two: Request:
 
-> **Note:** This entity is being created using the default **normalized** NGSI-LD format, which is the
-> Gold Standard for data exchange between context brokers. NGSI-LD supports two lossless data
-> formats [normalized](https://github.com/FIWARE/tutorials.CRUD-Operations/tree/NGSI-LD) and [concise](https://github.com/FIWARE/tutorials.Concise-Format/tree/NGSI-LD).
+> **Note:** This entity is being created using the default **normalized** NGSI-LD format, which is the Gold Standard for
+> data exchange between context brokers. NGSI-LD supports two lossless data formats
+> [normalized](https://github.com/FIWARE/tutorials.CRUD-Operations/tree/NGSI-LD) and
+> [concise](https://github.com/FIWARE/tutorials.Concise-Format/tree/NGSI-LD).
 >
-> In concise format, the addition of `"type": "Property"` is implied for each attribute with a
-> `value`. However in normalized format, the redundancy of adding the `type` is useful for receiving
-> microservices to be able to understand the difference between context data attributes and
-> links between data entities (which are defined using `"type": "Relationship"`) and are discussed
-> in a [later tutorial](https://github.com/FIWARE/tutorials.Entity-Relationships/tree/NGSI-LD)
-
+> In concise format, the addition of `"type": "Property"` is implied for each attribute with a `value`. However in
+> normalized format, the redundancy of adding the `type` is useful for receiving microservices to be able to understand
+> the difference between context data attributes and links between data entities (which are defined using
+> `"type": "Relationship"`) and are discussed in a
+> [later tutorial](https://github.com/FIWARE/tutorials.Entity-Relationships/tree/NGSI-LD)
+>
+> There are also several subtypes of _Property_ available:
+>
+> -   `"type": "GeoProperty"` for Geographic information
+> -   `"type": "LanguageProperty"` for Multi-language Strings
+> -   `"type": "VocabProperty"` for enumerated values
+>
+> More details can be found in later tutorials.
 
 ```console
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
