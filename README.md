@@ -337,6 +337,17 @@ New context data entities can be created by making a POST request to the `/ngsi-
 
 #### :two: Request:
 
+> **Note:** This entity is being created using the default **normalized** NGSI-LD format, which is the
+> Gold Standard for data exchange between context brokers. NGSI-LD supports two lossless data
+> formats [normalized](https://github.com/FIWARE/tutorials.CRUD-Operations/tree/NGSI-LD) and [concise](https://github.com/FIWARE/tutorials.Concise-Format/tree/NGSI-LD).
+>
+> In concise format, the addition of `"type": "Property"` is implied for each attribute with a
+> `value`. However in normalized format, the redundancy of adding the `type` is useful for receiving
+> microservices to be able to understand the difference between context data attributes and
+> links between data entities (which are defined using `"type": "Relationship"`) and are discussed
+> in a [later tutorial](https://github.com/FIWARE/tutorials.Entity-Relationships/tree/NGSI-LD)
+
+
 ```console
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
 -H 'Content-Type: application/ld+json' \
