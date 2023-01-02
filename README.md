@@ -750,4 +750,4 @@ development time.
 
 ## License
 
-[MIT](LICENSE) © 2018-2021 FIWARE Foundation e.V.
+[MIT](LICENSE) © 2018-2023 FIWARE Foundation e.V.
