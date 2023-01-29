@@ -11,23 +11,6 @@ services:
     ports:
       - "${STELLIO_PORT}:8080"
 
-  entity-service:
-    restart: always
-    container_name: stellio-entity-service
-    labels:
-      org.fiware: 'tutorial'
-    image: stellio/stellio-entity-service:${STELLIO_DOCKER_TAG}
-    environment:
-      - SPRING_PROFILES_ACTIVE=docker
-      - APPLICATION_AUTHENTICATION_ENABLED=false
-    ports:
-      - 8082:8082
-    depends_on:
-      neo4j:
-        condition: service_healthy
-      kafka:
-        condition: service_started
-
   search-service:
     container_name: stellio-search-service
     labels:
@@ -37,11 +20,12 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgres/stellio_search
       - SPRING_FLYWAY_URL=jdbc:postgresql://postgres/stellio_search
-      - SPRING_R2DBC_USERNAME=stellio_search
-      - SPRING_R2DBC_PASSWORD=stellio_search_db_password
+      - SPRING_R2DBC_USERNAME=stellio
+      - SPRING_R2DBC_PASSWORD=stellio_password
       - APPLICATION_AUTHENTICATION_ENABLED=false
     ports:
       - 8083:8083
+    restart: always
     depends_on:
       postgres:
         condition: service_healthy
@@ -57,93 +41,62 @@ services:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgres/stellio_subscription
       - SPRING_FLYWAY_URL=jdbc:postgresql://postgres/stellio_subscription
-      - SPRING_R2DBC_USERNAME=stellio_subscription
-      - SPRING_R2DBC_PASSWORD=stellio_subscription_db_password
+      - SPRING_R2DBC_USERNAME=stellio
+      - SPRING_R2DBC_PASSWORD=stellio_password
       - APPLICATION_AUTHENTICATION_ENABLED=false
     ports:
       - 8084:8084
+    restart: always
     depends_on:
       postgres:
         condition: service_healthy
       kafka:
         condition: service_started
 
-  zookeeper:
-    labels:
-      org.fiware: 'tutorial'
-    image: confluentinc/cp-zookeeper:5.5.7
-    container_name: zookeeper
-    ports:
-      - 2181:2181
-    restart: always
-    environment:
-      ZOOKEEPER_SERVER_ID: 1
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
-
   kafka:
     labels:
       org.fiware: 'tutorial'
-    image: confluentinc/cp-kafka:5.5.7
+    image: confluentinc/cp-kafka:7.3.1
     container_name: kafka
     ports:
       - 29092:29092
     restart: always
     environment:
-      KAFKA_ADVERTISED_LISTENERS: INTERNAL://kafka:9092,EXTERNAL://localhost:29092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
       KAFKA_BROKER_ID: 1
-      KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,PLAINTEXT_HOST://localhost:29092
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-    depends_on:
-      - zookeeper
-
+      KAFKA_PROCESS_ROLES: 'broker,controller'
+      KAFKA_NODE_ID: 1
+      KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:29093'
+      KAFKA_LISTENERS: CONTROLLER://kafka:29093,PLAINTEXT://kafka:9092,PLAINTEXT_HOST://0.0.0.0:29092
+      KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
+      KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
+      KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
+    volumes:
+      - ./stellio/kafka/update_run.sh:/tmp/update_run.sh
+    command: "bash -c 'if [ ! -f /tmp/update_run.sh ]; then echo \"ERROR: Did you forget the update_run.sh file that came with this docker-compose.yml file?\" && exit 1 ; else /tmp/update_run.sh && /etc/confluent/docker/run ; fi'"
 
 
   # Databases
-  neo4j:
-    labels:
-      org.fiware: 'tutorial'
-    image: neo4j:4.4
-    hostname: neo4j
-    container_name: db-neo4j
-    volumes:
-      - neo4j-db:/data
-    environment:
-      - NEO4J_dbms_default__database=stellio
-      - NEO4J_AUTH=none
-      - "NEO4J_dbms_security_procedures_unrestricted=apoc.*"
-      - "NEO4J_dbms_security_procedures_allowlist=apoc.*"
-      - NEO4JLABS_PLUGINS=["apoc"]
-    ports:
-      - 7474:7474
-      - 7687:7687
-    # following https://github.com/neo4j/neo4j/issues/7203#issuecomment-898511474
-    healthcheck:
-      test: wget -qO- http://localhost:7474 || exit 1
-      interval: 1s
-      timeout: 10s
-      retries: 20
-      start_period: 3s
-
   postgres:
     labels:
       org.fiware: 'tutorial'
-    image: stellio/stellio-timescale-postgis:2.3.0-pg13
+    image: stellio/stellio-timescale-postgis:14-2.9.1-3.3
     hostname: postgres
     container_name: db-postgres
     environment:
-      - POSTGRES_PASSWORD=password
-      - "POSTGRES_MULTIPLE_DATABASES=stellio_search,stellio_search,stellio_search_db_password: stellio_subscription,stellio_subscription,stellio_subscription_db_password"
-      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_USER=stellio
+      - POSTGRES_PASS=stellio_password
+      - POSTGRES_DBNAME=stellio_search,stellio_subscription
+      - POSTGRES_MULTIPLE_EXTENSIONS=postgis,timescaledb,pgcrypto
+      - ACCEPT_TIMESCALE_TUNING=TRUE
     ports:
       - 5432:5432
     volumes:
-      - postgres-db:/var/lib/postgresql/data
+      - postgres-db:/var/lib/postgresql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD-SHELL", "pg_isready -h localhost -U stellio"]
       interval: 10s
       timeout: 5s
       retries: 20
@@ -158,5 +111,4 @@ services:
       - CONTEXT_BROKER=http://api-gateway:${STELLIO_PORT}/ngsi-ld/v1 # URL of the context broker to update context
      
 volumes:
-  neo4j-db: ~
   postgres-db: ~
