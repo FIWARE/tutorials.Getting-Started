@@ -45,7 +45,7 @@ services:
       - SPRING_R2DBC_PASSWORD=stellio_password
       - APPLICATION_AUTHENTICATION_ENABLED=false
     ports:
-      - 8084:8084
+      - 8085:8084
     restart: always
     depends_on:
       postgres:
