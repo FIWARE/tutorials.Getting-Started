@@ -30,6 +30,10 @@ jobs:
     - name: Run Orion
       run: |
         ./services orion test && ./services stop test
+    - name: Run Stellio
+      run: |
+        ./services stellio test && ./services stop test
     - name: Run Scorpio
       run: |
         ./services scorpio test && ./services stop test
+
