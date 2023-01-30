@@ -32,9 +32,8 @@ jobs:
     #     ./services orion test && ./services stop test
     - name: Run Stellio
       run: |
-       sudo killall mono || true 
-       sudo lsof -i tcp:8084
-
+        x=`lsof -Fp -i:8084`
+        kill -9 ${x##p}
         ./services stellio test && ./services stop test
     # - name: Run Scorpio
     #   run: |
