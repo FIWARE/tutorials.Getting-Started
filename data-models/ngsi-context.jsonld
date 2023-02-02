@@ -130,7 +130,7 @@
 
         "on": "https://w3id.org/saref#on",
         "off": "https://w3id.org/saref#off",
-
+        "verified": "fiware:verified",
         "species": "fiware:species",
         "sex": "fiware:sex",
         "legalID": "fiware:legalID"
