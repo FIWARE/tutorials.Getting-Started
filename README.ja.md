@@ -471,7 +471,7 @@ Core `@context` は、**NGSI-LD** データ・エンティティを作成する�
 を使用したことがある人なら誰でもおなじみのはずです) などの属性は、標準の **JSON-LD** `@id` および `@type`
 [keywords](https://w3c.github.io/json-ld-syntax/#syntax-tokens-and-keywords) にマッピングされます。`type`
 はインクルードされたデータモデルを参照する必要があります。この場合、`Building` はインクルードされた
-URN `https://uri.fiware.org/ns/data-models#Building` の短い名前として使用されています。その後、各プロパティ
+URN `https://uri.fiware.org/ns/dataModels#Building` の短い名前として使用されています。その後、各プロパティ
 (_property_) は、`type` と `value` の2つの属性を含む JSON 要素として定義されます。
 
 プロパティ (_property_) 属性の `type` は次のいずれかでなければなりません:
@@ -529,7 +529,7 @@ JSON-LD コンテンツを取得するために必要です。
 curl -G -X GET \
   'http://localhost:1026/ngsi-ld/v1/entities' \
   -H 'Accept: application/ld+json' \
-  -d 'type=https://uri.fiware.org/ns/data-models%23Building'
+  -d 'type=https://uri.fiware.org/ns/dataModels%23Building'
 ```
 
 #### レスポンス:
@@ -540,7 +540,7 @@ curl -G -X GET \
 
 -   `id`, `type`, `location` および `name` は core context で定義され、展開されません
 -   `address` は `http://schema.org/address` にマッピングされました
--   `category`は `https://uri.fiware.org/ns/data-models#category` にマッピングされました
+-   `category`は `https://uri.fiware.org/ns/dataModels#category` にマッピングされました
 
 エンティティの作成時に属性が FQN に関連付けられていない場合は、短い名前が**常に**表示されます。
 
@@ -549,7 +549,7 @@ curl -G -X GET \
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
-        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
             "type": "Property",
             "value": {
@@ -567,7 +567,7 @@ curl -G -X GET \
             "type": "Property",
             "value": "Victory Farm"
         },
-        "https://uri.fiware.org/ns/data-models#category": {
+        "https://uri.fiware.org/ns/dataModels#category": {
             "type": "Property",
             "value": "farm"
         },
@@ -585,7 +585,7 @@ curl -G -X GET \
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
-        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
             "type": "Property",
             "value": {
@@ -603,7 +603,7 @@ curl -G -X GET \
             "type": "Property",
             "value": "Big Red Barn"
         },
-        "https://uri.fiware.org/ns/data-models#category": {
+        "https://uri.fiware.org/ns/dataModels#category": {
             "type": "Property",
             "value": "barn"
         },
@@ -699,7 +699,7 @@ Core `@context` が含まれることは常に暗示されることに注意し�
 ### タイプ別にエンティティ・データを取得
 
 `type` でフィルタリングする場合、[`Link` ヘッダ](https://www.w3.org/wiki/LinkHeader) を指定して、短い形式の
-`type="Building"` を FQN `https://uri.fiware.org/ns/data-models/Building` に関連付ける必要があります。
+`type="Building"` を FQN `https://uri.fiware.org/ns/dataModels/Building` に関連付ける必要があります。
 
 提供されたデータへの参照が提供された場合、短い名前のデータを返し、データの特定の `type` にレスポンスを制限する
 ことが可能です。たとえば、以下のリクエストはコンテキスト・データ内のすべての `Building` エンティティのデータを
@@ -827,14 +827,14 @@ curl -G -X GET \
 {
     "barn": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn",
     "category": {
-        "@id": "https://uri.fiware.org/ns/data-models#category",
+        "@id": "https://uri.fiware.org/ns/dataModels#category",
         "@type": "@vocab"
     }
 }
 ```
 
 これは、この **JSON-LD** レスポンスの `category` が列挙値 (`@vocab`) を保持し、値 `barn` が完全な URL によって
-定義されていることを示しています。これは、完全な URL `https://uri.fiware.org/ns/data-models#category` を持つ属性が
+定義されていることを示しています。これは、完全な URL `https://uri.fiware.org/ns/dataModels#category` を持つ属性が
 あるということしか言えない `ngsi-context.jsonld` `@context` ファイルとは異なります。正規化された **NGSI-LD**
 レスポンスでは、`category` 属性は (`type` と `value` を持つ) 文字列ではなく 、JSONオブジェクトを保持するためです。
 

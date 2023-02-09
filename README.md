@@ -468,7 +468,7 @@ The core `@context` supplies the vocabulary for creating **NGSI-LD** data entiti
 which should be familiar to anyone who has used NGSI v2) are mapped to the standard **JSON-LD** `@id` and `@type`
 [keywords](https://w3c.github.io/json-ld-syntax/#syntax-tokens-and-keywords). The `type` should refer to an included
 data model, in this case `Building` is being used as a short name for the included URN
-`https://uri.fiware.org/ns/data-models#Building`. Thereafter each _property_ is defined as a JSON element containing two
+`https://uri.fiware.org/ns/dataModels#Building`. Thereafter each _property_ is defined as a JSON element containing two
 attributes, a `type` and a `value`.
 
 The `type` of a _property_ attribute must be one of the following:
@@ -518,7 +518,7 @@ body.
 curl -G -X GET \
   'http://localhost:1026/ngsi-ld/v1/entities' \
   -H 'Accept: application/ld+json' \
-  -d 'type=https://uri.fiware.org/ns/data-models%23Building'
+  -d 'type=https://uri.fiware.org/ns/dataModels%23Building'
 ```
 
 #### Response:
@@ -528,7 +528,7 @@ Since no explicit `@context` was sent in the request, the response returns the C
 
 -   `id`, `type`, `location` and `name` are defined in the core context and are not expanded.
 -   `address` has been mapped to `http://schema.org/address`
--   `category` has been mapped to `https://uri.fiware.org/ns/data-models#category`
+-   `category` has been mapped to `https://uri.fiware.org/ns/dataModels#category`
 
 Note that if an attribute has not been associated to an FQN when the entity was created, the short name will **always**
 be displayed.
@@ -538,7 +538,7 @@ be displayed.
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
-        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
             "type": "Property",
             "value": {
@@ -556,7 +556,7 @@ be displayed.
             "type": "Property",
             "value": "Victory Farm"
         },
-        "https://uri.fiware.org/ns/data-models#category": {
+        "https://uri.fiware.org/ns/dataModels#category": {
             "type": "Property",
             "value": "farm"
         },
@@ -574,7 +574,7 @@ be displayed.
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
-        "type": "https://uri.fiware.org/ns/data-models#Building",
+        "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
             "type": "Property",
             "value": {
@@ -592,7 +592,7 @@ be displayed.
             "type": "Property",
             "value": "Big Red Barn"
         },
-        "https://uri.fiware.org/ns/data-models#category": {
+        "https://uri.fiware.org/ns/dataModels#category": {
             "type": "Property",
             "value": "barn"
         },
@@ -684,7 +684,7 @@ files explicitly as element in the array of `@context` sent. The response is nor
 ### Obtain entity data by type
 
 When filtering by `type`, a [`Link` header](https://www.w3.org/wiki/LinkHeader) must be supplied to associate the short
-form `type="Building"` with the FQN `https://uri.fiware.org/ns/data-models/Building`.
+form `type="Building"` with the FQN `https://uri.fiware.org/ns/dataModels/Building`.
 
 If a reference to the supplied data is supplied, it is possible to return short name data and limit responses to a
 specific `type` of data. For example, the request below returns the data of all `Building` entities within the context
@@ -810,7 +810,7 @@ additional **JSON-LD** information within it such as the following:
 {
     "barn": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn",
     "category": {
-        "@id": "https://uri.fiware.org/ns/data-models#category",
+        "@id": "https://uri.fiware.org/ns/dataModels#category",
         "@type": "@vocab"
     }
 }
@@ -818,7 +818,7 @@ additional **JSON-LD** information within it such as the following:
 
 This indicates the `category` in this **JSON-LD** response holds an enumerated value (`@vocab`) and that the value
 `barn` is defined by a full URL. This differs compared to the `ngsi-context.jsonld` `@context` file where all we can say
-is that there is an attribute with the full URL `https://uri.fiware.org/ns/data-models#category`, because in a
+is that there is an attribute with the full URL `https://uri.fiware.org/ns/dataModels#category`, because in a
 normalized **NGSI-LD** response the `category` attribute would hold a JSON object (with a `type` and `value`) not a
 string.
 
