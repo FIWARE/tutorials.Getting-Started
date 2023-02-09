@@ -647,6 +647,10 @@ files explicitly as element in the array of `@context` sent. The response is nor
     "@context": "http://context/ngsi-context.jsonld",
     "id": "urn:ngsi-ld:Building:farm001",
     "type": "Building",
+    "category": {
+        "type": "Property",
+        "value": "farm"
+    },
     "address": {
         "type": "Property",
         "value": {
@@ -660,14 +664,6 @@ files explicitly as element in the array of `@context` sent. The response is nor
             "value": true
         }
     },
-    "name": {
-        "type": "Property",
-        "value": "Victory Farm"
-    },
-    "category": {
-        "type": "Property",
-        "value": "farm"
-    },
     "location": {
         "type": "GeoProperty",
         "value": {
@@ -677,6 +673,10 @@ files explicitly as element in the array of `@context` sent. The response is nor
                 52.5144
             ]
         }
+    },
+    "name": {
+        "type": "Property",
+        "value": "Victory Farm"
     }
 }
 ```

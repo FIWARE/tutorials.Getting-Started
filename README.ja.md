@@ -660,6 +660,10 @@ Core `@context` が含まれることは常に暗示されることに注意し�
     "@context": "http://context/ngsi-context.jsonld",
     "id": "urn:ngsi-ld:Building:farm001",
     "type": "Building",
+    "category": {
+        "type": "Property",
+        "value": "farm"
+    },
     "address": {
         "type": "Property",
         "value": {
@@ -673,14 +677,6 @@ Core `@context` が含まれることは常に暗示されることに注意し�
             "value": true
         }
     },
-    "name": {
-        "type": "Property",
-        "value": "Victory Farm"
-    },
-    "category": {
-        "type": "Property",
-        "value": "farm"
-    },
     "location": {
         "type": "GeoProperty",
         "value": {
@@ -690,6 +686,10 @@ Core `@context` が含まれることは常に暗示されることに注意し�
                 52.5144
             ]
         }
+    },
+    "name": {
+        "type": "Property",
+        "value": "Victory Farm"
     }
 }
 ```
