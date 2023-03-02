@@ -887,7 +887,7 @@ done using the `q` parameter, comma separating the acceptable values.
 ```console
 curl -G -X GET \
     'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Link: <http://context/nsgi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=category==%22barn%22,%22farm_auxiliary%22' \
