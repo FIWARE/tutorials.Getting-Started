@@ -933,7 +933,7 @@ Filtering can be done using the `q` parameter - sub-attributes are annotated usi
 #### :one::zero: Request:
 
 ```console
-curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
+curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
 -H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
@@ -1069,7 +1069,7 @@ If another attribute is to be used, an additional `geoproperty` parameter is req
 ```console
 curl -G -X GET \
   'http://localhost:1026/ngsi-ld/v1/entities' \
-  -H 'Link: <https://fiware.github.io/data-models/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+  -H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
   -H 'Accept: application/json' \
   -d 'type=Building' \
   -d 'geometry=Point' \
