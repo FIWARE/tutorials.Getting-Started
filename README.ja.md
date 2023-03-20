@@ -632,7 +632,7 @@ curl -G -X GET \
 完全な Link ヘッダ構文は次のとおりです:
 
 ```text
-Link: <https://fiware.github.io/data-models/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json
+Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json
 ```
 
 標準の HTTP `Link` ヘッダを使用すると、当のリソースに実際に触れることなくメタデータ (この場合は `@context`)
@@ -907,7 +907,7 @@ curl -G -X GET \
 ```console
 curl -G -X GET \
     'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Link: <http://context/nsgi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=category==%22barn%22,%22farm_auxiliary%22' \
@@ -955,7 +955,7 @@ curl -G -X GET \
 #### :one::zero: リクエスト:
 
 ```console
-curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
+curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
 -H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
@@ -1096,7 +1096,7 @@ curl -G -X GET \
 ```console
 curl -G -X GET \
   'http://localhost:1026/ngsi-ld/v1/entities' \
-  -H 'Link: <https://fiware.github.io/data-models/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+  -H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
   -H 'Accept: application/json' \
   -d 'type=Building' \
   -d 'geometry=Point' \
