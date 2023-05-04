@@ -209,7 +209,7 @@ NGSI ドメイン外の他のサービスは、データ構造の名前を選択
 
 ```yaml
 orion:
-    image: fiware/orion-ld
+    image: quay.io/fiware/orion-ld
     hostname: orion
     container_name: fiware-orion
     depends_on:

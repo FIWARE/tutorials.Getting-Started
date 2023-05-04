@@ -22,7 +22,8 @@ services:
   orion:
     labels:
       org.fiware: 'tutorial'
-    image: fiware/orion-ld:${ORION_LD_VERSION}
+    platform: linux/amd64
+    image: quay.io/fiware/orion-ld:${ORION_LD_VERSION}
     hostname: orion
     container_name: fiware-orion
     depends_on:
