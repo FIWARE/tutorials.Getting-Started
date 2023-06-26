@@ -73,7 +73,7 @@ services:
   scorpio:
     labels:
       org.fiware: 'tutorial'
-    image: scorpiobroker/all-in-one-runner:spring-kafka-${SCORPIO_VERSION}
+    image: scorpiobroker/all-in-one-runner:java-kafka-${SCORPIO_VERSION}
     hostname: scorpio
     container_name: fiware-scorpio
     networks:
