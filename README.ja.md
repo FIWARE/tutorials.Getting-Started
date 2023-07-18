@@ -334,16 +334,15 @@ curl -X GET \
 
 ```json
 {
-    "orion": {
-        "version": "1.15.0-next",
-        "uptime": "0 d, 3 h, 1 m, 51 s",
-        "git_hash": "af440c6e316075266094c2a5f3f4e4f8e3bb0668",
-        "compile_time": "Tue Jul 16 15:46:18 UTC 2019",
-        "compiled_by": "root",
-        "compiled_in": "51b4d802385a",
-        "release_date": "Tue Jul 16 15:46:18 UTC 2019",
-        "doc": "https://fiware-orion.readthedocs.org/en/master/"
-    }
+  "orionld version": "1.2.1",
+  "orion version": "1.15.0-next",
+  "uptime": "0 d, 0 h, 0 m, 31 s",
+  "git_hash": "8a0c02ee6d6554d485b232cd43f3f036674854d8",
+  "compile_time": "Wed May 17 11:08:59 UTC 2023",
+  "compiled_by": "root",
+  "compiled_in": "",
+  "release_date": "Wed May 17 11:08:59 UTC 2023",
+  "doc": "https://fiware-orion.readthedocs.org/en/master/"
 }
 ```
 
@@ -402,7 +401,7 @@ Context Broker は `@context` で示されているすべてのファイルを�
 
 `Content-Type: application/ld+json` なので、`@context` はリクエストのボディで提供されます。すべての **NGSI-LD**
 相互作用と同様に、core **NGSI-LD** `@context`
-([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld))
+([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld))
 も暗黙的に含まれています。
 
 つまり、実際の `@context` は次のとおりです:
@@ -411,7 +410,7 @@ Context Broker は `@context` で示されているすべてのファイルを�
 {
     "@context": [
         "http://context/ngsi-context.jsonld",
-        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld"
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld"
     ]
 }
 ```
@@ -535,7 +534,7 @@ curl -G -X GET \
 #### レスポンス:
 
 リクエストで明示的な `@context` が送信されなかったため、レスポンスはデフォルト
-(`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld`) で core `@context` を返し、
+(`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`) で core `@context` を返し、
 すべての属性は可能な限り展開されます。
 
 -   `id`, `type`, `location` および `name` は core context で定義され、展開されません
@@ -547,7 +546,7 @@ curl -G -X GET \
 ```jsonld
 [
     {
-        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
         "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
@@ -583,7 +582,7 @@ curl -G -X GET \
         }
     },
     {
-        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.3.jsonld",
+        "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "https://uri.fiware.org/ns/dataModels#Building",
         "https://schema.org/address": {
