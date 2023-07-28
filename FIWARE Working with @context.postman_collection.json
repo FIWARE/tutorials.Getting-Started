@@ -1687,7 +1687,7 @@
 		},
 		{
 			"key": "alternate-context.jsonld",
-			"value": "http://context-provider:3000/data-models/alternate-context.jsonld"
+			"value": "http://context/alternate-context.jsonld"
 		},
 		{
 			"key": "stellio",
