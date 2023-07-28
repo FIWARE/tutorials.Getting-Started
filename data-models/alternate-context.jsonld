@@ -84,7 +84,7 @@
         "bewegung": "https://w3id.org/saref#motion",
         "bewegungsaktivität": "https://w3id.org/saref#movementActivity",
         "multimedia": "https://w3id.org/saref#multimedia",
-        "name": "ngsi-ld:name",
+        "name": "schema:name",
         "netzwerk": "https://w3id.org/saref#network",
         "belegung": "https://w3id.org/saref#occupancy",
         "besatzer": "fiware:occupier",

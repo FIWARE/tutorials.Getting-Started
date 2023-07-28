@@ -187,8 +187,7 @@
         "movementActivity": "https://w3id.org/saref#movementActivity",
         "multimedia": "https://w3id.org/saref#multimedia",
         "name": {
-            "@id": "ngsi-ld:name",
-            "@type": "xsd:string"
+            "@id": "schema:name",            "@type": "xsd:string"
         },
         "network": "https://w3id.org/saref#network",
         "occupancy": "https://w3id.org/saref#occupancy",

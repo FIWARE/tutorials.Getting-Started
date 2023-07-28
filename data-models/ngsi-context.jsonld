@@ -82,7 +82,7 @@
         "motion": "https://w3id.org/saref#motion",
         "movementActivity": "https://w3id.org/saref#movementActivity",
         "multimedia": "https://w3id.org/saref#multimedia",
-        "name": "ngsi-ld:name",
+        "name": "schema:name",
         "network": "https://w3id.org/saref#network",
         "observedAt": "ngsi-ld:observedAt",
         "occupancy": "https://w3id.org/saref#occupancy",
