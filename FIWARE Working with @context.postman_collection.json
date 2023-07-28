@@ -4,7 +4,8 @@
 		"name": "NGSI-LD Working with @context",
 		"description": "This tutorial examines the interaction between **NGSI-LD** and **JSON-LD** `@context` files. The `@context` files generated in the [previous tutorial](https://github.com/FIWARE/tutorials.Understanding-At-Context) are used as the underlying data model for inputing context data and context information is queries and read back in different formats.\n\nThe `docker-compose` file for this tutorial can be found on GitHub: \n\n![GitHub](https://fiware.github.io/tutorials.Getting-Started/icon/GitHub-Mark-32px.png) [FIWARE-LD 102: Working with `@context` ](https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-LD)\n\n# Working with `@context` files\n\n> “Some quotations are greatly improved by lack of context.”\n>\n> ― John Wyndham, The Midwich Cuckoos\n\nFrom the [previous tutorial](https://github.com/FIWARE/tutorials.Understanding-At-Context) we have generated two `@context` files defining the context data entities which will be offered in our simple Smart Farm Management System. This means that we have defined an agreed set of unique IDs (URNs or URLs) for all the\ndata entities and every single attribute within those entities so that other external applications will be able to programmatically understand the data held within our broker.\n\nFor example the attribute `address` is within our smart application is defined as follows:\n\n```jsonld\n\"@context\": {\n    \"schema\": \"https://schema.org/\",\n    \"address\": \"schema:address\"\n}\n```\n\nWhich means that every `address` attribute follows the definition as defined by `schema.org`:\n\n`https://schema.org/address` :\n\n![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture-ld.png)\n\nA program written by a third party would therefore be able to extract information such the fact an `address` attribute holds a JSON object with a sub-attribute containing the `streetAddress`  by referring to the full [schema.org **JSON-LD** schema](https://schema.org/version/latest/schemaorg-current-http.jsonld)\n\n```jsonld\n{\n  \"@id\": \"http://schema.org/streetAddress\",\n  \"@type\": \"rdf:Property\",\n  \"http://schema.org/domainIncludes\": {\n    \"@id\": \"http://schema.org/PostalAddress\"\n  },\n  \"http://schema.org/rangeIncludes\": {\n    \"@id\": \"http://schema.org/Text\"\n  },\n  \"rdfs:comment\": \"The street address. For example, 1600 Amphitheatre Pkwy.\",\n  \"rdfs:label\": \"streetAddress\"\n}\n```\n\nThis is the **JSON-LD** programmatic syntax allowing computers to extract meaningful data _The attribute `address.streetAddress` is a street_ directly without the need for human intervention.\n\nImagine the case where a company is contracting agricultural labourers. The farmer will need to be billed for the work done. If such a system is built on JSON-LD, it does not matter if the farmer's Farm Management Information System assigns different names to the attributes of the billing address provided that the farmer and contractor can agree on the well-defined URNS for each attribute as **JSON-LD** can easily translate between the two formats using common expansion and compaction algorithms.\n\n## NGSI-LD Rules\n\n**NGSI-LD** is a formally structured _extended subset_ of **JSON-LD**. Therefore **NGSI-LD** offers all the interoperability and flexibility of **JSON-LD** itself. It also defines its own core `@context` which cannot be overridden for **NGSI-LD** operations. This means that **NGSI-LD** users agree to a common well defined set of rules for structuring their data, and then supplement this with the rest of the **JSON-LD** specification.\n\nWhilst interacting directly with **NGSI-LD** interface of the context broker the additional **NGSI-LD** rules must be respected. However after the data has been extracted it is possible to loosen this requirement and pass the results to third parties as **JSON-LD**.\n\nThis tutorial is a simple introduction to the rules and restrictions behind **NGSI-LD** and  will create some **NGSI-LD** entities and then extract the data in different formats. The two main data formats are _normalized_ and _key-value-pairs_. Data returned in the  _normalised_ format respects the **NGSI-LD** rules and may be used directly by another context broker (or any other component offering an **NGSI-LD** interface). Data returned in the  _key-value-pairs_ format is by definition not **NGSI-LD**.\n\n## Content negociation and the `Content-Type` and `Accept` Headers\n\nDuring content negociation, **NGSI-LD** offers data in one of three formats, these effect the structure of the payload body.\n\n- `Accept: application/json` - the response is in **JSON** format\n- `Accept: application/ld+json` - the response is in **JSON-LD** format\n- `Accept: application/geo+json` - the response is in **GeoJSON** or **GeoJSON-LD** format\n\nThe major difference between **JSON** format and **JSON-LD** format, is that if **JSON-LD** format is chosen, then the `@context` is found as an additional attribute within the body of the response. if the **JSON** only format is used the `@context` is passed as an additional `Link` Header element and is not found in the response body.\n\nSimilarly when sending **NGSI-LD** data to the context broker, an application may choose to send a payload including an additional `@context` attribute (in which case `Content-Type: application/ld+json`) or the application may send NGSI-LD data without an additional `@context` attribute (in which case `Content-Type: application/json` and the `Link` header must also be present).\n\nThe **GeoJSON** format is only used when querying a context broker for existing data and returns the context in a format suitable for GIS systems. It is a recent addition to the **NGSI-LD** specification and therefore will not be discussed further here.\n\n# Prerequisites\n\n## Docker\n\nTo keep things simple all components will be run using [Docker](https://www.docker.com). **Docker** is a container\ntechnology which allows to different components isolated into their respective environments.\n\n-   To install Docker on Windows follow the instructions [here](https://docs.docker.com/docker-for-windows/)\n-   To install Docker on Mac follow the instructions [here](https://docs.docker.com/docker-for-mac/)\n-   To install Docker on Linux follow the instructions [here](https://docs.docker.com/install/)\n\n**Docker Compose** is a tool for defining and running multi-container Docker applications. A\n[YAML file](https://raw.githubusercontent.com/Fiware/tutorials.Working-with-At-Context/master/docker-compose/orion-ld.yml) is used\nconfigure the required services for the application. This means all container services can be brought up in a single\ncommand. Docker Compose is installed by default as part of Docker for Windows and Docker for Mac, however Linux users\nwill need to follow the instructions found [here](https://docs.docker.com/compose/install/)\n\n## Cygwin\n\nWe will start up our services using a simple bash script. Windows users should download [cygwin](http://www.cygwin.com/)\nto provide a command-line functionality similar to a Linux distribution on Windows.\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "513743"
+		"_exporter_id": "513743",
+		"_collection_link": "https://fiware.postman.co/workspace/NGSI-LD-tutorials~60157bf9-a93f-4c6e-90d1-0917133c1872/collection/513743-37a6dc59-bcbb-4813-b1b3-5b088f4e3bdd?action=share&creator=513743&source=collection_link"
 	},
 	"item": [
 		{
@@ -105,6 +106,50 @@
 							]
 						},
 						"description": "New context data entities can be created by making a POST request to the `/ngsi-ld/v1/entities` endpoint and supply an `@context` along with structured **NGSI-LD** data.\n\nThe first request will take some time, as the context broker must navigate and load all of the files mentioned in the\n`@context`.\n\nSince the `Content-Type: application/ld+json` the `@context` is supplied in the body of the request. As with all **NGSI-LD** interactions, the core **NGSI-LD** `@context` ([`https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld`](https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld) is implicitly included as well.)\n\nThis means that the actual `@context` is:\n\n```jsonld\n{\n    \"@context\": [\n        \"http://context-provider:3000/data-models/ngsi-context.jsonld\",\n        \"https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context.jsonld\"\n    ]\n}\n```\n\nwith the core `@context` being processed **last** and therefore overriding any terms previously defined with the same `@id`."
+					},
+					"response": []
+				},
+				{
+					"name": "Obtain Entity Data by type and linked context",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Link",
+								"type": "text",
+								"value": "<{{ngsi-context.jsonld}}>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
+							},
+							{
+								"key": "Accept",
+								"value": "application/ld+json",
+								"type": "text",
+								"name": "Accept"
+							}
+						],
+						"url": {
+							"raw": "http://{{orion}}/ngsi-ld/v1/entities?type=Building&options=keyValues",
+							"protocol": "http",
+							"host": [
+								"{{orion}}"
+							],
+							"path": [
+								"ngsi-ld",
+								"v1",
+								"entities"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "Building"
+								},
+								{
+									"key": "options",
+									"value": "keyValues",
+									"description": "* `keyValues` option in order to get a more compact and brief representation, including just attribute values\n* `values` option combined with a list of attribute values  `attrs`  for an ordered list of attributes only"
+								}
+							]
+						},
+						"description": "When filtering by `type`, a [`Link` header](https://www.w3.org/wiki/LinkHeader) must be supplied to associate the short form `type=\"Building\"`\nwith the FQN `https://uri.fiware.org/ns/data-models/Building`.\n\nIf a reference to the supplied data is supplied, it is possible to return short name data and limit responses to a\nspecific `type` of data. For example, the request below returns the data of all `Building` entities within the context\ndata. Use of the `type` parameter limits the response to `Building` entities only, use of the `options=keyValues` query\nparameter reduces the response down to standard JSON-LD.\n\nBecause of the use of the `options=keyValues`, the response consists of JSON only without the attribute definitions\n`type=\"Property\"` or any _properties-of-properties_ elements. You can see that `Link` header from the request has been\nused as the `@context` returned in the response."
 					},
 					"response": []
 				},
@@ -227,50 +272,6 @@
 							]
 						},
 						"description": "This example returns the data of `urn:ngsi-ld:Building:farm001`. The NGSI-LD `@context` is supplied as a [`Link` header](https://www.w3.org/wiki/LinkHeader) to define the entities returned. The `ngsi-context.jsonld` `@context` file is just supplying short names for every attribute.\n\nThe full link header syntax can be seen below:\n\n```text\nLink: <https://fiware.github.io/data-models/context.jsonld>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\n```\n\nThe standard HTTP `Link` header allows metadata (in this case the `@context`) to be passed in without actually touching\nthe resource in question. In the case of NGSI-LD, the metadata is a file in `application/ld+json` format."
-					},
-					"response": []
-				},
-				{
-					"name": "Obtain Entity Data by type and linked context",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Link",
-								"type": "text",
-								"value": "<{{ngsi-context.jsonld}}>; rel=\"http://www.w3.org/ns/json-ld#context\"; type=\"application/ld+json\""
-							},
-							{
-								"key": "Accept",
-								"value": "application/ld+json",
-								"type": "text",
-								"name": "Accept"
-							}
-						],
-						"url": {
-							"raw": "http://{{orion}}/ngsi-ld/v1/entities?type=Building&options=keyValues",
-							"protocol": "http",
-							"host": [
-								"{{orion}}"
-							],
-							"path": [
-								"ngsi-ld",
-								"v1",
-								"entities"
-							],
-							"query": [
-								{
-									"key": "type",
-									"value": "Building"
-								},
-								{
-									"key": "options",
-									"value": "keyValues",
-									"description": "* `keyValues` option in order to get a more compact and brief representation, including just attribute values\n* `values` option combined with a list of attribute values  `attrs`  for an ordered list of attributes only"
-								}
-							]
-						},
-						"description": "When filtering by `type`, a [`Link` header](https://www.w3.org/wiki/LinkHeader) must be supplied to associate the short form `type=\"Building\"`\nwith the FQN `https://uri.fiware.org/ns/data-models/Building`.\n\nIf a reference to the supplied data is supplied, it is possible to return short name data and limit responses to a\nspecific `type` of data. For example, the request below returns the data of all `Building` entities within the context\ndata. Use of the `type` parameter limits the response to `Building` entities only, use of the `options=keyValues` query\nparameter reduces the response down to standard JSON-LD.\n\nBecause of the use of the `options=keyValues`, the response consists of JSON only without the attribute definitions\n`type=\"Property\"` or any _properties-of-properties_ elements. You can see that `Link` header from the request has been\nused as the `@context` returned in the response."
 					},
 					"response": []
 				},
@@ -534,7 +535,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://{{orion}}/ngsi-ld/v1/entities/?type=Building&geometry=Point&coordinates=%5B13.3777,52.5162%5D&georel=near;maxDistance==800&options=keyValues",
+							"raw": "http://{{orion}}/ngsi-ld/v1/entities/?type=Building&geometry=Point&coordinates=%5B13.3777,52.5162%5D&georel=near%3BmaxDistance==800&options=keyValues",
 							"protocol": "http",
 							"host": [
 								"{{orion}}"
@@ -560,7 +561,7 @@
 								},
 								{
 									"key": "georel",
-									"value": "near;maxDistance==800",
+									"value": "near%3BmaxDistance==800",
 									"description": "Ordered list of attribute names to display"
 								},
 								{
@@ -574,7 +575,7 @@
 					"response": []
 				}
 			],
-			"description": "# Architecture\n\nThe demo application will send and receive NGSI-LD calls to a compliant context broker. Since the standardized NGSI-LD interface is available across\nmultiple context brokers, so we only need to pick one - for example the\n[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). The application will therefore only make use of one FIWARE component.\n\nCurrently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep\npersistence of the context data it holds.\n\nTo promote interoperability of data exchange, NGSI-LD context brokers explicitly expose a [JSON-LD `@context` file](https://json-ld.org/spec/latest/json-ld/#the-context) to define the data held within the context entities. This defines a unique URI for every entity type and every attribute so that other services outside of the NGSI domain are able to pick and choose the names of their data structures. Every `@context` file must be available on the\nnetwork. In our case the tutorial application will be used to host a series of static files.\n\n\nTherefore, the architecture will consist of three elements:\n\n-   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using\n    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)\n-   The underlying [MongoDB](https://www.mongodb.com/) database :\n    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and\n        registrations\n-   The **Tutorial Application** does the following:\n    -   Offers static `@context` files defining the context entities within the system.\n\nSince all interactions between the three elements are initiated by HTTP requests, the elements can be containerized and\nrun from exposed ports.\n\n![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture.png)\n\nThe necessary configuration information can be seen in the services section of the associated `orion-ld.yml` file:\n\n```yaml\norion:\n    image: quay.io/fiware/orion-ld\n    hostname: orion\n    container_name: fiware-orion\n    depends_on:\n        - mongo-db\n    networks:\n        - default\n    ports:\n        - \"1026:1026\"\n    command: -dbhost mongo-db -logLevel DEBUG\n    healthcheck:\n        test: curl --fail -s http://orion:1026/version || exit 1\n```\n\n```yaml\nmongo-db:\n    image: mongo:3.6\n    hostname: mongo-db\n    container_name: db-mongo\n    expose:\n        - \"27017\"\n    ports:\n        - \"27017:27017\"\n    networks:\n        - default\n    command: --nojournal\n```\n\n```yaml\ntutorial:\n    image: quay.io/fiware/tutorials.ngsi-ld\n    hostname: tutorial\n    container_name: fiware-tutorial\n    networks:\n      default:\n        aliases:\n          - context\n    expose:\n      - 3000\n```\n\nAll containers are residing on the same network - the Orion Context Broker is listening on Port `1026` and MongoDB is\nlistening on the default port `27017` and the tutorial app is listening on port `3000`. All containers are also exposing the same ports externally - this is purely for\nthe tutorial access - so that cUrl or Postman can access them without being part of the same network. The command-line\ninitialization should be self explanatory.\n\n# Start Up\n\nAll services can be initialised from the command-line by running the\n[services](https://github.com/FIWARE/tutorials.Working-with-At-Context/blob/master/services) Bash script provided within the\nrepository. Please clone the repository and create the necessary images by running the commands as shown:\n\n```bash\ngit clone https://github.com/FIWARE/tutorials.Working-with-At-Context.git\ncd tutorials.Working-with-At-Context\n\n./services orion|scorpio\n```\n\n> **Note:** If you want to clean up and start over again you can do so with the following command:\n>\n> ```\n> ./services stop\n> ```",
+			"description": "# Architecture\n\nThe demo application will send and receive NGSI-LD calls to a compliant context broker. Since the standardized NGSI-LD interface is available across\nmultiple context brokers, so we only need to pick one - for example the\n[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). The application will therefore only make use of one FIWARE component.\n\nCurrently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep\npersistence of the context data it holds.\n\nTo promote interoperability of data exchange, NGSI-LD context brokers explicitly expose a [JSON-LD `@context` file](https://json-ld.org/spec/latest/json-ld/#the-context) to define the data held within the context entities. This defines a unique URI for every entity type and every attribute so that other services outside of the NGSI domain are able to pick and choose the names of their data structures. Every `@context` file must be available on the\nnetwork. In our case the tutorial application will be used to host a series of static files.\n\n\nTherefore, the architecture will consist of three elements:\n\n-   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using\n    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)\n-   The underlying [MongoDB](https://www.mongodb.com/) database :\n    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and\n        registrations\n-   The **Tutorial Application** does the following:\n    -   Offers static `@context` files defining the context entities within the system.\n\nSince all interactions between the three elements are initiated by HTTP requests, the elements can be containerized and\nrun from exposed ports.\n\n![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture.png)\n\nThe necessary configuration information can be seen in the services section of the associated `orion-ld.yml` file:\n\n```yaml\norion:\n    image: fiware/orion-ld\n    hostname: orion\n    container_name: fiware-orion\n    depends_on:\n        - mongo-db\n    networks:\n        - default\n    ports:\n        - \"1026:1026\"\n    command: -dbhost mongo-db -logLevel DEBUG\n    healthcheck:\n        test: curl --fail -s http://orion:1026/version || exit 1\n```\n\n```yaml\nmongo-db:\n    image: mongo:3.6\n    hostname: mongo-db\n    container_name: db-mongo\n    expose:\n        - \"27017\"\n    ports:\n        - \"27017:27017\"\n    networks:\n        - default\n    command: --nojournal\n```\n\n```yaml\ntutorial:\n    image: fiware/tutorials.ngsi-ld\n    hostname: tutorial\n    container_name: fiware-tutorial\n    networks:\n      default:\n        aliases:\n          - context\n    expose:\n      - 3000\n```\n\nAll containers are residing on the same network - the Orion Context Broker is listening on Port `1026` and MongoDB is\nlistening on the default port `27017` and the tutorial app is listening on port `3000`. All containers are also exposing the same ports externally - this is purely for\nthe tutorial access - so that cUrl or Postman can access them without being part of the same network. The command-line\ninitialization should be self explanatory.\n\n# Start Up\n\nAll services can be initialised from the command-line by running the\n[services](https://github.com/FIWARE/tutorials.Working-with-At-Context/blob/master/services) Bash script provided within the\nrepository. Please clone the repository and create the necessary images by running the commands as shown:\n\n```bash\ngit clone https://github.com/FIWARE/tutorials.Working-with-At-Context.git\ncd tutorials.Working-with-At-Context\n\n./services orion|scorpio\n```\n\n> **Note:** If you want to clean up and start over again you can do so with the following command:\n>\n> ```\n> ./services stop\n> ```",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -600,28 +601,6 @@
 			"name": "Linked Data using Scorpio",
 			"item": [
 				{
-					"name": "Obtaining Version Information",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://{{scorpio}}/scorpio/v1/info/",
-							"protocol": "http",
-							"host": [
-								"{{scorpio}}"
-							],
-							"path": [
-								"scorpio",
-								"v1",
-								"info",
-								""
-							]
-						},
-						"description": "You can check if the Scorpio Context Broker is running by making an HTTP request to the exposed port."
-					},
-					"response": []
-				},
-				{
 					"name": "Creating your first Data Entity",
 					"request": {
 						"method": "POST",
@@ -633,7 +612,8 @@
 							{
 								"key": "NGSILD-Tenant",
 								"value": "openiot",
-								"type": "text"
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -711,7 +691,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://{{scorpio}}/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/data-models%23Building",
+							"raw": "http://{{scorpio}}/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building",
 							"protocol": "http",
 							"host": [
 								"{{scorpio}}"
@@ -724,7 +704,7 @@
 							"query": [
 								{
 									"key": "type",
-									"value": "https://uri.fiware.org/ns/data-models%23Building"
+									"value": "https://uri.fiware.org/ns/dataModels%23Building"
 								}
 							]
 						},
@@ -1083,7 +1063,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://{{scorpio}}/ngsi-ld/v1/entities/?type=Building&geometry=Point&coordinates=%5B13.3777,52.5162%5D&georel=near;maxDistance==800&options=keyValues",
+							"raw": "http://{{scorpio}}/ngsi-ld/v1/entities/?type=Building&geometry=Point&coordinates=%5B13.3777,52.5162%5D&georel=near%3BmaxDistance==800&options=keyValues",
 							"protocol": "http",
 							"host": [
 								"{{scorpio}}"
@@ -1109,7 +1089,7 @@
 								},
 								{
 									"key": "georel",
-									"value": "near;maxDistance==800",
+									"value": "near%3BmaxDistance==800",
 									"description": "Ordered list of attribute names to display"
 								},
 								{
@@ -1123,7 +1103,7 @@
 					"response": []
 				}
 			],
-			"description": "# Architecture\n\nThe demo application will send and receive NGSI-LD calls to a compliant context broker. Since the standardized NGSI-LD interface is available across\nmultiple context brokers, so we only need to pick one - for example the\n[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). The application will therefore only make use of one FIWARE component.\n\nCurrently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep\npersistence of the context data it holds.\n\nTo promote interoperability of data exchange, NGSI-LD context brokers explicitly expose a [JSON-LD `@context` file](https://json-ld.org/spec/latest/json-ld/#the-context) to define the data held within the context entities. This defines a unique URI for every entity type and every attribute so that other services outside of the NGSI domain are able to pick and choose the names of their data structures. Every `@context` file must be available on the\nnetwork. In our case the tutorial application will be used to host a series of static files.\n\n\nTherefore, the architecture will consist of three elements:\n\n-   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using\n    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)\n-   The underlying [MongoDB](https://www.mongodb.com/) database :\n    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and\n        registrations\n-   The **Tutorial Application** does the following:\n    -   Offers static `@context` files defining the context entities within the system.\n\nSince all interactions between the three elements are initiated by HTTP requests, the elements can be containerized and\nrun from exposed ports.\n\n![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture.png)\n\nThe necessary configuration information can be seen in the services section of the associated `orion-ld.yml` file:\n\n```yaml\norion:\n    image: quay.io/fiware/orion-ld\n    hostname: orion\n    container_name: fiware-orion\n    depends_on:\n        - mongo-db\n    networks:\n        - default\n    ports:\n        - \"1026:1026\"\n    command: -dbhost mongo-db -logLevel DEBUG\n    healthcheck:\n        test: curl --fail -s http://orion:1026/version || exit 1\n```\n\n```yaml\nmongo-db:\n    image: mongo:3.6\n    hostname: mongo-db\n    container_name: db-mongo\n    expose:\n        - \"27017\"\n    ports:\n        - \"27017:27017\"\n    networks:\n        - default\n    command: --nojournal\n```\n\n```yaml\ntutorial:\n    image: quay.io/fiware/tutorials.ngsi-ld\n    hostname: tutorial\n    container_name: fiware-tutorial\n    networks:\n      default:\n        aliases:\n          - context\n    expose:\n      - 3000\n```\n\nAll containers are residing on the same network - the Orion Context Broker is listening on Port `1026` and MongoDB is\nlistening on the default port `27017` and the tutorial app is listening on port `3000`. All containers are also exposing the same ports externally - this is purely for\nthe tutorial access - so that cUrl or Postman can access them without being part of the same network. The command-line\ninitialization should be self explanatory.\n\n# Start Up\n\nAll services can be initialised from the command-line by running the\n[services](https://github.com/FIWARE/tutorials.Working-with-At-Context/blob/master/services) Bash script provided within the\nrepository. Please clone the repository and create the necessary images by running the commands as shown:\n\n```bash\ngit clone https://github.com/FIWARE/tutorials.Working-with-At-Context.git\ncd tutorials.Working-with-At-Context\n\n./services orion|scorpio\n```\n\n> **Note:** If you want to clean up and start over again you can do so with the following command:\n>\n> ```\n> ./services stop\n> ```",
+			"description": "# Architecture\n\nThe demo application will send and receive NGSI-LD calls to a compliant context broker. Since the standardized NGSI-LD interface is available across\nmultiple context brokers, so we only need to pick one - for example the\n[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). The application will therefore only make use of one FIWARE component.\n\nCurrently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep\npersistence of the context data it holds.\n\nTo promote interoperability of data exchange, NGSI-LD context brokers explicitly expose a [JSON-LD `@context` file](https://json-ld.org/spec/latest/json-ld/#the-context) to define the data held within the context entities. This defines a unique URI for every entity type and every attribute so that other services outside of the NGSI domain are able to pick and choose the names of their data structures. Every `@context` file must be available on the\nnetwork. In our case the tutorial application will be used to host a series of static files.\n\n\nTherefore, the architecture will consist of three elements:\n\n-   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using\n    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)\n-   The underlying [MongoDB](https://www.mongodb.com/) database :\n    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and\n        registrations\n-   The **Tutorial Application** does the following:\n    -   Offers static `@context` files defining the context entities within the system.\n\nSince all interactions between the three elements are initiated by HTTP requests, the elements can be containerized and\nrun from exposed ports.\n\n![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture.png)\n\nThe necessary configuration information can be seen in the services section of the associated `orion-ld.yml` file:\n\n```yaml\norion:\n    image: fiware/orion-ld\n    hostname: orion\n    container_name: fiware-orion\n    depends_on:\n        - mongo-db\n    networks:\n        - default\n    ports:\n        - \"1026:1026\"\n    command: -dbhost mongo-db -logLevel DEBUG\n    healthcheck:\n        test: curl --fail -s http://orion:1026/version || exit 1\n```\n\n```yaml\nmongo-db:\n    image: mongo:3.6\n    hostname: mongo-db\n    container_name: db-mongo\n    expose:\n        - \"27017\"\n    ports:\n        - \"27017:27017\"\n    networks:\n        - default\n    command: --nojournal\n```\n\n```yaml\ntutorial:\n    image: fiware/tutorials.ngsi-ld\n    hostname: tutorial\n    container_name: fiware-tutorial\n    networks:\n      default:\n        aliases:\n          - context\n    expose:\n      - 3000\n```\n\nAll containers are residing on the same network - the Orion Context Broker is listening on Port `1026` and MongoDB is\nlistening on the default port `27017` and the tutorial app is listening on port `3000`. All containers are also exposing the same ports externally - this is purely for\nthe tutorial access - so that cUrl or Postman can access them without being part of the same network. The command-line\ninitialization should be self explanatory.\n\n# Start Up\n\nAll services can be initialised from the command-line by running the\n[services](https://github.com/FIWARE/tutorials.Working-with-At-Context/blob/master/services) Bash script provided within the\nrepository. Please clone the repository and create the necessary images by running the commands as shown:\n\n```bash\ngit clone https://github.com/FIWARE/tutorials.Working-with-At-Context.git\ncd tutorials.Working-with-At-Context\n\n./services orion|scorpio\n```\n\n> **Note:** If you want to clean up and start over again you can do so with the following command:\n>\n> ```\n> ./services stop\n> ```",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -1233,7 +1213,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://{{scorpio}}/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/data-models%23Building",
+							"raw": "http://{{scorpio}}/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building",
 							"protocol": "http",
 							"host": [
 								"{{scorpio}}"
@@ -1246,7 +1226,7 @@
 							"query": [
 								{
 									"key": "type",
-									"value": "https://uri.fiware.org/ns/data-models%23Building"
+									"value": "https://uri.fiware.org/ns/dataModels%23Building"
 								}
 							]
 						},
@@ -1645,7 +1625,7 @@
 					"response": []
 				}
 			],
-			"description": "# Architecture\n\nThe demo application will send and receive NGSI-LD calls to a compliant context broker. Since the standardized NGSI-LD interface is available across\nmultiple context brokers, so we only need to pick one - for example the\n[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). The application will therefore only make use of one FIWARE component.\n\nCurrently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep\npersistence of the context data it holds.\n\nTo promote interoperability of data exchange, NGSI-LD context brokers explicitly expose a [JSON-LD `@context` file](https://json-ld.org/spec/latest/json-ld/#the-context) to define the data held within the context entities. This defines a unique URI for every entity type and every attribute so that other services outside of the NGSI domain are able to pick and choose the names of their data structures. Every `@context` file must be available on the\nnetwork. In our case the tutorial application will be used to host a series of static files.\n\n\nTherefore, the architecture will consist of three elements:\n\n-   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using\n    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)\n-   The underlying [MongoDB](https://www.mongodb.com/) database :\n    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and\n        registrations\n-   The **Tutorial Application** does the following:\n    -   Offers static `@context` files defining the context entities within the system.\n\nSince all interactions between the three elements are initiated by HTTP requests, the elements can be containerized and\nrun from exposed ports.\n\n![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture.png)\n\nThe necessary configuration information can be seen in the services section of the associated `orion-ld.yml` file:\n\n```yaml\norion:\n    image: quay.io/fiware/orion-ld\n    hostname: orion\n    container_name: fiware-orion\n    depends_on:\n        - mongo-db\n    networks:\n        - default\n    ports:\n        - \"1026:1026\"\n    command: -dbhost mongo-db -logLevel DEBUG\n    healthcheck:\n        test: curl --fail -s http://orion:1026/version || exit 1\n```\n\n```yaml\nmongo-db:\n    image: mongo:3.6\n    hostname: mongo-db\n    container_name: db-mongo\n    expose:\n        - \"27017\"\n    ports:\n        - \"27017:27017\"\n    networks:\n        - default\n    command: --nojournal\n```\n\n```yaml\ntutorial:\n    image: quay.io/fiware/tutorials.ngsi-ld\n    hostname: tutorial\n    container_name: fiware-tutorial\n    networks:\n      default:\n        aliases:\n          - context\n    expose:\n      - 3000\n```\n\nAll containers are residing on the same network - the Orion Context Broker is listening on Port `1026` and MongoDB is\nlistening on the default port `27017` and the tutorial app is listening on port `3000`. All containers are also exposing the same ports externally - this is purely for\nthe tutorial access - so that cUrl or Postman can access them without being part of the same network. The command-line\ninitialization should be self explanatory.\n\n# Start Up\n\nAll services can be initialised from the command-line by running the\n[services](https://github.com/FIWARE/tutorials.Working-with-At-Context/blob/master/services) Bash script provided within the\nrepository. Please clone the repository and create the necessary images by running the commands as shown:\n\n```bash\ngit clone https://github.com/FIWARE/tutorials.Working-with-At-Context.git\ncd tutorials.Working-with-At-Context\n\n./services orion|scorpio\n```\n\n> **Note:** If you want to clean up and start over again you can do so with the following command:\n>\n> ```\n> ./services stop\n> ```",
+			"description": "# Architecture\n\nThe demo application will send and receive NGSI-LD calls to a compliant context broker. Since the standardized NGSI-LD interface is available across\nmultiple context brokers, so we only need to pick one - for example the\n[Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). The application will therefore only make use of one FIWARE component.\n\nCurrently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep\npersistence of the context data it holds.\n\nTo promote interoperability of data exchange, NGSI-LD context brokers explicitly expose a [JSON-LD `@context` file](https://json-ld.org/spec/latest/json-ld/#the-context) to define the data held within the context entities. This defines a unique URI for every entity type and every attribute so that other services outside of the NGSI domain are able to pick and choose the names of their data structures. Every `@context` file must be available on the\nnetwork. In our case the tutorial application will be used to host a series of static files.\n\n\nTherefore, the architecture will consist of three elements:\n\n-   The [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/) which will receive requests using\n    [NGSI-LD](https://forge.etsi.org/swagger/ui/?url=https://forge.etsi.org/gitlab/NGSI-LD/NGSI-LD/raw/master/spec/updated/full_api.json)\n-   The underlying [MongoDB](https://www.mongodb.com/) database :\n    -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and\n        registrations\n-   The **Tutorial Application** does the following:\n    -   Offers static `@context` files defining the context entities within the system.\n\nSince all interactions between the three elements are initiated by HTTP requests, the elements can be containerized and\nrun from exposed ports.\n\n![](https://fiware.github.io/tutorials.Working-with-At-Context/img/architecture.png)\n\nThe necessary configuration information can be seen in the services section of the associated `orion-ld.yml` file:\n\n```yaml\norion:\n    image: fiware/orion-ld\n    hostname: orion\n    container_name: fiware-orion\n    depends_on:\n        - mongo-db\n    networks:\n        - default\n    ports:\n        - \"1026:1026\"\n    command: -dbhost mongo-db -logLevel DEBUG\n    healthcheck:\n        test: curl --fail -s http://orion:1026/version || exit 1\n```\n\n```yaml\nmongo-db:\n    image: mongo:3.6\n    hostname: mongo-db\n    container_name: db-mongo\n    expose:\n        - \"27017\"\n    ports:\n        - \"27017:27017\"\n    networks:\n        - default\n    command: --nojournal\n```\n\n```yaml\ntutorial:\n    image: fiware/tutorials.ngsi-ld\n    hostname: tutorial\n    container_name: fiware-tutorial\n    networks:\n      default:\n        aliases:\n          - context\n    expose:\n      - 3000\n```\n\nAll containers are residing on the same network - the Orion Context Broker is listening on Port `1026` and MongoDB is\nlistening on the default port `27017` and the tutorial app is listening on port `3000`. All containers are also exposing the same ports externally - this is purely for\nthe tutorial access - so that cUrl or Postman can access them without being part of the same network. The command-line\ninitialization should be self explanatory.\n\n# Start Up\n\nAll services can be initialised from the command-line by running the\n[services](https://github.com/FIWARE/tutorials.Working-with-At-Context/blob/master/services) Bash script provided within the\nrepository. Please clone the repository and create the necessary images by running the commands as shown:\n\n```bash\ngit clone https://github.com/FIWARE/tutorials.Working-with-At-Context.git\ncd tutorials.Working-with-At-Context\n\n./services orion|scorpio\n```\n\n> **Note:** If you want to clean up and start over again you can do so with the following command:\n>\n> ```\n> ./services stop\n> ```",
 			"event": [
 				{
 					"listen": "prerequest",

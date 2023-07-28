@@ -1100,7 +1100,7 @@ curl -G -X GET \
   -d 'type=Building' \
   -d 'geometry=Point' \
   -d 'coordinates=%5B13.3777,52.5162%5D' \
-  -d 'georel=near;maxDistance==800' \
+  -d 'georel=near%3BmaxDistance==800' \
   -d 'options=keyValues'
 ```
 
