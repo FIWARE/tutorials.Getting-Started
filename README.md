@@ -315,15 +315,15 @@ The response will look similar to the following:
 
 ```json
 {
-  "orionld version": "1.2.1",
-  "orion version": "1.15.0-next",
-  "uptime": "0 d, 0 h, 0 m, 31 s",
-  "git_hash": "8a0c02ee6d6554d485b232cd43f3f036674854d8",
-  "compile_time": "Wed May 17 11:08:59 UTC 2023",
-  "compiled_by": "root",
-  "compiled_in": "",
-  "release_date": "Wed May 17 11:08:59 UTC 2023",
-  "doc": "https://fiware-orion.readthedocs.org/en/master/"
+    "orionld version": "1.2.1",
+    "orion version": "1.15.0-next",
+    "uptime": "0 d, 0 h, 0 m, 31 s",
+    "git_hash": "8a0c02ee6d6554d485b232cd43f3f036674854d8",
+    "compile_time": "Wed May 17 11:08:59 UTC 2023",
+    "compiled_by": "root",
+    "compiled_in": "",
+    "release_date": "Wed May 17 11:08:59 UTC 2023",
+    "doc": "https://fiware-orion.readthedocs.org/en/master/"
 }
 ```
 
@@ -817,9 +817,8 @@ additional **JSON-LD** information within it such as the following:
 
 This indicates the `category` in this **JSON-LD** response holds an enumerated value (`@vocab`) and that the value
 `barn` is defined by a full URL. This differs compared to the `ngsi-context.jsonld` `@context` file where all we can say
-is that there is an attribute with the full URL `https://uri.fiware.org/ns/dataModels#category`, because in a
-normalized **NGSI-LD** response the `category` attribute would hold a JSON object (with a `type` and `value`) not a
-string.
+is that there is an attribute with the full URL `https://uri.fiware.org/ns/dataModels#category`, because in a normalized
+**NGSI-LD** response the `category` attribute would hold a JSON object (with a `type` and `value`) not a string.
 
 ### Using an alternative `@context`
 
