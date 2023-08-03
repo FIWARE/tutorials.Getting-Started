@@ -176,27 +176,27 @@ The response will look similar to the following:
 
 ```json
 {
-  "orion": {
-    "version": "3.10.1",
-    "uptime": "0 d, 0 h, 0 m, 28 s",
-    "git_hash": "9a80e06abe7f690901cf1586377acec02d40e303",
-    "compile_time": "Mon Jun 12 16:55:20 UTC 2023",
-    "compiled_by": "root",
-    "compiled_in": "buildkitsandbox",
-    "release_date": "Mon Jun 12 16:55:20 UTC 2023",
-    "machine": "x86_64",
-    "doc": "https://fiware-orion.rtfd.io/en/3.10.1/",
-    "libversions": {
-      "boost": "1_74",
-      "libcurl": "libcurl/7.74.0 OpenSSL/1.1.1n zlib/1.2.12 brotli/1.0.9 libidn2/2.3.0 libpsl/0.21.0 (+libidn2/2.3.0) libssh2/1.9.0 nghttp2/1.43.0 librtmp/2.3",
-      "libmosquitto": "2.0.15",
-      "libmicrohttpd": "0.9.76",
-      "openssl": "1.1",
-      "rapidjson": "1.1.0",
-      "mongoc": "1.23.1",
-      "bson": "1.23.1"
+    "orion": {
+        "version": "3.10.1",
+        "uptime": "0 d, 0 h, 0 m, 28 s",
+        "git_hash": "9a80e06abe7f690901cf1586377acec02d40e303",
+        "compile_time": "Mon Jun 12 16:55:20 UTC 2023",
+        "compiled_by": "root",
+        "compiled_in": "buildkitsandbox",
+        "release_date": "Mon Jun 12 16:55:20 UTC 2023",
+        "machine": "x86_64",
+        "doc": "https://fiware-orion.rtfd.io/en/3.10.1/",
+        "libversions": {
+            "boost": "1_74",
+            "libcurl": "libcurl/7.74.0 OpenSSL/1.1.1n zlib/1.2.12 brotli/1.0.9 libidn2/2.3.0 libpsl/0.21.0 (+libidn2/2.3.0) libssh2/1.9.0 nghttp2/1.43.0 librtmp/2.3",
+            "libmosquitto": "2.0.15",
+            "libmicrohttpd": "0.9.76",
+            "openssl": "1.1",
+            "rapidjson": "1.1.0",
+            "mongoc": "1.23.1",
+            "bson": "1.23.1"
+        }
     }
-  }
 }
 ```
 
