@@ -79,7 +79,7 @@ services:
     networks:
       - default
     ports:
-      - "${SCORPIO_PORT}:9090"
+      - "${EXPOSED_PORT}:${SCORPIO_PORT}"
     depends_on:
       - postgres
       - kafka

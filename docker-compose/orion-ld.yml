@@ -31,7 +31,7 @@ services:
     networks:
       - default
     ports:
-      - "${ORION_LD_PORT}:${ORION_LD_PORT}" # localhost:1026
+      - ${EXPOSED_PORT:-1026}:${ORION_LD_PORT:-1026} # localhost:1026
     command: -dbhost mongo-db -logLevel DEBUG -forwarding -experimental
     healthcheck:
       test: curl --fail -s http://orion:${ORION_LD_PORT}/version || exit 1

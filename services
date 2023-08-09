@@ -151,6 +151,7 @@ command="$1"
 case "${command}" in
 	"help")
 		echo "usage: services [create|orion|scorpio|stellio|stellio|stop]"
+		exit 0;
 		;;
 	"orion")
 		export $(cat .env | grep "#" -v)
@@ -166,6 +167,7 @@ case "${command}" in
 		addDatabaseIndex
 		waitForOrion
 		waitForUserContext
+		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
 		;;
 	"scorpio")
 		export $(cat .env | grep "#" -v)
@@ -178,6 +180,7 @@ case "${command}" in
 		displayServices "scorpio|fiware"
 		waitForScorpio
 		waitForUserContext
+		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
 		;;
 	"stellio")
 		export $(cat .env | grep "#" -v)
@@ -190,6 +193,7 @@ case "${command}" in
 		displayServices "stellio|fiware"
 		waitForStellio
 		waitForUserContext
+		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
 		;;
 	"stop")
 		export $(cat .env | grep "#" -v)
@@ -197,7 +201,7 @@ case "${command}" in
 		;;
 	"start")
 		export $(cat .env | grep "#" -v)
-		./services orion $2
+		./services ${CONTEXT_BROKER:=orion} $2
 		;;
 	"create")
 		export $(cat .env | grep "#" -v)

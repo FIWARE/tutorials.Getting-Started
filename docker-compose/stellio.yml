@@ -10,7 +10,7 @@ services:
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
-      - "${STELLIO_PORT}:8080"
+      - "${EXPOSED_PORT}:${STELLIO_PORT}"
 
   search-service:
     container_name: stellio-search-service
