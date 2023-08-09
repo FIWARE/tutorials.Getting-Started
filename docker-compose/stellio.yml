@@ -85,7 +85,8 @@ services:
   postgres:
     labels:
       org.fiware: 'tutorial'
-    image: stellio/stellio-timescale-postgis:14-2.9.1-3.3
+    image: stellio/stellio-timescale-postgis:${STELLIO_TIMESCALE_POSTGIS}
+
     hostname: postgres
     container_name: db-postgres
     environment:
