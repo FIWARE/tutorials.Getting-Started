@@ -17,14 +17,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/data-models/ngsi-context.jsonld",
+							"raw": "http://localhost:3004/ngsi-context.jsonld",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3004",
 							"path": [
-								"data-models",
 								"ngsi-context.jsonld"
 							]
 						},
@@ -38,14 +37,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/data-models/json-context.jsonld",
+							"raw": "http://localhost:3004/json-context.jsonld",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "3004",
 							"path": [
-								"data-models",
 								"json-context.jsonld"
 							]
 						},
@@ -207,7 +205,7 @@
 							}
 						],
 						"url": {
-							"raw": "http://{{orion}}/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/data-models%23Building",
+							"raw": "http://{{orion}}/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building",
 							"protocol": "http",
 							"host": [
 								"{{orion}}"
@@ -220,7 +218,7 @@
 							"query": [
 								{
 									"key": "type",
-									"value": "https://uri.fiware.org/ns/data-models%23Building"
+									"value": "https://uri.fiware.org/ns/dataModels%23Building"
 								}
 							]
 						},
@@ -1213,10 +1211,10 @@
 							}
 						],
 						"url": {
-							"raw": "http://{{scorpio}}/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building",
+							"raw": "http://{{stellio}}/ngsi-ld/v1/entities?type=https://uri.fiware.org/ns/dataModels%23Building",
 							"protocol": "http",
 							"host": [
-								"{{scorpio}}"
+								"{{stellio}}"
 							],
 							"path": [
 								"ngsi-ld",
