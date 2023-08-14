@@ -20,7 +20,7 @@ fi
 
 if (( $# < 1 )); then
 	echo "Illegal number of parameters"
-	echo "usage: services [create|orion|scorpio|stellio|stellio|stop]"
+	echo "usage: services [create|orion|scorpio|stellio|start|stop]"
 	exit 1
 fi
 
@@ -150,7 +150,7 @@ displayServices () {
 command="$1"
 case "${command}" in
 	"help")
-		echo "usage: services [create|orion|scorpio|stellio|stellio|stop]"
+		echo "usage: services [create|orion|scorpio|stellio|start|stop]"
 		exit 0;
 		;;
 	"orion")
@@ -211,7 +211,7 @@ case "${command}" in
 		;;
 	*)
 		echo "Command not Found."
-		echo "usage: services [create|orion|scorpio|stellio|stellio|stop]"
+		echo "usage: services [create|orion|scorpio|stellio|start|stop]"
 		exit 127;
 		;;
 esac
