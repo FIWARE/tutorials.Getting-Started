@@ -8,19 +8,9 @@ ports:
     port: 3004
     onOpen: notify
     visibility: public
-  - name: Orion
+  - name: Context Broker
     description: Context Broker
     port: 1026
-    onOpen: notify
-    visibility: public
-  - name: Scorpio
-    description: Context Broker
-    port: 9090
-    onOpen: notify
-    visibility: public
-  - name: Stellio
-    description: Context Broker
-    port: 8080
     onOpen: notify
     visibility: public
   - name: Tutorial App
