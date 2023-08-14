@@ -1000,7 +1000,7 @@ Metadata queries (i.e. Properties of Properties) are annotated using the dot syn
 ```console
 curl -G -X GET \
     'http://localhost:1026/ngsi-ld/v1/entities' \
-    -H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+    -H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context; type="application/ld+json"' \
     -H 'Accept: application/json' \
     -d 'type=Building' \
     -d 'q=address.verified==true' \
