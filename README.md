@@ -358,8 +358,8 @@ New context data entities can be created by making a POST request to the `/ngsi-
 
 ```console
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Content-Type: application/ld+json' \
---data-raw '{
+  -H 'Content-Type: application/ld+json' \
+  -d '{
     "id": "urn:ngsi-ld:Building:farm001",
     "type": "Building",
     "category": {
@@ -422,9 +422,9 @@ Each subsequent entity must have a unique `id` for the given `type`
 
 ```console
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Content-Type: application/json' \
--H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
---d '{
+  -H 'Content-Type: application/json' \
+  -H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+  -d '{
     "id": "urn:ngsi-ld:Building:barn002",
     "type": "Building",
     "category": {

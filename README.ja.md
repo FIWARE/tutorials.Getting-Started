@@ -360,8 +360,8 @@ curl -X GET \
 
 ```console
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Content-Type: application/ld+json' \
---data-raw '{
+  -H 'Content-Type: application/ld+json' \
+  -d '{
     "id": "urn:ngsi-ld:Building:farm001",
     "type": "Building",
     "category": {
@@ -423,9 +423,9 @@ Core`@context`が**最後**に処理されるため、以前に同じ `@ id` で
 
 ```console
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Content-Type: application/json' \
--H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
---d '{
+  -H 'Content-Type: application/json' \
+  -H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+  -d '{
     "id": "urn:ngsi-ld:Building:barn002",
     "type": "Building",
     "category": {
