@@ -191,7 +191,11 @@ Therefore, the architecture will consist of three elements:
     -   Used by the Orion Context Broker to hold context data information such as data entities, subscriptions and
         registrations
 -   An HTTP **Web-Server** which offers static `@context` files defining the context entities within the system.
--   The **Tutorial Application** does the following:
+-   The **Tutorial Application** (optional) does the following:
+    -   Acts as set of dummy [agricultural IoT devices](https://github.com/FIWARE/tutorials.IoT-Sensors/tree/NGSI-LD)
+        using the
+        [UltraLight 2.0](https://fiware-iotagent-ul.readthedocs.io/en/latest/usermanual/index.html#user-programmers-manual)
+        protocol running over HTTP.
 
 Since all interactions between the three elements are initiated by HTTP requests, the elements can be containerized and
 run from exposed ports.
