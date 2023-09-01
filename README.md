@@ -174,8 +174,9 @@ interface is available across multiple context brokers, so we only need to pick 
 [Orion Context Broker](https://fiware-orion.readthedocs.io/en/latest/). The application will therefore only make use of
 one FIWARE component.
 
-Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to keep
-persistence of the context data it holds.
+Currently, the Orion Context Broker relies on open source [MongoDB](https://www.mongodb.com/) technology to hold the current
+state of the context data it contains and peristent information relevant to subscriptions and registrations. Other Context Brokers
+such as Scorpio or Stello are using [Postgres](https://www.postgresql.org/) for state information.
 
 To promote interoperability of data exchange, NGSI-LD context brokers explicitly expose a
 [JSON-LD `@context` file](https://json-ld.org/spec/latest/json-ld/#the-context) to define the data held within the
