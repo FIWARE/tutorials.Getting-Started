@@ -6,7 +6,7 @@
         "fiware": "https://uri.fiware.org/ns/dataModels#",
         "schema": "https://schema.org/",
         "tutorial": "https://ngsi-ld-tutorials.readthedocs.io/en/latest/datamodels.html#",
-        "Building": "fiware:Building",
+        "Building": "https://uri.fiware.org/ns/dataModels#Building",
         "Device": "fiware:Device",
         "Animal": "fiware:Animal",
         "Female": "schema:Female",
