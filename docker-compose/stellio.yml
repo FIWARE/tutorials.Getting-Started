@@ -5,7 +5,7 @@ services:
     hostname: stellio
     labels:
       org.fiware: 'tutorial'
-    image: stellio/stellio-api-gateway:${STELLIO_DOCKER_TAG}
+    image: quay.io/fiware/stellio-api-gateway:${STELLIO_DOCKER_TAG}
     platform: linux/amd64
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -16,7 +16,7 @@ services:
     container_name: stellio-search-service
     labels:
       org.fiware: 'tutorial'
-    image: stellio/stellio-search-service:${STELLIO_DOCKER_TAG}
+    image: quay.io/fiware/stellio-search-service:${STELLIO_DOCKER_TAG}
     platform: linux/amd64
     environment:
       - SPRING_PROFILES_ACTIVE=docker
@@ -38,7 +38,7 @@ services:
     container_name: stellio-subscription-service
     labels:
       org.fiware: 'tutorial'
-    image: stellio/stellio-subscription-service:${STELLIO_DOCKER_TAG}
+    image: quay.io/fiware/stellio-subscription-service:${STELLIO_DOCKER_TAG}
     platform: linux/amd64
     environment:
       - SPRING_PROFILES_ACTIVE=docker
