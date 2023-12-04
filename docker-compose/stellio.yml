@@ -6,7 +6,6 @@ services:
     labels:
       org.fiware: 'tutorial'
     image: quay.io/fiware/stellio-api-gateway:${STELLIO_DOCKER_TAG}
-    platform: linux/amd64
     environment:
       - SPRING_PROFILES_ACTIVE=docker
     ports:
@@ -17,7 +16,6 @@ services:
     labels:
       org.fiware: 'tutorial'
     image: quay.io/fiware/stellio-search-service:${STELLIO_DOCKER_TAG}
-    platform: linux/amd64
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgres/stellio_search
@@ -39,7 +37,6 @@ services:
     labels:
       org.fiware: 'tutorial'
     image: quay.io/fiware/stellio-subscription-service:${STELLIO_DOCKER_TAG}
-    platform: linux/amd64
     environment:
       - SPRING_PROFILES_ACTIVE=docker
       - SPRING_R2DBC_URL=r2dbc:postgresql://postgres/stellio_subscription
