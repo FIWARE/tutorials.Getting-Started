@@ -21,6 +21,7 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 [português](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.pt.md) <br/> 🇪🇸 Este tutorial también
 está disponible en [español](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.es.md)
 
+
 ## Contents
 
 <details>
@@ -126,7 +127,8 @@ docker run -d --name fiware-orion -h orion --network=fiware_default \
   -p 1026:1026  fiware/orion -dbhost mongo-db
 ```
 
-> **Note:** If you want to clean up and start again you can do so with the following commands
+> [!NOTE]
+> If you want to clean up and start again you can do so with the following commands
 >
 > ```
 > docker stop fiware-orion
@@ -151,7 +153,8 @@ export $(cat .env | grep "#" -v)
 docker compose -p fiware up -d
 ```
 
-> **Note:** If you want to clean up and start again you can do so with the following command:
+> [!NOTE]
+> If you want to clean up and start again you can do so with the following command:
 >
 > ```
 > docker compose -p fiware down
@@ -163,7 +166,7 @@ docker compose -p fiware up -d
 
 You can check if the Orion Context Broker is running by making an HTTP request to the exposed port:
 
-#### :one: Request:
+#### 1️⃣ Request:
 
 ```console
 curl -X GET \
@@ -200,6 +203,7 @@ The response will look similar to the following:
 }
 ```
 
+> [!TIP]
 > **What if I get a `Failed to connect to localhost port 1026: Connection refused` Response?**
 >
 > If you get a `Connection refused` response, the Orion Content Broker cannot be found where expected for this
@@ -240,7 +244,7 @@ creating two new entities (stores in **Berlin**). Any entity must have a `id` an
 attributes are optional and will depend on the system being described. Each additional attribute should also have a
 defined `type` and a `value` attribute.
 
-#### :two: Request:
+#### 2️⃣ Request:
 
 ```console
 curl -iX POST \
@@ -279,7 +283,7 @@ curl -iX POST \
 }'
 ```
 
-#### :three: Request:
+#### 3️⃣ Request:
 
 Each subsequent entity must have a unique `id` for the given `type`
 
@@ -395,7 +399,7 @@ stripping out the type elements from each attribute
 
 This example returns the data of `urn:ngsi-ld:Store:001`
 
-#### :four: Request:
+#### 4️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -431,7 +435,7 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
 This example returns the data of all `Store` entities within the context data The `type` parameter limits the response
 to store entities only.
 
-#### :five: Request:
+#### 5️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -485,7 +489,7 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
 This example returns all stores with the `name` attribute _Checkpoint Markt_. Filtering can be done using the `q`
 parameter - if a string has spaces in it, it can be URL encoded and held within single quote characters `'` = `%27`
 
-#### :six: Request:
+#### 6️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -527,7 +531,7 @@ This example returns all stores found in the Kreuzberg District.
 Filtering can be done using the `q` parameter - sub-attributes are annotated using the dot syntax e.g.
 `address.addressLocality`
 
-#### :seven: Request:
+#### 7️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -568,7 +572,7 @@ This example returns the data of all `Store` entities with a verified address.
 
 Metadata queries can be made using the `mq` parameter.
 
-#### :eight: Request:
+#### 8️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -622,7 +626,7 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
 
 This example return all Stores within 1.5km the **Brandenburg Gate** in **Berlin** (_52.5162N 13.3777W_)
 
-#### :nine: Request:
+#### 9️⃣ Request:
 
 ```console
 curl -G -X GET \
