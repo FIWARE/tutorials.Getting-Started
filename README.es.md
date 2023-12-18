@@ -164,7 +164,7 @@ docker-compose -p fiware up -d
 
 Puede comprobar si el Orion Context Broker se está ejecutando haciendo una petición HTTP al puerto expuesto:
 
-#### :one: Petición:
+#### 1️⃣ Petición:
 
 ```console
 curl -X GET \
@@ -235,7 +235,7 @@ La respuesta debe parecerse a la siguiente:
 En el fondo, FIWARE es un sistema de gestión de información contextual, por lo tanto, agreguemos datos de contexto al sistema mediante la creación de dos nuevas entidades (tiendas en **Berlin**). Cualquier entidad debe tener un `id` y atributos de tipo `type`, los atributos adicionales son opcionales y dependerán del sistema que se describa. Cada atributo adicional debe tener también un tipo definido y un atributo de valor.
 
 
-#### :two: Petición:
+#### 2️⃣ Petición:
 
 ```console
 curl -iX POST \
@@ -274,7 +274,7 @@ curl -iX POST \
 }'
 ```
 
-#### :three: Petición:
+#### 3️⃣ Petición:
 
 Cada entidad siguiente debe tener un "id" único para el "tipo" dado.
 
@@ -374,7 +374,7 @@ Aquí hay algunos ejemplos, en cada caso se ha utilizado el parámetro de consul
 
 Este ejemplo devuelve los datos de `urn:ngsi-ld:Store:001`
 
-#### :four: Petición:
+#### 4️⃣ Petición:
 
 ```console
 curl -G -X GET \
@@ -408,7 +408,7 @@ Debido al uso del modificador `options=keyValues`, la respuesta consta solo de u
 
 Este ejemplo devuelve el dato de todas las entidades `Store` con sus datos de contexto. El parámetro `type` limita la respuesta sólo a las entidades de tipo tienda
 
-#### :five: Petición:
+#### 5️⃣ Petición:
 
 ```console
 curl -G -X GET \
@@ -460,7 +460,7 @@ Debido al uso del modificador `options=keyValues`, la respuesta consta solo de u
 
 Este ejemplo devuelve todos las tiendas con el atributo `name` con el valor _Checkpoint Markt_. Se puede filtrar usando el parámetro `q` - si una cadena tiene espacios en el, se puede condificar en URL y mantenerse entre comillas simples `'` = `%27`
 
-#### :six: Petición:
+#### 6️⃣ Petición:
 
 ```console
 curl -G -X GET \
@@ -500,7 +500,7 @@ Este ejemplo devuelve todas las tiendas encontradas en Kreuzberg District.
 
 El filtrado se puede hacer usando el parámetro `q` - los sub-atributos Los sub-atributos se apuntan usando la sintaxis de puntos, por ejemplo, `address.addressLocality`
 
-#### :seven: Petición:
+#### 7️⃣  Petición:
 
 ```console
 curl -G -X GET \
@@ -540,7 +540,7 @@ Este ejemplo devuelve todos los datos de las entidades `Store` con la dirección
 
 Las búsquedas por metadatos se pueden usar empleando el parámetro `mq`.
 
-#### :eight: Petición:
+#### 8️⃣  Petición:
 
 ```console
 curl -G -X GET \
@@ -593,7 +593,7 @@ Debido al uso del modificador `options=keyValues`, la respuesta consta solo de u
 
 Este ejemplo devuelve todas las tiendas a 1.5Km de distancia de **La puerta de Brandenburgo** en **Berlin** (_52.5162N 13.3777W_)
 
-#### :nine: Petición:
+#### 9️⃣ Petición:
 
 ```console
 curl -G -X GET \

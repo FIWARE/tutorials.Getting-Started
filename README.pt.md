@@ -155,7 +155,7 @@ docker-compose -p fiware up -d
 
 Você pode verificar se o Orion Context Broker está rodando fazendo uma requisição HTTP para a porta exposta:
 
-#### :one: Pedido:
+#### 1️⃣ Pedido:
 
 ```console
 curl -X GET \
@@ -232,7 +232,7 @@ contexto ao sistema através de criar duas novas entidades (lojas em **Berlim**)
 `id` e `type`, adicionais são opcionais e dependem do sistema que está sendo descrito. Cada atributo adicional também
 deve ter um definido `type` e um atributo `value`.
 
-#### :two: Pedido:
+#### 2️⃣ Pedido:
 
 ```console
 curl -iX POST \
@@ -265,7 +265,7 @@ curl -iX POST \
 }'
 ```
 
-#### :three: Pedido:
+#### 3️⃣ Pedido:
 
 Cada entidade subseqüente deve ter um `id` exclusivo para o `type` dado.
 
@@ -363,7 +363,7 @@ respostas por despojando os elementos de tipo de cada atributo
 
 Este exemplo retorna os dados de `urn:ngsi-ld:Store:001`
 
-#### :four: Pedido:
+#### 4️⃣ Pedido:
 
 ```console
 curl -X GET \
@@ -394,7 +394,7 @@ curl -X GET \
 
 Este exemplo retorna os dados de todas as entidades `Store` dentro dos dados de contexto.
 
-#### :five: Pedido:
+#### 5️⃣ Pedido:
 
 ```console
 curl -X GET \
@@ -442,7 +442,7 @@ curl -X GET \
 
 Este exemplo devolve todas as lojas encontradas no distrito de Kreuzberg
 
-#### :six: Pedido:
+#### 6️⃣ Pedido:
 
 ```console
 curl -X GET \
@@ -475,7 +475,7 @@ http://localhost:1026/v2/entities?type=Store&q=address.addressLocality==Kreuzber
 
 Este exemplo devolve todas as lojas num raio de 1,5 km do **Portão de Brandemburgo** em **Berlim** (_52.5162N 13.3777W_)
 
-#### :seven: Pedido:
+#### 7️⃣  Pedido:
 
 ```console
 curl -X GET \
