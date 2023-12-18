@@ -262,7 +262,8 @@ git checkout NGSI-LD
 ./services [orion|scorpio|stellio]
 ```
 
-> **Note:** If you want to clean up and start over again you can do so with the following command:
+> [!NOTE]
+> If you want to clean up and start over again you can do so with the following command:
 >
 > ```
 > ./services stop
@@ -307,7 +308,7 @@ of the same model is also available, and would be use to generate code stubs in 
 
 As usual, you can check if the Orion Context Broker is running by making an HTTP request to the exposed port:
 
-#### :one: Request:
+#### 1️⃣ Request:
 
 ```console
 curl -X GET \
@@ -340,9 +341,10 @@ work with the requests defined below.
 New context data entities can be created by making a POST request to the `/ngsi-ld/v1/entities` endpoint and supply an
 `@context` along with structured **NGSI-LD** data.
 
-#### :two: Request:
+#### 2️⃣ Request:
 
-> **Note:** This entity is being created using the default **normalized** NGSI-LD format, which is the Gold Standard for
+> [!NOTE]
+> This entity is being created using the default **normalized** NGSI-LD format, which is the Gold Standard for
 > data exchange between context brokers. NGSI-LD supports two lossless data formats
 > [normalized](https://github.com/FIWARE/tutorials.CRUD-Operations/tree/NGSI-LD) and
 > [concise](https://github.com/FIWARE/tutorials.Concise-Format/tree/NGSI-LD).
@@ -421,7 +423,7 @@ This means that the actual `@context` is:
 with the core `@context` being processed **last** and therefore overriding any terms previously defined with the same
 `@id`.
 
-#### :three: Request:
+#### 3️⃣ Request:
 
 Each subsequent entity must have a unique `id` for the given `type`
 
@@ -484,7 +486,8 @@ The `type` of a _property_ attribute must be one of the following:
 -   For time-based values, `"Property"` shall be used as well, but the property value should be Date, Time or DateTime
     strings encoded in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) - e.g. `YYYY-MM-DDThh:mm:ssZ`
 
-> **Note:** that for simplicity, this data entity has no relationships defined. Relationships must be given the
+> [!NOTE]
+>  Note that for simplicity, this data entity has no relationships defined. Relationships must be given the
 > `type=Relationship`. Relationships will be discussed in a subsequent tutorial.
 
 ### Defining Properties-of-Properties within the NGSI-LD entity definition
@@ -516,7 +519,7 @@ This example returns the data of all `Building` entities within the context data
 NGSI-LD and is used to filter the response. The Accept HTTP header is needed to retrieve JSON-LD content in the response
 body.
 
-#### :four: Request:
+#### 4️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -629,7 +632,7 @@ Link: <https://fiware.github.io/data-models/context.jsonld>; rel="http://www.w3.
 The standard HTTP `Link` header allows metadata (in this case the `@context`) to be passed in without actually touching
 the resource in question. In the case of NGSI-LD, the metadata is a file in `application/ld+json` format.
 
-#### :five: Request:
+#### 5️⃣ Request:
 
 ```console
 curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001' \
@@ -695,7 +698,7 @@ specific `type` of data. For example, the request below returns the data of all 
 data. Use of the `type` parameter limits the response to `Building` entities only, use of the `options=keyValues` query
 parameter reduces the response down to standard JSON-LD.
 
-#### :six: Request:
+#### 6️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -764,7 +767,7 @@ This example returns all `Building` entities with the `name` attribute _Big Red 
 Since `options=keyValues` is sent, this will effect the structure of the payload and we will need to supply a different
 `@context` file - `json-context.jsonld`
 
-#### :seven: Request:
+#### 7️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -833,7 +836,7 @@ data_ using a different set of short names.
 The `alternate-context.jsonld` maps the names of various attributes to their equivalents in German. If it is supplied in
 the request a query can be made using alternate short names (e.g. `type=Building` becomes `type=Gebäude`)
 
-#### :eight: Request:
+#### 8️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -885,7 +888,7 @@ Within the standard `Building` model, the `category` attribute refers to an arra
 `Building` entities with a `category` attribute which contains either `commercial` or `office` strings. Filtering can be
 done using the `q` parameter, comma separating the acceptable values.
 
-#### :nine: Request:
+#### 9️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -933,7 +936,7 @@ This example returns all stores found in the Tiergarten District.
 Filtering can be done using the `q` parameter - sub-attributes are annotated using the bracket syntax e.g.
 `q=address[addressLocality]=="Tiergarten"`.
 
-#### :one::zero: Request:
+#### 1️⃣0️⃣ Request:
 
 ```console
 curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
@@ -1000,7 +1003,7 @@ of a _Property-of-a-Property_
 
 Metadata queries (i.e. Properties of Properties) are annotated using the dot syntax e.g. `q=address.verified==true`.
 
-#### :one::one: Request:
+#### 1️⃣1️⃣ Request:
 
 ```console
 curl -G -X GET \
@@ -1067,7 +1070,7 @@ brackets.
 Note that by default the geo-query will be applied to the `location` attribute, as this is default specified in NGSI-LD.
 If another attribute is to be used, an additional `geoproperty` parameter is required.
 
-#### :one::two: Request:
+#### 1️⃣2️⃣ Request:
 
 ```console
 curl -G -X GET \

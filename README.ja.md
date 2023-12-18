@@ -321,7 +321,7 @@ git checkout NGSI-LD
 通常どおり、公開されたポートに HTTP リクエストを送信することで、Orion Context Broker が実行されているかどうかを
 確認できます:
 
-#### :one: リクエスト:
+#### 1️⃣ リクエスト:
 
 ```console
 curl -X GET \
@@ -356,7 +356,7 @@ curl -X GET \
 `/ngsi-ld/v1/entities` エンドポイントに POST リクエストを行い、構造化された **NGSI-LD** データとともに `@context`
 を提供することで、新しいコンテキスト・データ・エンティティを作成できます。
 
-#### :two: リクエスト:
+#### 2️⃣ リクエスト:
 
 ```console
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
@@ -417,7 +417,7 @@ Context Broker は `@context` で示されているすべてのファイルを�
 
 Core`@context`が**最後**に処理されるため、以前に同じ `@ id` で定義された用語を上書きします。
 
-#### :three: リクエスト:
+#### 3️⃣ リクエスト:
 
 後続の各エンティティには、指定された `type` に対して一意の `id` が必要です。
 
@@ -522,7 +522,7 @@ UN/CEFACT [Common Codes](http://wiki.goodrelations-vocabulary.org/Documentation/
 NGSI-LD に必須であり、レスポンスのフィルタリングに使用されます。Accept HTTP ヘッダは、レスポンス・ボディの
 JSON-LD コンテンツを取得するために必要です。
 
-#### :four: リクエスト:
+#### 4️⃣ リクエスト:
 
 ```console
 curl -G -X GET \
@@ -637,7 +637,7 @@ Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#co
 標準の HTTP `Link` ヘッダを使用すると、当のリソースに実際に触れることなくメタデータ (この場合は `@context`)
 を渡すことができます。NGSI-LD の場合、メタデータは `application/ld+json` 形式のファイルです。
 
-#### :five: リクエスト:
+#### 5️⃣ リクエスト:
 
 ```console
 curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001' \
@@ -705,7 +705,7 @@ Core `@context` が含まれることは常に暗示されることに注意し�
 返します。`type` パラメータを使用すると、レスポンスが `Building` エンティティのみに制限されます。
 `options=keyValues` クエリ・パラメータを使用すると、レスポンスが標準の JSON-LD になります。
 
-#### :six: リクエスト:
+#### 6️⃣ リクエスト:
 
 ```console
 curl -G -X GET \
@@ -776,7 +776,7 @@ curl -G -X GET \
 `"` = `%22` で保持できます。`options=keyValues` が送信されるため、これによりペイロードの構造に影響を与えるため、
 別の `@context` ファイル - `json-context.jsonld` を提供する必要があります。
 
-#### :seven: リクエスト:
+#### 7️⃣ リクエスト:
 
 ```console
 curl -G -X GET \
@@ -847,7 +847,7 @@ curl -G -X GET \
 `alternate-context.jsonld` は、さまざまな属性の名前をドイツ語の対応する属性にマッピングします。リクエストで提供されている
 場合、代替の短い名前を使用してクエリを作成できます (たとえば、`type=Building` は `type=Gebäude` になります)。
 
-#### :eight: リクエスト:
+#### 8️⃣ リクエスト:
 
 ```console
 curl -G -X GET \
@@ -901,7 +901,7 @@ curl -G -X GET \
 文字列を含む `category` 属性を持つすべての `Building` エンティティを返します。フィルタリングは、`q`
 パラメータを使用して、許容値をカンマで区切って行うことができます。
 
-#### :nine: リクエスト:
+#### 9️⃣ リクエスト:
 
 ```console
 curl -G -X GET \
@@ -951,7 +951,7 @@ curl -G -X GET \
 フィルタリングは `q` パラメータを使用して行うことができます - サブ属性は、`q=address[addressLocality]=="Tiergarten"`
 などのブラケット構文を使用して注釈が付けられます。
 
-#### :one::zero: リクエスト:
+#### 1️⃣0️⃣ リクエスト:
 
 ```console
 curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
@@ -1021,7 +1021,7 @@ curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
 メタデータ・クエリ (プロパティのプロパティなど) は、ドット構文を使用して注釈が付けられます
 (例: `q=address.verified==true`)。
 
-#### :one::one: リクエスト:
+#### 1️⃣1️⃣ リクエスト:
 
 ```console
 curl -G -X GET \
@@ -1090,7 +1090,7 @@ curl -G -X GET \
 これはデフォルトで NGSI-LD に指定されているため、デフォルトではジオ・クエリが `location` 属性に適用されることに
 注意してください。別の属性を使用する場合は、追加の `geoproperty` パラメーターが必要です。
 
-#### :one::two: リクエスト:
+#### 1️⃣2️⃣ リクエスト:
 
 ```console
 curl -G -X GET \
