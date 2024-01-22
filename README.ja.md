@@ -64,7 +64,7 @@
 
 たとえば、`address` 属性はスマート・アプリケーション内にあり、次のように定義されています:
 
-```jsonld
+```json
 "@context": {
     "schema": "https://schema.org/",
     "address": "schema:address"
@@ -81,7 +81,7 @@
 [schema.org **JSON-LD** schema](https://schema.org/version/latest/schemaorg-current-http.jsonld) を参照することにより、
 `address` 属性が `streetAddress` を含むサブ属性を持つ JSON オブジェクトを保持しているという情報を抽出できます。
 
-```jsonld
+```json
 {
   "@id": "http://schema.org/streetAddress",
   "@type": "rdf:Property",
@@ -406,7 +406,7 @@ Context Broker は `@context` で示されているすべてのファイルを�
 
 つまり、実際の `@context` は次のとおりです:
 
-```jsonld
+```json
 {
     "@context": [
         "http://context/ngsi-context.jsonld",
@@ -543,7 +543,7 @@ curl -G -X GET \
 
 エンティティの作成時に属性が FQN に関連付けられていない場合は、短い名前が**常に**表示されます。
 
-```jsonld
+```json
 [
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
@@ -654,7 +654,7 @@ Core `@context` が含まれることは常に暗示されることに注意し�
 両方の `@context` ファイルを明示的に含めることもできます。レスポンスは正規化された **NGSI-LD** であり、
 したがって有効な **JSON-LD** でもあり、`@context` は受信プログラムで **JSON-LD** 操作に使用できます。
 
-```jsonld
+```json
 {
     "@context": "http://context/ngsi-context.jsonld",
     "id": "urn:ngsi-ld:Building:farm001",
@@ -722,7 +722,7 @@ curl -G -X GET \
 やプロパティのプロパティ (_properties-of-properties_) 要素は含まれません。リクエストの `Link`
 ヘッダがレスポンスで返される `@context` として使用されていることがわかります。
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/ngsi-context.jsonld",
@@ -793,7 +793,7 @@ curl -G -X GET \
 `Link` ヘッダと `options=keyValues` パラメータを使用すると、次のように、短い形式の Key-Value **JSON-LD**
 へのレスポンスが減少します:
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/json-context.jsonld",
@@ -865,7 +865,7 @@ curl -G -X GET \
 形式で返されます。Core Context の用語 (`id`, `type` など) を直接上書きすることはできませんが、追加の **JSON-LD**
 拡張/圧縮操作が必要になることに注意してください。
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/alternate-context.jsonld",
@@ -917,7 +917,7 @@ curl -G -X GET \
 
 レスポンスは JSON-LD 形式で返され、短い形式の属性名が含まれます:
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/ngsi-context.jsonld",
@@ -966,7 +966,7 @@ curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
 
 `Link` ヘッダと `options=keyValues` パラメータを使用すると、JSON-LD へのレスポンスが減少します。
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/json-context.jsonld",

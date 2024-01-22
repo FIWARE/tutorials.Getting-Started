@@ -65,7 +65,7 @@ held within our broker.
 
 For example, the attribute `address` is within our smart application is defined as follows:
 
-```jsonld
+```json
 "@context": {
     "schema": "https://schema.org/",
     "address": "schema:address"
@@ -82,7 +82,7 @@ A program written by a third party would therefore be able to extract informatio
 holds a JSON object with a sub-attribute containing the `streetAddress` by referring to the full
 [schema.org **JSON-LD** schema](https://schema.org/version/latest/schemaorg-current-http.jsonld)
 
-```jsonld
+```json
 {
   "@id": "http://schema.org/streetAddress",
   "@type": "rdf:Property",
@@ -411,7 +411,7 @@ is implicitly included as well.
 
 This means that the actual `@context` is:
 
-```jsonld
+```json
 {
     "@context": [
         "http://context/ngsi-context.jsonld",
@@ -540,7 +540,7 @@ Since no explicit `@context` was sent in the request, the response returns the C
 Note that if an attribute has not been associated to an FQN when the entity was created, the short name will **always**
 be displayed.
 
-```jsonld
+```json
 [
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld",
@@ -626,7 +626,7 @@ This example returns the data of `urn:ngsi-ld:Building:farm001`. The NGSI-LD `@c
 The full link header syntax can be seen below:
 
 ```text
-Link: <https://fiware.github.io/data-models/context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json
+Link: <ttp://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json
 ```
 
 The standard HTTP `Link` header allows metadata (in this case the `@context`) to be passed in without actually touching
@@ -649,7 +649,7 @@ Note that the inclusion of the core `@context` is always implied. It would be al
 files explicitly as element in the array of `@context` sent. The response is normalized **NGSI-LD** and therefore valid
 **JSON-LD** as well, and the `@context` can be used by the receiving program for **JSON-LD** operations.
 
-```jsonld
+```json
 {
     "@context": "http://context/ngsi-context.jsonld",
     "id": "urn:ngsi-ld:Building:farm001",
@@ -715,7 +715,7 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
 `type="Property"` or any _properties-of-properties_ elements. You can see that `Link` header from the request has been
 used as the `@context` returned in the response.
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/ngsi-context.jsonld",
@@ -784,7 +784,7 @@ curl -G -X GET \
 The use of the `Link` header and the `options=keyValues` parameter reduces the response to short form key-values
 **JSON-LD** as shown:
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/json-context.jsonld",
@@ -854,7 +854,7 @@ The response is returned in JSON-LD format with short form attribute names (`add
 the short names provided in the alternate context. Note that core context terms (`id`, `type` etc.) cannot be overridden
 directly but would require an additional **JSON-LD** expansion/compaction operation.
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/alternate-context.jsonld",
@@ -904,7 +904,7 @@ curl -G -X GET \
 
 The response is returned in JSON-LD format with short form attribute names:
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/ngsi-context.jsonld",
@@ -951,7 +951,7 @@ curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
 
 Use of the `Link` header and the `options=keyValues` parameter reduces the response to JSON-LD.
 
-```jsonld
+```json
 [
     {
         "@context": "http://context/json-context.jsonld",
