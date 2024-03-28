@@ -27,6 +27,7 @@ está disponible en [español](https://github.com/FIWARE/tutorials.Getting-Start
 <details>
 <summary><strong>Details</strong></summary>
 
+-   [Introduction to NGSI-v2](#introduction-to-ngsi-v2)
 -   [Architecture](#architecture)
 -   [Prerequisites](#prerequisites)
     -   [Docker](#docker)
@@ -50,6 +51,15 @@ está disponible en [español](https://github.com/FIWARE/tutorials.Getting-Start
     -   [Iterative Development](#iterative-development)
 
 </details>
+
+# Introduction to NGSI-v2
+
+> "Begin at the beginning," the King said, very gravely, "and go on till you come to the end: then stop."
+>
+> — Lewis Carroll, Alice in Wonderland 
+
+**NGSI-v2** is a JSON-based interoperability interface for use in individual Smart Systems. It is ideal for creating individual applications offering interoperable interfaces 
+for web services or IoT devices. It is easier to understand than NGSI-LD and does not require a [JSON-LD `@context`](https://www.w3.org/TR/json-ld11/#the-context).
 
 # Architecture
 
