@@ -29,6 +29,8 @@ services:
       - APPLICATION_TENANTS_1_NAME=openiot
       - APPLICATION_TENANTS_1_ISSUER=https://sso.stellio.io/auth/realms/openiot
       - APPLICATION_TENANTS_1_DBSCHEMA=openiot
+      - APPLICATION_PAGINATION_LIMIT-DEFAULT=30
+      - APPLICATION_PAGINATION_LIMIT-MAX=1000
     ports:
       - 8083:8083
     restart: always
@@ -56,6 +58,8 @@ services:
       - APPLICATION_TENANTS_1_NAME=openiot
       - APPLICATION_TENANTS_1_ISSUER=https://sso.stellio.io/auth/realms/openiot
       - APPLICATION_TENANTS_1_DBSCHEMA=openiot
+      - APPLICATION_PAGINATION_LIMIT-DEFAULT=30
+      - APPLICATION_PAGINATION_LIMIT-MAX=1000
     ports:
       - 8085:8084
     restart: always
