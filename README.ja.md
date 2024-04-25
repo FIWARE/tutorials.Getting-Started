@@ -656,7 +656,10 @@ Core `@context` が含まれることは常に暗示されることに注意し�
 
 ```json
 {
-    "@context": "http://context/ngsi-context.jsonld",
+    "@context":  [
+        "http://context/ngsi-context.jsonld",
+        "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+    ],
     "id": "urn:ngsi-ld:Building:farm001",
     "type": "Building",
     "category": {
@@ -725,7 +728,10 @@ curl -G -X GET \
 ```json
 [
     {
-        "@context": "http://context/ngsi-context.jsonld",
+        "@context": [
+            "http://context/ngsi-context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
         "id": "urn:ngsi-ld:Building:farm001",
         "type": "Building",
         "address": {
@@ -745,7 +751,10 @@ curl -G -X GET \
         }
     },
     {
-        "@context": "http://context/ngsi-context.jsonld",
+        "@context": [
+            "http://context/ngsi-context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {
@@ -796,7 +805,10 @@ curl -G -X GET \
 ```json
 [
     {
-        "@context": "http://context/json-context.jsonld",
+        "@context": [
+            "http://context/json-context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {
@@ -868,7 +880,10 @@ curl -G -X GET \
 ```json
 [
     {
-        "@context": "http://context/alternate-context.jsonld",
+        "@context": [
+            "http://context/alternate-context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Gebäude",
         "adresse": {
@@ -920,7 +935,10 @@ curl -G -X GET \
 ```json
 [
     {
-        "@context": "http://context/ngsi-context.jsonld",
+        "@context": [
+            "http://context/ngsi-context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {
@@ -969,7 +987,10 @@ curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
 ```json
 [
     {
-        "@context": "http://context/json-context.jsonld",
+        "@context": [
+            "http://context/json-context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
         "id": "urn:ngsi-ld:Building:farm001",
         "type": "Building",
         "address": {
@@ -989,7 +1010,10 @@ curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
         }
     },
     {
-        "@context": "http://context/json-context.jsonld",
+        "@context": [
+            "http://context/json-context.jsonld",
+            "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
+        ],
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "Building",
         "address": {
