@@ -186,7 +186,7 @@ case "${command}" in
 		export $(cat .env | grep "#" -v)
 		stoppingContainers
 		waitForCoreContext
-		echo -e "Starting containers:  \033[1;34mStellio\033[0m, \033[1mKafka\033[0m, \033[1mZookeeper\033[0m, \033[1mNeo4j\033[0m, \033[1mPostgreSQL/TimescaleDB\033[0m, and a linked data \033[1mContext\033[0m."
+		echo -e "Starting containers:  \033[1;34mStellio\033[0m, \033[1mKafka\033[0m, \033[1mPostgreSQL/TimescaleDB\033[0m, and a linked data \033[1mContext\033[0m."
 		echo -e "- \033[1;34mStellio\033[0m is the context broker"
 		echo -e "- Data models \033[1m@context\033[0m (Smart Farm) is supplied externally"
 		${dockerCmd}  -f docker-compose/common.yml -f docker-compose/stellio.yml up -d
