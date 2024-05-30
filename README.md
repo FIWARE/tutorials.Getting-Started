@@ -4,8 +4,8 @@
 [![License: MIT](https://img.shields.io/github/license/fiware/tutorials.Getting-Started.svg)](https://opensource.org/licenses/MIT)
 [![Support badge](https://img.shields.io/badge/tag-fiware-orange.svg?logo=stackoverflow)](https://stackoverflow.com/questions/tagged/fiware)
 
-This is an Introductory Tutorial to the FIWARE Platform. We will start with the data from a supermarket chain’s store
-finder and create a very simple _“Powered by FIWARE”_ application by passing in the address and location of each store
+These are an Introductory Tutorials to the FIWARE NGSI interfaces. We will start with the data from a supermarket chain’s store
+finder/Smart Farm and create a very simple _“Powered by FIWARE”_ application by passing in the address and location of each store
 as context data to the FIWARE context broker.
 
 The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also available as
