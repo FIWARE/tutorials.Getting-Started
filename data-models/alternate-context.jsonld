@@ -10,12 +10,12 @@
         "tutorial": "https://ngsi-ld-tutorials.readthedocs.io/en/latest/datamodels.html#",
         "Gebäude": "fiware:Building",
         "Tier": "fiware:Animal",
-        "Weiblich": "schema:Female",
+        "Weiblich": "https://schema.org/Female",
         "Gerät": "fiware:Device",
         "Füllstandssensor": "tutorial:FillingLevelSensor",
         "Herbicide": "tutorial:Herbicide",
         "HVAC": "https://w3id.org/saref#HVAC",
-        "Männlich": "schema:Male",
+        "Männlich": "https://schema.org/Male",
         "PartField": "tutorial:PartField",
         "Person": "fiware:Person",
         "SoilSensor": "tutorial:SoilSensor",
@@ -24,16 +24,16 @@
         "Traktor": "tutorial:Tractor",
         "Wasser": "tutorial:Water",
         "aktuator": "https://w3id.org/saref#actuator",
-        "zusätzlicherName": "schema:additionalName",
-        "adresse": "schema:address",
-        "addressCountry": "schema:addressCountry",
-        "addressLocality": "schema:addressLocality",
-        "addressRegion": "schema:addressRegion",
+        "zusätzlicherName": "https://schema.org/additionalName",
+        "adresse": "https://schema.org/address",
+        "addressCountry": "https://schema.org/addressCountry",
+        "addressLocality": "https://schema.org/addressLocality",
+        "addressRegion": "https://schema.org/addressRegion",
         "airPollution": "https://w3id.org/saref#airPollution",
         "atmosphericPressure": "https://w3id.org/saref#atmosphericPressure",
         "scheune": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn",
         "akku": "fiware:batteryLevel",
-        "kategorie": "fiware:category",
+        "kategorie": "https://uri.fiware.org/ns/dataModels#category",
         "aufbau": "fiware:configuration",
         "wintergarten": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dconservatory",
         "anOrtEnthalten": "fiware:containedInPlace",
@@ -53,31 +53,31 @@
         "gerätestatus": "fiware:deviceState",
         "fermenter": "https://wiki.openstreetmap.org/wiki/Tag:building%3Ddigester",
         "essaktivität": "https://w3id.org/saref#eatingActivity",
-        "email": "schema:email",
+        "email": "https://schema.org/email",
         "endgun": "https://w3id.org/saref#endgun",
-        "familienname": "schema:familyName",
+        "familienname": "https://schema.org/familyName",
         "bauernhof": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dfarm",
         "bauernhofhilfsmittel": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dfarm_auxiliary",
-        "faxnummer": "schema:faxNumber",
+        "faxnummer": "https://schema.org/faxNumber",
         "füllstands": "https://w3id.org/saref#fillingLevel",
         "firmwareVersion": "fiware:firmwareVersion",
         "floorsAboveGround": "fiware:floorsAboveGround",
         "floorsBelowGround": "fiware:floorsBelowGround",
-        "geschlecht": "schema:gender",
-        "vorname": "schema:givenName",
+        "geschlecht": "https://schema.org/gender",
+        "vorname": "https://schema.org/givenName",
         "gewächshaus": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dgreenhouse",
         "hangar": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dhangar",
         "hardwareVersion": "fiware:hardwareVersion",
-        "honorificPrefix": "schema:honorificPrefix",
-        "honorificSuffix": "schema:honorificSuffix",
+        "honorificPrefix": "https://schema.org/honorificPrefix",
+        "honorificSuffix": "https://schema.org/honorificSuffix",
         "luftfeuchtigkeit": "https://w3id.org/saref#humidity",
         "hütte": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dhut",
         "werkzeug": "https://w3id.org/saref#implement",
         "ipAddress": "fiware:ipAddress",
         "irrSection": "https://w3id.org/saref#irrSection",
         "irrSystem": "https://w3id.org/saref#irrSystem",
-        "isicV4": "schema:isicV4",
-        "berufsbezeichnung": "schema:jobTitle",
+        "isicV4": "https://schema.org/isicV4",
+        "berufsbezeichnung": "https://schema.org/jobTitle",
         "ort": "https://w3id.org/saref#location",
         "macAddress": "fiware:macAddress",
         "mcc": "fiware:mcc",
@@ -87,14 +87,14 @@
         "bewegung": "https://w3id.org/saref#motion",
         "bewegungsaktivität": "https://w3id.org/saref#movementActivity",
         "multimedia": "https://w3id.org/saref#multimedia",
-        "name": "schema:name",
+        "name": "https://schema.org/name",
         "netzwerk": "https://w3id.org/saref#network",
         "belegung": "https://w3id.org/saref#occupancy",
         "besatzer": "fiware:occupier",
         "öffnungszeiten": "fiware:openingHours",
         "osVersion": "fiware:osVersion",
         "inhaber": "fiware:owner",
-        "postalCode": "schema:postalCode",
+        "postalCode": "https://schema.org/postalCode",
         "niederschlag": "https://w3id.org/saref#precipitation",
         "druck": "https://w3id.org/saref#pressure",
         "anbieter": "fiware:provider",
@@ -111,14 +111,15 @@
         "sonnenstrahlung": "https://w3id.org/saref#solarRadiation",
         "quelle": "fiware:source",
         "stall": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dstable",
+        "streetAddress": "https://schema.org/streetAddress",
         "schweinestall": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dsty",
         "supportedProtocol": "fiware:supportedProtocol",
-        "steuerID": "schema:taxID",
-        "telefon": "schema:telephone",
+        "steuerID": "https://schema.org/taxID",
+        "telefon": "https://schema.org/telephone",
         "temperature": "https://w3id.org/saref#temperature",
         "transformator_turm": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dtransformer_tower",
         "value": "fiware:value",
-        "vatID": "schema:vatID",
+        "vatID": "https://schema.org/vatID",
         "wasserVerbrauch": "https://w3id.org/saref#waterConsumption",
         "wasserturm": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dwater_tower",
         "wetterbedingungen": "https://w3id.org/saref#weatherConditions",
@@ -157,7 +158,7 @@
                 }
             ],
             "rdfs:subClassOf": {
-                "@id": "schema:Thing"
+                "@id": "https://schema.org/Thing"
             }
         },
         {
@@ -176,7 +177,7 @@
                 }
             ],
             "rdfs:subClassOf": {
-                "@id": "schema:Thing"
+                "@id": "https://schema.org/Thing"
             }
         },
         {
@@ -195,7 +196,7 @@
                 }
             ],
             "rdfs:subClassOf": {
-                "@id": "schema:Thing"
+                "@id": "https://schema.org/Thing"
             }
         },
         {
@@ -214,7 +215,7 @@
                 }
             ],
             "rdfs:subClassOf": {
-                "@id": "schema:Thing"
+                "@id": "https://schema.org/Thing"
             }
         },
         {
