@@ -26,6 +26,9 @@
         "aktuator": "https://w3id.org/saref#actuator",
         "zusätzlicherName": "schema:additionalName",
         "adresse": "schema:address",
+        "addressCountry": "schema:addressCountry",
+        "addressLocality": "schema:addressLocality",
+        "addressRegion": "schema:addressRegion",
         "airPollution": "https://w3id.org/saref#airPollution",
         "atmosphericPressure": "https://w3id.org/saref#atmosphericPressure",
         "scheune": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn",
@@ -91,7 +94,7 @@
         "öffnungszeiten": "fiware:openingHours",
         "osVersion": "fiware:osVersion",
         "inhaber": "fiware:owner",
-       
+        "postalCode": "schema:postalCode",
         "niederschlag": "https://w3id.org/saref#precipitation",
         "druck": "https://w3id.org/saref#pressure",
         "anbieter": "fiware:provider",

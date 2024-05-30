@@ -25,10 +25,13 @@
         "Water": "tutorial:Water",
         "actuator": "https://w3id.org/saref#actuator",
         "additionalName": {
-            "@id": "schema:additionalName",
+            "@id": "https://schema.org/additionalName",
             "@type": "xsd:string"
         },
         "address": "schema:address",
+        "addressCountry": "schema:addressCountry",
+        "addressLocality": "schema:addressLocality",
+        "addressRegion": "schema:addressRegion",
         "airPollution": "https://w3id.org/saref#airPollution",
         "atmosphericPressure": "https://w3id.org/saref#atmosphericPressure",
         "barn": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn",
@@ -102,18 +105,18 @@
         "digester": "https://wiki.openstreetmap.org/wiki/Tag:building%3Ddigester",
         "eatingActivity": "https://w3id.org/saref#eatingActivity",
         "email": {
-            "@id": "schema:email",
+            "@id": "https://schema.org/email",
             "@type": "xsd:string"
         },
         "endgun": "https://w3id.org/saref#endgun",
         "familyName": {
-            "@id": "schema:familyName",
+            "@id": "https://schema.org/familyName",
             "@type": "xsd:string"
         },
         "farm": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dfarm",
         "farm_auxiliary": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dfarm_auxiliary",
         "faxNumber": {
-            "@id": "schema:faxNumber",
+            "@id": "https://schema.org/faxNumber",
             "@type": "xsd:string"
         },
         "filling": "https://w3id.org/saref#fillingLevel",
@@ -130,11 +133,11 @@
             "@type": "xsd:integer"
         },
         "gender": {
-            "@id": "schema:gender",
+            "@id": "https://schema.org/gender",
             "@type": "@vocab"
         },
         "givenName": {
-            "@id": "schema:givenName",
+            "@id": "https://schema.org/givenName",
             "@type": "xsd:string"
         },
         "greenhouse": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dgreenhouse",
@@ -144,11 +147,11 @@
             "@type": "xsd:string"
         },
         "honorificPrefix": {
-            "@id": "schema:honorificPrefix",
+            "@id": "https://schema.org/honorificPrefix",
             "@type": "xsd:string"
         },
         "honorificSuffix": {
-            "@id": "schema:honorificSuffix",
+            "@id": "https://schema.org/honorificSuffix",
             "@type": "xsd:string"
         },
         "humidity": "https://w3id.org/saref#humidity",
@@ -161,11 +164,11 @@
         "irrSection": "https://w3id.org/saref#irrSection",
         "irrSystem": "https://w3id.org/saref#irrSystem",
         "isicV4": {
-            "@id": "schema:isicV4",
+            "@id": "https://schema.org/isicV4",
             "@type": "xsd:string"
         },
         "jobTitle": {
-            "@id": "schema:jobTitle",
+            "@id": "https://schema.org/jobTitle",
             "@type": "xsd:string"
         },
         "location": "https://w3id.org/saref#location",
@@ -187,7 +190,7 @@
         "movementActivity": "https://w3id.org/saref#movementActivity",
         "multimedia": "https://w3id.org/saref#multimedia",
         "name": {
-            "@id": "schema:name",            "@type": "xsd:string"
+            "@id": "https://schema.org/name",            "@type": "xsd:string"
         },
         "network": "https://w3id.org/saref#network",
         "occupancy": "https://w3id.org/saref#occupancy",
@@ -207,6 +210,7 @@
             "@id": "fiware:owner",
             "@type": "@id"
         },
+        "postalCode": "schema:postalCode",
         "precipitation": "https://w3id.org/saref#precipitation",
         "pressure": "https://w3id.org/saref#pressure",
         "provider": {
@@ -249,11 +253,11 @@
             "@type": "@vocab"
         },
         "taxID": {
-            "@id": "schema:taxID",
+            "@id": "https://schema.org/taxID",
             "@type": "xsd:string"
         },
         "telephone": {
-            "@id": "schema:telephone",
+            "@id": "https://schema.org/telephone",
             "@type": "xsd:string"
         },
         "temperature": "https://w3id.org/saref#temperature",
@@ -263,7 +267,7 @@
             "@type": "xsd:string"
         },
         "vatID": {
-            "@id": "schema:vatID",
+            "@id": "https://schema.org/vatID",
             "@type": "xsd:string"
         },
         "waterConsumption": "https://w3id.org/saref#waterConsumption",
@@ -312,7 +316,7 @@
                 }
             ],
             "rdfs:subClassOf": {
-                "@id": "schema:Thing"
+                "@id": "https://schema.org/Thing"
             }
         },
         {
@@ -331,7 +335,7 @@
                 }
             ],
             "rdfs:subClassOf": {
-                "@id": "schema:Thing"
+                "@id": "https://schema.org/Thing"
             }
         },
         {
@@ -350,7 +354,7 @@
                 }
             ],
             "rdfs:subClassOf": {
-                "@id": "schema:Thing"
+                "@id": "https://schema.org/Thing"
             }
         },
         {
@@ -369,7 +373,7 @@
                 }
             ],
             "rdfs:subClassOf": {
-                "@id": "schema:Thing"
+                "@id": "https://schema.org/Thing"
             }
         },
         {
