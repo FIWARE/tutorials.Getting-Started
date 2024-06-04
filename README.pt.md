@@ -90,7 +90,7 @@ docker-compose -v
 docker version
 ```
 
-Certifique-se de estar usando Docker versão 18.03 ou superior e Docker Compose 1.29 ou superior e atualize se
+Certifique-se de estar usando Docker versão 18.03 ou superior e Docker Compose 2.24.x ou superior e atualize se
 necessário.
 
 # Iniciando os contentores
