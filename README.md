@@ -25,7 +25,6 @@ The tutorial uses [cUrl](https://ec.haxx.se/) commands throughout, but is also a
 [português](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.pt.md) <br/> 🇪🇸 Este tutorial también
 está disponible en [español](https://github.com/FIWARE/tutorials.Getting-Started/blob/master/README.es.md)
 
-
 ## Contents
 
 <details>
@@ -60,10 +59,11 @@ está disponible en [español](https://github.com/FIWARE/tutorials.Getting-Start
 
 > "Begin at the beginning," the King said, very gravely, "and go on till you come to the end: then stop."
 >
-> — Lewis Carroll, Alice in Wonderland 
+> — Lewis Carroll, Alice in Wonderland
 
-**NGSI-v2** is a JSON-based interoperability interface for use in individual Smart Systems. It is ideal for creating individual applications offering interoperable interfaces 
-for web services or IoT devices. It is easier to understand than NGSI-LD and does not require a [JSON-LD `@context`](https://www.w3.org/TR/json-ld11/#the-context).
+**NGSI-v2** is a JSON-based interoperability interface for use in individual Smart Systems. It is ideal for creating
+individual applications offering interoperable interfaces for web services or IoT devices. It is easier to understand
+than NGSI-LD and does not require a [JSON-LD `@context`](https://www.w3.org/TR/json-ld11/#the-context).
 
 # Architecture
 
@@ -142,6 +142,7 @@ docker run -d --name fiware-orion -h orion --network=fiware_default \
 ```
 
 > [!NOTE]
+>
 > If you want to clean up and start again you can do so with the following commands
 >
 > ```
@@ -168,6 +169,7 @@ docker compose -p fiware up -d
 ```
 
 > [!NOTE]
+>
 > If you want to clean up and start again you can do so with the following command:
 >
 > ```
@@ -217,8 +219,7 @@ The response will look similar to the following:
 }
 ```
 
-> [!TIP]
-> **What if I get a `Failed to connect to localhost port 1026: Connection refused` Response?**
+> [!TIP] > **What if I get a `Failed to connect to localhost port 1026: Connection refused` Response?**
 >
 > If you get a `Connection refused` response, the Orion Content Broker cannot be found where expected for this
 > tutorial - you will need to substitute the URL and port in each cUrl command with the corrected IP address. All the
@@ -259,17 +260,22 @@ attributes are optional and will depend on the system being described. Each addi
 defined `type` and a `value` attribute.
 
 > [!NOTE]
-> The `type` attribute should be used to describe the **Datatype**  of the Entity and its Properties
-> 
-> -  For Native JSON Properties, the `type` can align with a well-known  **Datatype** schema, such as [schema.org](https://schema.org/DataType)  or
->    [XML Schema](https://www.w3.org/TR/2004/REC-xmlschema-2-20041028/) - typically values such as: `Time`, `Boolean`, `DateTime`, `Number`,
->    `Text`, `Date`, `Float`, `Integer` etc.
-> -  For other JSON Objects, where possible use a datatype from an existing ontology - for example `PostalAddress` aligns with `https://schema.org/PostalAddress`.
-> -  `"type": "Property"` can also be used if maintenance of a detailed datatype is not important.
-> -  For GeoProperties, define the position using [GeoJSON](https://geojson.org/) and use the attribute type: `"type": "geo:json"`
-> -  Use of [NGSI-LD](https://ngsi-ld-tutorials.readthedocs.io/) Property sub-classes such `LanguageProperty`, `VocabularyProperty`, `JsonProperty` and `ListProperty`
->    can be useful if it is enviaged that an NGSI-v2 system is expected to later connect with NGSI-LD systems for Federations and Data Spaces
-> -  By convention `"type": "Relationship"` is used for [Relationships](https://github.com/FIWARE/tutorials.Entity-Relationships/tree/NGSI-v2)
+>
+> The `type` attribute should be used to describe the **Datatype** of the Entity and its Properties
+>
+> -   For Native JSON Properties, the `type` can align with a well-known **Datatype** schema, such as
+>     [schema.org](https://schema.org/DataType) or [XML Schema](https://www.w3.org/TR/2004/REC-xmlschema-2-20041028/) -
+>     typically values such as: `Time`, `Boolean`, `DateTime`, `Number`, `Text`, `Date`, `Float`, `Integer` etc.
+> -   For other JSON Objects, where possible use a datatype from an existing ontology - for example `PostalAddress`
+>     aligns with `https://schema.org/PostalAddress`.
+> -   `"type": "Property"` can also be used if maintenance of a detailed datatype is not important.
+> -   For GeoProperties, define the position using [GeoJSON](https://geojson.org/) and use the attribute type:
+>     `"type": "geo:json"`
+> -   Use of [NGSI-LD](https://ngsi-ld-tutorials.readthedocs.io/) Property sub-classes such `LanguageProperty`,
+>     `VocabularyProperty`, `JsonProperty` and `ListProperty` can be useful if it is enviaged that an NGSI-v2 system is
+>     expected to later connect with NGSI-LD systems for Federations and Data Spaces
+> -   By convention `"type": "Relationship"` is used for
+>     [Relationships](https://github.com/FIWARE/tutorials.Entity-Relationships/tree/NGSI-v2)
 
 #### 2️⃣ Request:
 
