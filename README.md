@@ -89,16 +89,16 @@ holds a JSON object with a sub-attribute containing the `streetAddress` by refer
 
 ```json
 {
-  "@id": "http://schema.org/streetAddress",
-  "@type": "rdf:Property",
-  "http://schema.org/domainIncludes": {
-    "@id": "http://schema.org/PostalAddress"
-  },
-  "http://schema.org/rangeIncludes": {
-    "@id": "http://schema.org/Text"
-  },
-  "rdfs:comment": "The street address. For example, 1600 Amphitheatre Pkwy.",
-  "rdfs:label": "streetAddress"
+    "@id": "http://schema.org/streetAddress",
+    "@type": "rdf:Property",
+    "http://schema.org/domainIncludes": {
+        "@id": "http://schema.org/PostalAddress"
+    },
+    "http://schema.org/rangeIncludes": {
+        "@id": "http://schema.org/Text"
+    },
+    "rdfs:comment": "The street address. For example, 1600 Amphitheatre Pkwy.",
+    "rdfs:label": "streetAddress"
 }
 ```
 
@@ -268,6 +268,7 @@ git checkout NGSI-LD
 ```
 
 > [!NOTE]
+>
 > If you want to clean up and start over again you can do so with the following command:
 >
 > ```
@@ -349,8 +350,9 @@ New context data entities can be created by making a POST request to the `/ngsi-
 #### 2️⃣ Request:
 
 > [!NOTE]
-> This entity is being created using the default **normalized** NGSI-LD format, which is the Gold Standard for
-> data exchange between context brokers. NGSI-LD supports two lossless data formats
+>
+> This entity is being created using the default **normalized** NGSI-LD format, which is the Gold Standard for data
+> exchange between context brokers. NGSI-LD supports two lossless data formats
 > [normalized](https://github.com/FIWARE/tutorials.CRUD-Operations/tree/NGSI-LD) and
 > [concise](https://github.com/FIWARE/tutorials.Concise-Format/tree/NGSI-LD).
 >
@@ -492,7 +494,8 @@ The `type` of a _property_ attribute must be one of the following:
     strings encoded in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601) - e.g. `YYYY-MM-DDThh:mm:ssZ`
 
 > [!NOTE]
->  Note that for simplicity, this data entity has no relationships defined. Relationships must be given the
+>
+> Note that for simplicity, this data entity has no relationships defined. Relationships must be given the
 > `type=Relationship`. Relationships will be discussed in a subsequent tutorial.
 
 ### Defining Properties-of-Properties within the NGSI-LD entity definition
@@ -576,10 +579,7 @@ be displayed.
             "type": "GeoProperty",
             "value": {
                 "type": "Point",
-                "coordinates": [
-                    13.3505,
-                    52.5144
-                ]
+                "coordinates": [13.3505, 52.5144]
             }
         }
     },
@@ -612,10 +612,7 @@ be displayed.
             "type": "GeoProperty",
             "value": {
                 "type": "Point",
-                "coordinates": [
-                    13.3698,
-                    52.5163
-                ]
+                "coordinates": [13.3698, 52.5163]
             }
         }
     }
@@ -683,10 +680,7 @@ files explicitly as element in the array of `@context` sent. The response is nor
         "type": "GeoProperty",
         "value": {
             "type": "Point",
-            "coordinates": [
-                13.3505,
-                52.5144
-            ]
+            "coordinates": [13.3505, 52.5144]
         }
     },
     "name": {
@@ -742,10 +736,7 @@ used as the `@context` returned in the response.
         "category": "farm",
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3505,
-                52.5144
-            ]
+            "coordinates": [13.3505, 52.5144]
         }
     },
     {
@@ -765,10 +756,7 @@ used as the `@context` returned in the response.
         "category": "barn",
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3698,
-                52.5163
-            ]
+            "coordinates": [13.3698, 52.5163]
         }
     }
 ]
@@ -801,7 +789,8 @@ The use of the `Link` header and the `options=keyValues` parameter reduces the r
 ```json
 [
     {
-        "@context": ["http://context/json-context.jsonld",
+        "@context": [
+            "http://context/json-context.jsonld",
             "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
         ],
         "id": "urn:ngsi-ld:Building:barn002",
@@ -816,10 +805,7 @@ The use of the `Link` header and the `options=keyValues` parameter reduces the r
         "category": "barn",
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3698,
-                52.5163
-            ]
+            "coordinates": [13.3698, 52.5163]
         }
     }
 ]
@@ -873,7 +859,8 @@ directly but would require an additional **JSON-LD** expansion/compaction operat
 ```json
 [
     {
-        "@context": ["http://context/alternate-context.jsonld",
+        "@context": [
+            "http://context/alternate-context.jsonld",
             "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
         ],
         "id": "urn:ngsi-ld:Building:barn002",
@@ -888,10 +875,7 @@ directly but would require an additional **JSON-LD** expansion/compaction operat
         "kategorie": "barn",
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3698,
-                52.5163
-            ]
+            "coordinates": [13.3698, 52.5163]
         }
     }
 ]
@@ -925,7 +909,8 @@ The response is returned in JSON-LD format with short form attribute names:
 ```json
 [
     {
-        "@context": ["http://context/ngsi-context.jsonld",
+        "@context": [
+            "http://context/ngsi-context.jsonld",
             "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
         ],
         "id": "urn:ngsi-ld:Building:barn002",
@@ -940,10 +925,7 @@ The response is returned in JSON-LD format with short form attribute names:
         "category": "barn",
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3698,
-                52.5163
-            ]
+            "coordinates": [13.3698, 52.5163]
         }
     }
 ]
@@ -974,7 +956,8 @@ Use of the `Link` header and the `options=keyValues` parameter reduces the respo
 ```json
 [
     {
-        "@context": ["http://context/json-context.jsonld",
+        "@context": [
+            "http://context/json-context.jsonld",
             "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
         ],
         "id": "urn:ngsi-ld:Building:farm001",
@@ -989,14 +972,12 @@ Use of the `Link` header and the `options=keyValues` parameter reduces the respo
         "category": "farm",
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3505,
-                52.5144
-            ]
+            "coordinates": [13.3505, 52.5144]
         }
     },
     {
-        "@context": ["http://context/json-context.jsonld",
+        "@context": [
+            "http://context/json-context.jsonld",
             "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
         ],
         "id": "urn:ngsi-ld:Building:barn002",
@@ -1011,10 +992,7 @@ Use of the `Link` header and the `options=keyValues` parameter reduces the respo
         "category": "barn",
         "location": {
             "type": "Point",
-            "coordinates": [
-                13.3698,
-                52.5163
-            ]
+            "coordinates": [13.3698, 52.5163]
         }
     }
 ]
