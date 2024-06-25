@@ -148,7 +148,7 @@ Orion Context Broker は、次のコマンドを使用して起動し、ネッ�
 
 ```console
 docker run -d --name fiware-orion  --network=fiware_default \
-  -p 1026:1026  fiware/orion -dbhost mongo-db
+  -p 1026:1026  fiware/orion -dbURI mongodb://mongo-db
 ```
 
 > **注** : クリーンアップして再び開始したい場合は、以下のコマンドを使用して行う

@@ -127,7 +127,7 @@ El Orion Context Broker se puede iniciar y conectar a la red empleando el siguie
 
 ```console
 docker run -d --name fiware-orion -h orion --network=fiware_default \
-  -p 1026:1026  fiware/orion -dbhost mongo-db
+  -p 1026:1026  fiware/orion -dbURI mongodb://mongo-db
 ```
 
 > **Nota:** Si desea limpiar el entorno y empezar de nuevo puede hacerlo con los siguientes comandos:
