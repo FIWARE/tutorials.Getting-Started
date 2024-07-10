@@ -34,7 +34,7 @@ services:
           target: /usr/local/apache2/conf/mime.types
           read_only: true
     healthcheck:
-      test: (wget --server-response --spider --quiet  http://ld-context/ngsi-context.jsonld 2>&1 | awk 'NR==1{print $$2}'|  grep -q -e "200") || exit 1
+      test: (wget --server-response --spider --quiet  http://context/user-context.jsonld 2>&1 | awk 'NR==1{print $$2}'|  grep -q -e "200") || exit 1
 
   # Databases
   mongo-db:
@@ -88,7 +88,7 @@ services:
       - TWITTER_CONSUMER_KEY=<ADD_YOUR_CONSUMER_KEY>
       - TWITTER_CONSUMER_SECRET=<ADD_YOUR_CONSUMER_SECRET>
       - MONGO_URL=mongodb://mongo-db:27017
-      - IOTA_JSON_LD_CONTEXT=http://context/ngsi-context.jsonld
+      - IOTA_JSON_LD_CONTEXT=http://context/user-context.jsonld
 
 
 networks:

@@ -10,7 +10,7 @@ set -e
 SCORPIO="http://scorpio:9090/"
 ORION="http://orion:1026/version"
 STELLIO="http://stellio:8080/actuator/health"
-CONTEXT="http://context/ngsi-context.jsonld"
+CONTEXT="http://context/user-context.jsonld"
 CORE_CONTEXT="https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.6.jsonld"
 
 dockerCmd="docker compose"

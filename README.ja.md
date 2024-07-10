@@ -422,7 +422,7 @@ Core`@context`が**最後**に処理されるため、以前に同じ `@ id` で
 ```console
 curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
   -H 'Content-Type: application/json' \
-  -H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+  -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
   -d '{
     "id": "urn:ngsi-ld:Building:barn002",
     "type": "Building",
@@ -640,7 +640,7 @@ Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#co
 ```console
 curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001' \
 -H 'Accept: application/ld+json' \
--H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
+-H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
 ```
 
 #### レスポンス:
@@ -711,7 +711,7 @@ Core `@context` が含まれることは常に暗示されることに注意し�
 ```console
 curl -G -X GET \
     'http://localhost:1026/ngsi-ld/v1/entities' \
--H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'options=keyValues'
@@ -919,7 +919,7 @@ curl -G -X GET \
 ```console
 curl -G -X GET \
     'http://localhost:1026/ngsi-ld/v1/entities/' \
--H 'Link: <http://context/ngsi-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
+-H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=category==%22barn%22,%22farm_auxiliary%22' \
