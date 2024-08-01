@@ -7,5 +7,5 @@
 
 set -e
 
-helm uninstall mongodb-orion
-helm uninstall orion-ld orion-ld 
+helm uninstall mongodb-orion | true
+helm uninstall orion-ld orion-ld | true
