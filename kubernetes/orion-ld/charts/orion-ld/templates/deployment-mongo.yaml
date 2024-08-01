@@ -1,0 +1,69 @@
+{{- if .Values.mongo.enabled -}}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "orion.fullname" . }}-mongo
+  labels:
+    app.kubernetes.io/name: {{ include "orion.name" . }}-mongo
+    helm.sh/chart: {{ include "orion.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  {{- end }}
+  revisionHistoryLimit: {{ .Values.deployment.revisionHistoryLimit }}
+  strategy:
+  {{- with .Values.deployment.updateStrategy }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "orion.name" . }}-mongo
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: {{ include "orion.name" . }}-mongo
+        helm.sh/chart: {{ include "orion.chart" . }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        {{- with .Values.deployment.additionalLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{ if .Values.deployment.additionalAnnotations -}}
+      annotations:
+        {{- with .Values.deployment.additionalAnnotations }}
+          {{- toYaml . | nindent 8 }}
+          {{- end }}
+      {{- end }}
+    spec:
+      containers:
+        - name: mongo-db
+          imagePullPolicy: {{ .Values.mongo.image.pullPolicy }}
+          image: "{{ .Values.mongo.image.repository }}:{{ .Values.mongo.image.tag }}"
+          securityContext:
+            runAsUser: 999
+          ports:
+            - name: mongo
+              containerPort: {{ .Values.mongo.port}}
+              protocol: TCP
+          livenessProbe:
+            exec:
+              command:
+                - bash
+                - -ec
+                - |
+                  mongo --eval 'db.runCommand("ping").ok' 127.0.0.1:27017/test && echo 0 || echo 1
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+                - bash
+                - -ec
+                - |
+                  mongo --eval 'db.runCommand("ping").ok' 127.0.0.1:27017/test && echo 0 || echo 1
+            initialDelaySeconds: 5
+            periodSeconds: 5
+{{- end }}

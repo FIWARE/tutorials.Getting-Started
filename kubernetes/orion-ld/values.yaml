@@ -1,0 +1,14 @@
+orion-ld:
+  broker:
+    db:
+      hosts:
+        -  mongodb
+      user: root
+      existingSecret:
+        name: mongodb-secret
+        key: mongodb-root-password
+      noDevTrace: false
+
+  mongo:
+    # we want to use the individually deployed mongodb
+    enabled: false

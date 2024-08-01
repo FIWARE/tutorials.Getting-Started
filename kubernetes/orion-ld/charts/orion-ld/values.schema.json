@@ -1,0 +1,1231 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "nameOverride": "",
+            "fullnameOverride": "",
+            "service": {
+                "type": "ClusterIP",
+                "port": 1026,
+                "annotations": {}
+            },
+            "serviceAccount": {
+                "create": false
+            },
+            "deployment": {
+                "replicaCount": 1,
+                "revisionHistoryLimit": 3,
+                "updateStrategy": {
+                    "type": "RollingUpdate",
+                    "rollingUpdate": {
+                        "maxSurge": 1,
+                        "maxUnavailable": 0
+                    }
+                },
+                "image": {
+                    "repository": "quay.io/fiware/orion-ld",
+                    "tag": "1.0.1",
+                    "pullPolicy": "IfNotPresent"
+                },
+                "additionalLabels": {},
+                "additionalAnnotations": {},
+                "nodeSelector": {},
+                "tolerations": [],
+                "affinity": {},
+                "livenessProbe": {
+                    "initialDelaySeconds": 30,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 30
+                },
+                "readinessProbe": {
+                    "initialDelaySeconds": 30,
+                    "periodSeconds": 10,
+                    "successThreshold": 1,
+                    "timeoutSeconds": 30
+                },
+                "sidecars": [],
+                "volumes": []
+            },
+            "autoscaling": {
+                "enabled": false,
+                "minReplicas": 1,
+                "maxReplicas": 10,
+                "metrics": []
+            },
+            "route": {
+                "enabled": false,
+                "annotations": {},
+                "tls": {}
+            },
+            "ingress": {
+                "enabled": false,
+                "annotations": {},
+                "hosts": [],
+                "tls": []
+            },
+            "broker": {
+                "envPrefix": "ORIONLD_",
+                "port": 1026,
+                "ipv6enabled": false,
+                "ipv4enabled": false,
+                "noDevTrace": true,
+                "troe": {
+                    "enabled": false,
+                    "dbHost": "postgres",
+                    "dbPort": 5432,
+                    "dbUser": "user",
+                    "dbPassword": "password"
+                },
+                "cachedContextFolder": "/opt/orion/ldcontexts",
+                "logging": {
+                    "level": "WARN"
+                },
+                "db": {
+                    "hosts": [],
+                    "name": "orion"
+                },
+                "metrics": {
+                    "enabled": "false"
+                }
+            },
+            "mongo": {
+                "enabled": true,
+                "image": {
+                    "pullPolicy": "IfNotPresent",
+                    "repository": "quay.io/opencloudio/ibm-mongodb",
+                    "tag": "4.0.24"
+                },
+                "port": 27017
+            }
+        }
+    ],
+    "required": [
+        "nameOverride",
+        "fullnameOverride",
+        "service",
+        "serviceAccount",
+        "deployment",
+        "autoscaling",
+        "route",
+        "ingress",
+        "broker",
+        "mongo"
+    ],
+    "properties": {
+        "nameOverride": {
+            "$id": "#/properties/nameOverride",
+            "type": "string",
+            "title": "The nameOverride schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "fullnameOverride": {
+            "$id": "#/properties/fullnameOverride",
+            "type": "string",
+            "title": "The fullnameOverride schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                ""
+            ]
+        },
+        "service": {
+            "$id": "#/properties/service",
+            "type": "object",
+            "title": "The service schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "type": "ClusterIP",
+                    "port": 1026,
+                    "annotations": {}
+                }
+            ],
+            "required": [
+                "type",
+                "port",
+                "annotations"
+            ],
+            "properties": {
+                "type": {
+                    "$id": "#/properties/service/properties/type",
+                    "type": "string",
+                    "title": "The type schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "ClusterIP"
+                    ]
+                },
+                "port": {
+                    "$id": "#/properties/service/properties/port",
+                    "type": "integer",
+                    "title": "The port schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        1026
+                    ]
+                },
+                "annotations": {
+                    "$id": "#/properties/service/properties/annotations",
+                    "type": "object",
+                    "title": "The annotations schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {}
+                    ],
+                    "required": [],
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true
+        },
+        "serviceAccount": {
+            "$id": "#/properties/serviceAccount",
+            "type": "object",
+            "title": "The serviceAccount schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "create": false
+                }
+            ],
+            "required": [
+                "create"
+            ],
+            "properties": {
+                "create": {
+                    "$id": "#/properties/serviceAccount/properties/create",
+                    "type": "boolean",
+                    "title": "The create schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                        false
+                    ]
+                }
+            },
+            "additionalProperties": true
+        },
+        "deployment": {
+            "$id": "#/properties/deployment",
+            "type": "object",
+            "title": "The deployment schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "replicaCount": 1,
+                    "revisionHistoryLimit": 3,
+                    "updateStrategy": {
+                        "type": "RollingUpdate",
+                        "rollingUpdate": {
+                            "maxSurge": 1,
+                            "maxUnavailable": 0
+                        }
+                    },
+                    "image": {
+                        "repository": "quay.io/fiware/orion-ld",
+                        "tag": "1.0.1",
+                        "pullPolicy": "IfNotPresent"
+                    },
+                    "additionalLabels": {},
+                    "additionalAnnotations": {},
+                    "nodeSelector": {},
+                    "tolerations": [],
+                    "affinity": {},
+                    "livenessProbe": {
+                        "initialDelaySeconds": 30,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 30
+                    },
+                    "readinessProbe": {
+                        "initialDelaySeconds": 30,
+                        "periodSeconds": 10,
+                        "successThreshold": 1,
+                        "timeoutSeconds": 30
+                    },
+                    "sidecars": [],
+                    "volumes": []
+                }
+            ],
+            "required": [
+                "replicaCount",
+                "revisionHistoryLimit",
+                "updateStrategy",
+                "image",
+                "additionalLabels",
+                "additionalAnnotations",
+                "nodeSelector",
+                "tolerations",
+                "affinity",
+                "livenessProbe",
+                "readinessProbe",
+                "sidecars",
+                "volumes"
+            ],
+            "properties": {
+                "replicaCount": {
+                    "$id": "#/properties/deployment/properties/replicaCount",
+                    "type": "integer",
+                    "title": "The replicaCount schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        1
+                    ]
+                },
+                "revisionHistoryLimit": {
+                    "$id": "#/properties/deployment/properties/revisionHistoryLimit",
+                    "type": "integer",
+                    "title": "The revisionHistoryLimit schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        3
+                    ]
+                },
+                "updateStrategy": {
+                    "$id": "#/properties/deployment/properties/updateStrategy",
+                    "type": "object",
+                    "title": "The updateStrategy schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "type": "RollingUpdate",
+                            "rollingUpdate": {
+                                "maxSurge": 1,
+                                "maxUnavailable": 0
+                            }
+                        }
+                    ],
+                    "required": [
+                        "type",
+                        "rollingUpdate"
+                    ],
+                    "properties": {
+                        "type": {
+                            "$id": "#/properties/deployment/properties/updateStrategy/properties/type",
+                            "type": "string",
+                            "title": "The type schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "RollingUpdate"
+                            ]
+                        },
+                        "rollingUpdate": {
+                            "$id": "#/properties/deployment/properties/updateStrategy/properties/rollingUpdate",
+                            "type": "object",
+                            "title": "The rollingUpdate schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": {},
+                            "examples": [
+                                {
+                                    "maxSurge": 1,
+                                    "maxUnavailable": 0
+                                }
+                            ],
+                            "required": [
+                                "maxSurge",
+                                "maxUnavailable"
+                            ],
+                            "properties": {
+                                "maxSurge": {
+                                    "$id": "#/properties/deployment/properties/updateStrategy/properties/rollingUpdate/properties/maxSurge",
+                                    "type": "integer",
+                                    "title": "The maxSurge schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": 0,
+                                    "examples": [
+                                        1
+                                    ]
+                                },
+                                "maxUnavailable": {
+                                    "$id": "#/properties/deployment/properties/updateStrategy/properties/rollingUpdate/properties/maxUnavailable",
+                                    "type": "integer",
+                                    "title": "The maxUnavailable schema",
+                                    "description": "An explanation about the purpose of this instance.",
+                                    "default": 0,
+                                    "examples": [
+                                        0
+                                    ]
+                                }
+                            },
+                            "additionalProperties": true
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "image": {
+                    "$id": "#/properties/deployment/properties/image",
+                    "type": "object",
+                    "title": "The image schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "repository": "quay.io/fiware/orion-ld",
+                            "tag": "1.0.1",
+                            "pullPolicy": "IfNotPresent"
+                        }
+                    ],
+                    "required": [
+                        "repository",
+                        "tag",
+                        "pullPolicy"
+                    ],
+                    "properties": {
+                        "repository": {
+                            "$id": "#/properties/deployment/properties/image/properties/repository",
+                            "type": "string",
+                            "title": "The repository schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "quay.io/fiware/orion-ld"
+                            ]
+                        },
+                        "tag": {
+                            "$id": "#/properties/deployment/properties/image/properties/tag",
+                            "type": "string",
+                            "title": "The tag schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "1.0.1"
+                            ]
+                        },
+                        "pullPolicy": {
+                            "$id": "#/properties/deployment/properties/image/properties/pullPolicy",
+                            "type": "string",
+                            "title": "The pullPolicy schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "IfNotPresent"
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "additionalLabels": {
+                    "$id": "#/properties/deployment/properties/additionalLabels",
+                    "type": "object",
+                    "title": "The additionalLabels schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {}
+                    ],
+                    "required": [],
+                    "additionalProperties": true
+                },
+                "additionalAnnotations": {
+                    "$id": "#/properties/deployment/properties/additionalAnnotations",
+                    "type": "object",
+                    "title": "The additionalAnnotations schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {}
+                    ],
+                    "required": [],
+                    "additionalProperties": true
+                },
+                "nodeSelector": {
+                    "$id": "#/properties/deployment/properties/nodeSelector",
+                    "type": "object",
+                    "title": "The nodeSelector schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {}
+                    ],
+                    "required": [],
+                    "additionalProperties": true
+                },
+                "tolerations": {
+                    "$id": "#/properties/deployment/properties/tolerations",
+                    "type": "array",
+                    "title": "The tolerations schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        []
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/deployment/properties/tolerations/items"
+                    }
+                },
+                "affinity": {
+                    "$id": "#/properties/deployment/properties/affinity",
+                    "type": "object",
+                    "title": "The affinity schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {}
+                    ],
+                    "required": [],
+                    "additionalProperties": true
+                },
+                "livenessProbe": {
+                    "$id": "#/properties/deployment/properties/livenessProbe",
+                    "type": "object",
+                    "title": "The livenessProbe schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "initialDelaySeconds": 30,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 30
+                        }
+                    ],
+                    "required": [
+                        "initialDelaySeconds",
+                        "periodSeconds",
+                        "successThreshold",
+                        "timeoutSeconds"
+                    ],
+                    "properties": {
+                        "initialDelaySeconds": {
+                            "$id": "#/properties/deployment/properties/livenessProbe/properties/initialDelaySeconds",
+                            "type": "integer",
+                            "title": "The initialDelaySeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                                30
+                            ]
+                        },
+                        "periodSeconds": {
+                            "$id": "#/properties/deployment/properties/livenessProbe/properties/periodSeconds",
+                            "type": "integer",
+                            "title": "The periodSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                                10
+                            ]
+                        },
+                        "successThreshold": {
+                            "$id": "#/properties/deployment/properties/livenessProbe/properties/successThreshold",
+                            "type": "integer",
+                            "title": "The successThreshold schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                                1
+                            ]
+                        },
+                        "timeoutSeconds": {
+                            "$id": "#/properties/deployment/properties/livenessProbe/properties/timeoutSeconds",
+                            "type": "integer",
+                            "title": "The timeoutSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                                30
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "readinessProbe": {
+                    "$id": "#/properties/deployment/properties/readinessProbe",
+                    "type": "object",
+                    "title": "The readinessProbe schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "initialDelaySeconds": 30,
+                            "periodSeconds": 10,
+                            "successThreshold": 1,
+                            "timeoutSeconds": 30
+                        }
+                    ],
+                    "required": [
+                        "initialDelaySeconds",
+                        "periodSeconds",
+                        "successThreshold",
+                        "timeoutSeconds"
+                    ],
+                    "properties": {
+                        "initialDelaySeconds": {
+                            "$id": "#/properties/deployment/properties/readinessProbe/properties/initialDelaySeconds",
+                            "type": "integer",
+                            "title": "The initialDelaySeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                                30
+                            ]
+                        },
+                        "periodSeconds": {
+                            "$id": "#/properties/deployment/properties/readinessProbe/properties/periodSeconds",
+                            "type": "integer",
+                            "title": "The periodSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                                10
+                            ]
+                        },
+                        "successThreshold": {
+                            "$id": "#/properties/deployment/properties/readinessProbe/properties/successThreshold",
+                            "type": "integer",
+                            "title": "The successThreshold schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                                1
+                            ]
+                        },
+                        "timeoutSeconds": {
+                            "$id": "#/properties/deployment/properties/readinessProbe/properties/timeoutSeconds",
+                            "type": "integer",
+                            "title": "The timeoutSeconds schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                                30
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "sidecars": {
+                    "$id": "#/properties/deployment/properties/sidecars",
+                    "type": "array",
+                    "title": "The sidecars schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        []
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/deployment/properties/sidecars/items"
+                    }
+                },
+                "volumes": {
+                    "$id": "#/properties/deployment/properties/volumes",
+                    "type": "array",
+                    "title": "The volumes schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        []
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/deployment/properties/volumes/items"
+                    }
+                }
+            },
+            "additionalProperties": true
+        },
+        "autoscaling": {
+            "$id": "#/properties/autoscaling",
+            "type": "object",
+            "title": "The autoscaling schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "enabled": false,
+                    "minReplicas": 1,
+                    "maxReplicas": 10,
+                    "metrics": []
+                }
+            ],
+            "required": [
+                "enabled",
+                "minReplicas",
+                "maxReplicas",
+                "metrics"
+            ],
+            "properties": {
+                "enabled": {
+                    "$id": "#/properties/autoscaling/properties/enabled",
+                    "type": "boolean",
+                    "title": "The enabled schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                        false
+                    ]
+                },
+                "minReplicas": {
+                    "$id": "#/properties/autoscaling/properties/minReplicas",
+                    "type": "integer",
+                    "title": "The minReplicas schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        1
+                    ]
+                },
+                "maxReplicas": {
+                    "$id": "#/properties/autoscaling/properties/maxReplicas",
+                    "type": "integer",
+                    "title": "The maxReplicas schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        10
+                    ]
+                },
+                "metrics": {
+                    "$id": "#/properties/autoscaling/properties/metrics",
+                    "type": "array",
+                    "title": "The metrics schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        []
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/autoscaling/properties/metrics/items"
+                    }
+                }
+            },
+            "additionalProperties": true
+        },
+        "route": {
+            "$id": "#/properties/route",
+            "type": "object",
+            "title": "The route schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "enabled": false,
+                    "annotations": {},
+                    "tls": {}
+                }
+            ],
+            "required": [
+                "enabled",
+                "annotations",
+                "tls"
+            ],
+            "properties": {
+                "enabled": {
+                    "$id": "#/properties/route/properties/enabled",
+                    "type": "boolean",
+                    "title": "The enabled schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                        false
+                    ]
+                },
+                "annotations": {
+                    "$id": "#/properties/route/properties/annotations",
+                    "type": "object",
+                    "title": "The annotations schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {}
+                    ],
+                    "required": [],
+                    "additionalProperties": true
+                },
+                "tls": {
+                    "$id": "#/properties/route/properties/tls",
+                    "type": "object",
+                    "title": "The tls schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {}
+                    ],
+                    "required": [],
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true
+        },
+        "ingress": {
+            "$id": "#/properties/ingress",
+            "type": "object",
+            "title": "The ingress schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "enabled": false,
+                    "annotations": {},
+                    "hosts": [],
+                    "tls": []
+                }
+            ],
+            "required": [
+                "enabled",
+                "annotations",
+                "hosts",
+                "tls"
+            ],
+            "properties": {
+                "enabled": {
+                    "$id": "#/properties/ingress/properties/enabled",
+                    "type": "boolean",
+                    "title": "The enabled schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                        false
+                    ]
+                },
+                "annotations": {
+                    "$id": "#/properties/ingress/properties/annotations",
+                    "type": "object",
+                    "title": "The annotations schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {}
+                    ],
+                    "required": [],
+                    "additionalProperties": true
+                },
+                "hosts": {
+                    "$id": "#/properties/ingress/properties/hosts",
+                    "type": "array",
+                    "title": "The hosts schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        []
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/ingress/properties/hosts/items"
+                    }
+                },
+                "tls": {
+                    "$id": "#/properties/ingress/properties/tls",
+                    "type": "array",
+                    "title": "The tls schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": [],
+                    "examples": [
+                        []
+                    ],
+                    "additionalItems": true,
+                    "items": {
+                        "$id": "#/properties/ingress/properties/tls/items"
+                    }
+                }
+            },
+            "additionalProperties": true
+        },
+        "broker": {
+            "$id": "#/properties/broker",
+            "type": "object",
+            "title": "The broker schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "envPrefix": "ORIONLD_",
+                    "port": 1026,
+                    "ipv6enabled": false,
+                    "ipv4enabled": false,
+                    "noDevTrace": true,
+                    "troe": {
+                        "enabled": false,
+                        "dbHost": "postgres",
+                        "dbPort": 5432,
+                        "dbUser": "user",
+                        "dbPassword": "password"
+                    },
+                    "cachedContextFolder": "/opt/orion/ldcontexts",
+                    "logging": {
+                        "level": "WARN"
+                    },
+                    "db": {
+                        "hosts": [],
+                        "name": "orion"
+                    },
+                    "metrics": {
+                        "enabled": "false"
+                    }
+                }
+            ],
+            "required": [
+                "envPrefix",
+                "port",
+                "ipv6enabled",
+                "ipv4enabled",
+                "noDevTrace",
+                "troe",
+                "cachedContextFolder",
+                "logging",
+                "db",
+                "metrics"
+            ],
+            "properties": {
+                "envPrefix": {
+                    "$id": "#/properties/broker/properties/envPrefix",
+                    "type": "string",
+                    "title": "The envPrefix schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "ORIONLD_"
+                    ]
+                },
+                "port": {
+                    "$id": "#/properties/broker/properties/port",
+                    "type": "integer",
+                    "title": "The port schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        1026
+                    ]
+                },
+                "ipv6enabled": {
+                    "$id": "#/properties/broker/properties/ipv6enabled",
+                    "type": "boolean",
+                    "title": "The ipv6enabled schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                        false
+                    ]
+                },
+                "ipv4enabled": {
+                    "$id": "#/properties/broker/properties/ipv4enabled",
+                    "type": "boolean",
+                    "title": "The ipv4enabled schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                        false
+                    ]
+                },
+                "noDevTrace": {
+                    "$id": "#/properties/broker/properties/noDevTrace",
+                    "type": "boolean",
+                    "title": "The noDevTrace schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                        true
+                    ]
+                },
+                "troe": {
+                    "$id": "#/properties/broker/properties/troe",
+                    "type": "object",
+                    "title": "The troe schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "enabled": false,
+                            "dbHost": "postgres",
+                            "dbPort": 5432,
+                            "dbUser": "user",
+                            "dbPassword": "password"
+                        }
+                    ],
+                    "required": [
+                        "enabled",
+                        "dbHost",
+                        "dbPort",
+                        "dbUser",
+                        "dbPassword"
+                    ],
+                    "properties": {
+                        "enabled": {
+                            "$id": "#/properties/broker/properties/troe/properties/enabled",
+                            "type": "boolean",
+                            "title": "The enabled schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": false,
+                            "examples": [
+                                false
+                            ]
+                        },
+                        "dbHost": {
+                            "$id": "#/properties/broker/properties/troe/properties/dbHost",
+                            "type": "string",
+                            "title": "The dbHost schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "postgres"
+                            ]
+                        },
+                        "dbPort": {
+                            "$id": "#/properties/broker/properties/troe/properties/dbPort",
+                            "type": "integer",
+                            "title": "The dbPort schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": 0,
+                            "examples": [
+                                5432
+                            ]
+                        },
+                        "dbUser": {
+                            "$id": "#/properties/broker/properties/troe/properties/dbUser",
+                            "type": "string",
+                            "title": "The dbUser schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "user"
+                            ]
+                        },
+                        "dbPassword": {
+                            "$id": "#/properties/broker/properties/troe/properties/dbPassword",
+                            "type": "string",
+                            "title": "The dbPassword schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "password"
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "cachedContextFolder": {
+                    "$id": "#/properties/broker/properties/cachedContextFolder",
+                    "type": "string",
+                    "title": "The cachedContextFolder schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "/opt/orion/ldcontexts"
+                    ]
+                },
+                "logging": {
+                    "$id": "#/properties/broker/properties/logging",
+                    "type": "object",
+                    "title": "The logging schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "level": "WARN"
+                        }
+                    ],
+                    "required": [
+                        "level"
+                    ],
+                    "properties": {
+                        "level": {
+                            "$id": "#/properties/broker/properties/logging/properties/level",
+                            "type": "string",
+                            "title": "The level schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "WARN"
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "db": {
+                    "$id": "#/properties/broker/properties/db",
+                    "type": "object",
+                    "title": "The db schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "hosts": [],
+                            "name": "orion"
+                        }
+                    ],
+                    "required": [
+                        "hosts",
+                        "name"
+                    ],
+                    "properties": {
+                        "hosts": {
+                            "$id": "#/properties/broker/properties/db/properties/hosts",
+                            "type": "array",
+                            "title": "The hosts schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": [],
+                            "examples": [
+                                []
+                            ],
+                            "additionalItems": true,
+                            "items": {
+                                "$id": "#/properties/broker/properties/db/properties/hosts/items"
+                            }
+                        },
+                        "name": {
+                            "$id": "#/properties/broker/properties/db/properties/name",
+                            "type": "string",
+                            "title": "The name schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "orion"
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "metrics": {
+                    "$id": "#/properties/broker/properties/metrics",
+                    "type": "object",
+                    "title": "The metrics schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "enabled": "false"
+                        }
+                    ],
+                    "required": [
+                        "enabled"
+                    ],
+                    "properties": {
+                        "enabled": {
+                            "$id": "#/properties/broker/properties/metrics/properties/enabled",
+                            "type": "string",
+                            "title": "The enabled schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "false"
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true
+        },
+        "mongo": {
+            "$id": "#/properties/mongo",
+            "type": "object",
+            "title": "The mongo schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": {},
+            "examples": [
+                {
+                    "enabled": true,
+                    "image": {
+                        "pullPolicy": "IfNotPresent",
+                        "repository": "quay.io/opencloudio/ibm-mongodb",
+                        "tag": "4.0.24"
+                    },
+                    "port": 27017
+                }
+            ],
+            "required": [
+                "enabled",
+                "image",
+                "port"
+            ],
+            "properties": {
+                "enabled": {
+                    "$id": "#/properties/mongo/properties/enabled",
+                    "type": "boolean",
+                    "title": "The enabled schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": false,
+                    "examples": [
+                        true
+                    ]
+                },
+                "image": {
+                    "$id": "#/properties/mongo/properties/image",
+                    "type": "object",
+                    "title": "The image schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "pullPolicy": "IfNotPresent",
+                            "repository": "quay.io/opencloudio/ibm-mongodb",
+                            "tag": "4.0.24"
+                        }
+                    ],
+                    "required": [
+                        "pullPolicy",
+                        "repository",
+                        "tag"
+                    ],
+                    "properties": {
+                        "pullPolicy": {
+                            "$id": "#/properties/mongo/properties/image/properties/pullPolicy",
+                            "type": "string",
+                            "title": "The pullPolicy schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "IfNotPresent"
+                            ]
+                        },
+                        "repository": {
+                            "$id": "#/properties/mongo/properties/image/properties/repository",
+                            "type": "string",
+                            "title": "The repository schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "quay.io/opencloudio/ibm-mongodb"
+                            ]
+                        },
+                        "tag": {
+                            "$id": "#/properties/mongo/properties/image/properties/tag",
+                            "type": "string",
+                            "title": "The tag schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "4.0.24"
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                },
+                "port": {
+                    "$id": "#/properties/mongo/properties/port",
+                    "type": "integer",
+                    "title": "The port schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        27017
+                    ]
+                }
+            },
+            "additionalProperties": true
+        }
+    },
+    "additionalProperties": true
+}

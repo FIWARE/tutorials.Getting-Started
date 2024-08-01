@@ -1,0 +1,302 @@
+## Default values for orion.
+## This is a YAML-formatted file.
+## Declare variables to be passed into your templates.
+
+# -- option to override the name config in the _helpers.tpl
+nameOverride: ""
+# -- option to override the fullname config in the _helpers.tpl
+fullnameOverride: ""
+
+## configuration for the k8s service to access orion
+service:
+  # -- service type
+  type: ClusterIP
+  # -- port to be used by the service
+  port: 1026
+  # -- addtional annotations, if required
+  annotations: {}
+
+# -- if a orion specific service account should be used, it can be configured here
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-service-account/
+serviceAccount:
+  # -- specifies if the account should be created
+  create: false
+
+## deployment specific configuration
+deployment:
+  # -- initial number of target replications, can be different if autoscaling is enabled
+  replicaCount: 1
+  # -- number of old replicas to be retained
+  revisionHistoryLimit: 3
+  ## configuration of the orion update strategy
+  updateStrategy:
+    # -- type of the update
+    type: RollingUpdate
+    # -- new pods will be added gradually
+    rollingUpdate:
+      # -- number of pods that can be created above the desired amount while updating
+      maxSurge: 1
+      # -- number of pods that can be unavailable while updating
+      maxUnavailable: 0
+  ## configuration of the image to be used
+  image:
+    # -- orion image name
+    # ref: https://hub.docker.com/r/fiware/orion/
+    # ref: https://quay.io/repository/fiware/orion-ld
+    repository: quay.io/fiware/orion-ld
+    #repository: fiware/orion
+    # -- tag of the image to be used
+    tag: 1.0.1
+    # -- specification of the image pull policy
+    pullPolicy: IfNotPresent
+  # -- additional labels for the deployment, if required
+  additionalLabels: {}
+  # -- additional annotations for the deployment, if required
+  additionalAnnotations: {}
+  # -- orion resource requests and limits, we leave the default empty to make that a concious choice by the user.
+  # for the autoscaling to make sense, you should configure this.
+  # resources:
+    # limits:
+      # cpu: 100m
+      # memory: 128Mi
+    # requests:
+      # cpu: 100m
+      # memory: 128Mi
+  # -- selector template
+  # ref: https://kubernetes.io/docs/user-guide/node-selection/
+  nodeSelector: {}
+  # -- tolerations template
+  # ref: ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
+  tolerations: []
+  # -- affinity template
+  # ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
+  affinity: {}
+  ## liveness and readiness probes of the orion broker, they will be evaluated against the version endpoint
+  # ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
+  livenessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 30
+  readinessProbe:
+    initialDelaySeconds: 30
+    periodSeconds: 10
+    successThreshold: 1
+    timeoutSeconds: 30
+  # -- additional sidepods for the deployment, if required
+  sidecars: []
+  # -- additional volumes for the deployment, if required
+  volumes: []
+
+## pod autoscaling configuration, use for automatic scaling of the broker pods
+autoscaling:
+  # -- should autoscaling be enabled for the context broker
+  enabled: false
+  # -- minimum number of running pods
+  minReplicas: 1
+  # -- maximum number of running pods
+  maxReplicas: 10
+  # -- metrics to react on
+  metrics: []
+  # -- List of MetricSpecs to decide whether to scale
+  # See https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.17/#metricspec-v2beta2-autoscaling
+  # scaler targets to hold average cpu around 80%
+  #- type: Resource
+  #  resource:
+  #    name: cpu
+  #    target:
+  #      type: Utilization
+  #      averageUtilization: 80
+  ## scaler targets to hold average memory around 80%
+  #  - type: Resource
+  #    resource:
+  #      name: memory
+  #      target:
+  #        type: Utilization
+  #        averageUtilization: 80
+
+## openshift specific route definition. Will not work on plain k8s
+route:
+  ## -- should the deployment create openshift routes
+  enabled: false
+  # -- annotations to be added to the route
+  annotations: {}
+  # -- host to be used
+  # host: localhost
+  # -- tls configuration for the route
+  tls: {}
+  # termination: edge
+
+## ingress configuration
+ingress:
+  # -- should there be an ingress to connect orion with the public internet
+  enabled: false
+  # -- annotations to be added to the ingress
+  annotations: {}
+    # kubernetes.io/ingress.class: "ambassador"
+    ## example annotations, allowing cert-manager to automatically create tls-certs and forcing everything to use ssl.
+    # kubernetes.io/tls-acme: "true"
+    # ingress.kubernetes.io/ssl-redirect: "true"
+  # -- all hosts to be provided
+  hosts: []
+    # -- provide a hosts and the paths that should be available
+    # - host: localhost
+      # paths:
+      # - /
+  # -- configure the ingress' tls
+  tls: []
+    # - secretName: orion-tls
+      # hosts:
+        # - orion.fiware.org
+
+
+## orion-broker specific configuration
+# see defaults of the unset values at:
+# ref: https://fiware-orion.readthedocs.io/en/master/admin/cli/index.html
+broker:
+  # -- Prefix to be used for env-vars in orion. Must be ORION_ for orion and ORIONLD_ for orion-ld
+  envPrefix: ORIONLD_
+  # -- port that the broker is listening to
+  port: 1026
+  # -- set to true if only ipv6 should be used, do not set both options to true
+  ipv6enabled: false
+  # -- set to true if only ipv4 should be used, do not set both options to true
+  ipv4enabled: false
+  # -- should the extended development tracing be disabled?
+  noDevTrace: true
+  # -- configuration of temporal entity representation
+  troe:
+    # -- should temporal representation of entities be enabled
+    enabled: false
+    # -- host of the postgres to be used
+    dbHost: postgres
+    # -- port of the postgres to be used
+    dbPort: 5432
+    # -- username to authenticate with at postgres
+    dbUser: user
+    # -- password to authenticate with at postgres
+    dbPassword: password
+    ## connection pool of postgres
+    # poolSize: 10
+  ## timeout in milliseconds for forwarding messages and notifications
+  # httpTimeout: 5
+  ## the timeout in seconds for REST connection
+  # reqTimeout: 0
+  ## cross-Origin Resource Sharing, specifing the allowed origin (use __ALL for *).
+  ## ref: https://fiware-orion.readthedocs.io/en/master/user/cors/index.html
+  # corsOrigin:
+  ## maximum time (in seconds) preflight requests are allowed to be cached
+  # corsMaxAge: 86400
+  ## internal mutex policy
+  ## ref: https://fiware-orion.readthedocs.io/en/master/admin/perf_tuning/index.html#mutex-policy-impact-on-performance
+  # mutexPolicy: all
+  ## maximum number of forwarded requests to Context Providers for a single client request
+  # cprForwardLimit: 0
+  ## interval in seconds between calls to subscription cache refresh
+  ## ref: https://fiware-orion.readthedocs.io/en/master/admin/perf_tuning/index.html#subscription-cache
+  # subCacheIval: 60
+  ## disables the context subscription cache, so subscriptions searches are always done in DB
+  # noCache: false
+  ## sets the size of the connection memory buffer (in kB) per connection used internally by the HTTP server library
+  # connectionMemory: 64
+  ## maximum number of simultaneous connections
+  # maxConnections: 1020
+  ## size of thread pool for incoming connections
+  # reqPoolSize: 0
+  ## max allowed size for incoming requests payloads, in bytes
+  # inReqPayloadMaxSize: 1024
+  ## max allowed total size for request outgoing message, in bytes
+  # outReqMsgMaxSize: 8192
+  ## allows to select notification mode, either: transient, permanent or threadpool:q:n
+  # notificationMode: transient
+  ## enables flow control mechanism
+  ## ref: https://fiware-orion.readthedocs.io/en/master/admin/perf_tuning/index.html#updates-flow-control-mechanism
+  # notificationFlowControl:
+  ## notifications are not sent, but recorded internally and shown in the statistics operation. only for debbuging
+  # simulatedNotification: false
+  ## disabled NGSIv2 custom notifications
+  # disableCustomNotifications:
+  ## allow HTTPS notifications to peers which certificate cannot be authenticated with known CA certificates
+  # insecureNotifEnabled: false
+  ## enables multiservice/multitenant mode
+  ## ref: https://fiware-orion.readthedocs.io/en/master/user/multitenancy/index.html
+  # multiserviceEnabled: true
+  ## enables forwarding for the ld endpoint
+  # forwardingEnabled: true
+  ## folder holding cached context's
+  cachedContextFolder: "/opt/orion/ldcontexts"
+
+  ## logging configuration of the orion broker
+  logging:
+    # -- log level of the broker
+    level: "WARN"
+    ## specifies the initial trace levels for logging
+    # trace: 70
+    ## log summary period in seconds
+    # summaryPeriod: 0
+    ## to see every possible alarm-provoking failure in the log-file, even when an alarm is already active
+    # relogAlarms: false
+    ## to make the traces to standard out formated for humans
+    # forHumans: false
+    ## log line maximum length
+    # lineMaxSize: 
+    ## for those log traces at INFO level that print request and/or response payloads, this is the maximum allowed size for those payloads
+    # infoPayloadMaxSize:
+
+  ## database configuration
+  db:
+    # -- configuration of the mongo-db hosts. if multiple hosts are inserted, its assumed that mongo is running as a replica set
+    hosts: []
+    # - mongodb
+    # -- the db to use. if running in multiservice mode, its used as a prefix.
+    name: orion
+    # --user for connecting mongo
+    # user:
+    # -- Existing secret to be used for database auth
+    # existingSecret:
+      # --name of the secret
+      # name:
+      # --key to get the password from
+      # key: 
+    # -- Database authentication (not needed if MongoDB doesn't use --auth)
+    # auth:
+      # -- password to be used on mongo
+      # password:
+      # -- the MongoDB authentication mechanism to use in the case user and password is set
+      # mech: SCRAM-SHA-1
+    # -- name of the replicaset
+    #replicaSet: rs0
+    # -- enable SSL in the connection to MongoDB. needs to correspond with the mongoDB setting
+    # sslEnabled: true
+    # -- specifies the timeout in milliseconds for connections to the replica set
+    # timeout: 
+    # -- database connection pool
+    # poolSize: 10
+    # -- write concern for MongoDB write operations: acknowledged (1) or unacknowledged (0)
+    # writeConcern: 1
+
+  ## configratuion of orion metrics
+  metrics:
+    # -- enable or disable metrics gathering
+    enabled: "false"
+    # -- see statistics documentation for the following configurations
+    #ref: https://fiware-orion.readthedocs.io/en/master/admin/statistics/index.html
+    # statCountersEnabled: true
+    # statSemWaitEnabled: true
+    # statTimingEnabled: true
+    # statNotifQueueEnabled: true
+
+## Configuration for embedding mongodb into the chart. Do not use this in production.
+mongo:
+  # -- should mongodb be enabled
+  enabled: true
+  ## configuration for the mongo image to be used
+  image:
+    # -- pull policy to be used for mongo
+    pullPolicy: IfNotPresent
+    # -- mongo image name
+    repository: quay.io/opencloudio/ibm-mongodb
+    # -- version of mongo
+    tag: 4.0.24
+  # -- port to make mongo accessible at
+  port: 27017

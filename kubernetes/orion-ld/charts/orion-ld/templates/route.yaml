@@ -1,0 +1,26 @@
+{{- if .Values.route.enabled -}}
+{{- $fullName := include "orion.fullname" . -}}
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "orion.fullname" . }}
+  labels:
+    {{ include "orion.labels" . | nindent 4 }}
+  {{- if .Values.route.annotations }}
+  annotations:
+    {{- with .Values.route.annotations }}
+      {{- toYaml . | nindent 4 }}
+      {{- end }}
+  {{- end }}
+spec:
+  host: {{ .Values.route.host}}
+  to:
+    kind: Service
+    name: {{ $fullName }}
+  {{- if .Values.route.tls }}
+  tls:
+  {{- with .Values.route.tls }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- end }}
+{{- end }}

@@ -1,0 +1,3 @@
+Successfully deployed Orion-LD.
+
+Connect at {{ include "orion.fullname" . }}.{{ .Release.Namespace }}:{{ .Values.service.port }}

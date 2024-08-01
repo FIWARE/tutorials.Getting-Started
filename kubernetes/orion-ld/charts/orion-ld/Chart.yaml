@@ -1,0 +1,18 @@
+annotations:
+  charts.openshift.io/name: orion-ld
+apiVersion: v2
+appVersion: 1.0.1
+description: A Helm chart for running the fiware orion-ld context broker on kubernetes.
+home: https://github.com/FIWARE/context.Orion-LD
+icon: https://fiware.github.io/catalogue/img/fiware.png
+keywords:
+- fiware
+- orion-ld
+kubeVersion: '>= 1.19'
+maintainers:
+- email: stefan.wiedemann@fiware.org
+  name: wistefan
+name: orion-ld
+sources:
+- https://github.com/FIWARE/context.Orion-LD
+version: 1.0.2

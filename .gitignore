@@ -39,3 +39,5 @@ jspm_packages/
 datamodels.md
 datamodels.context-ngsi.jsonld
 datamodels.context.jsonld
+
+Chart.lock

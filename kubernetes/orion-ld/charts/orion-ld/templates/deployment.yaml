@@ -1,0 +1,362 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "orion.fullname" . }}
+  labels:
+    {{ include "orion.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.deployment.replicaCount }}
+  {{- end }}
+  revisionHistoryLimit: {{ .Values.deployment.revisionHistoryLimit }}
+  strategy:
+  {{- with .Values.deployment.updateStrategy }}
+  {{- toYaml . | nindent 4 }}
+  {{- end }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ include "orion.name" . }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        {{ include "orion.labels" . | nindent 8 }}
+        {{- with .Values.deployment.additionalLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{ if .Values.deployment.additionalAnnotations -}}
+      annotations:
+        {{- with .Values.deployment.additionalAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      {{- end }}
+    spec: 
+      serviceAccountName: {{ include "orion.serviceAccountName" . }}
+      containers:
+        - name: {{ .Chart.Name }}
+          imagePullPolicy: {{ .Values.deployment.image.pullPolicy }}
+          image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+          {{ if and (.Values.broker.noDevTrace) (eq .Values.deployment.image.repository "fiware/orion-ld") }}
+          args: ["-lmtmp"]
+          {{ end }}
+          # special handling for the health check of telefonica/orion
+          {{ if eq .Values.broker.envPrefix "ORION_" }}
+          command: ["/bin/bash", "-c", "/usr/bin/contextBroker -fg | sed '/SUMMARY/w /tmp/healthcheck'"]
+          {{ end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.broker.port}}
+              protocol: TCP
+          {{ if eq .Values.deployment.image.repository "fiware/orion-ld" }}
+          readinessProbe:
+            tcpSocket:
+              port: 1027
+            initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds}}
+            periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds}}
+            successThreshold: {{ .Values.deployment.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            tcpSocket:
+              port: 1027
+            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.deployment.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds }}
+          {{ end }}
+          # special handling for the health check of telefonica/orion
+          {{ if eq .Values.broker.envPrefix "ORION_" }}
+          readinessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - "echo /tmp/healthcheck? && true > /tmp/healthcheck"
+            initialDelaySeconds: {{ .Values.deployment.readinessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.readinessProbe.periodSeconds }}
+            successThreshold: {{ .Values.deployment.readinessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.deployment.readinessProbe.timeoutSeconds }}
+          livenessProbe:
+            exec:
+              command:
+                - /bin/bash
+                - -c
+                - "echo /tmp/healthcheck? && true > /tmp/healthcheck"
+            initialDelaySeconds: {{ .Values.deployment.livenessProbe.initialDelaySeconds }}
+            periodSeconds: {{ .Values.deployment.livenessProbe.periodSeconds }}
+            successThreshold: {{ .Values.deployment.livenessProbe.successThreshold }}
+            timeoutSeconds: {{ .Values.deployment.livenessProbe.timeoutSeconds }}
+          {{ end }}
+          env:
+            # general
+            - name: {{ .Values.broker.envPrefix }}PORT
+              value: {{ .Values.broker.port | quote }}
+            - name: {{ .Values.broker.envPrefix }}SOCKET_SERVICE
+              value: "TRUE"
+            - name: {{ .Values.broker.envPrefix }}SOCKET_SERVICE_PORT
+              value: "1027"
+            - name: {{ .Values.broker.envPrefix }}DISABLE_FILE_LOG
+              value: "TRUE"
+            - name: {{ .Values.broker.envPrefix }}CACHED_CONTEXT_DIRECTORY
+              value: {{ .Values.broker.cachedContextFolder }}
+            {{- if and (eq .Values.broker.ipv4enabled true) (eq .Values.broker.ipv6enabled false) }}
+            - name: {{ .Values.broker.envPrefix }}USEIPV4
+              value: "TRUE"
+            {{- end }}
+            {{- if and (eq .Values.broker.ipv6enabled true) (eq .Values.broker.ipv4enabled false) }}
+            - name: {{ .Values.broker.envPrefix }}USEIPV6
+              value: "TRUE"
+            {{- end }}
+            {{- if .Values.broker.httpTimeout }}
+            - name: {{ .Values.broker.envPrefix }}HTTP_TIMEOUT
+              value: {{ .Values.broker.httpTimeout }}
+            {{- end }}
+            {{- if .Values.broker.reqTimeout }}
+            - name: {{ .Values.broker.envPrefix }}REQ_TIMEOUT
+              value: {{ .Values.broker.reqTimeout }}
+            {{- end }}
+            {{- if .Values.broker.corsOrigin }}
+            - name: {{ .Values.broker.envPrefix }}CORS_ALLOWED_ORIGIN
+              value: {{ .Values.broker.corsOrigin }}
+            {{- end }}
+            {{- if .Values.broker.corsMaxAge }}
+            - name: {{ .Values.broker.envPrefix }}CORS_MAX_AGE
+              value: {{ .Values.broker.corsMaxAge }}
+            {{- end }}
+            {{- if .Values.broker.mutexPolicy }}
+            - name: {{ .Values.broker.envPrefix }}MUTEX_POLICY
+              value: {{ .Values.broker.mutexPolicy }}
+            {{- end }}     
+            {{- if .Values.broker.cprForwardLimit }}
+            - name: {{ .Values.broker.envPrefix }}CPR_FORWARD_LIMIT
+              value: {{ .Values.broker.cprForwardLimit }}
+            {{- end }}
+            {{- if .Values.broker.subCacheIval }}
+            - name: {{ .Values.broker.envPrefix }}SUBCACHE_IVAL
+              value: {{ .Values.broker.subCacheIval }}
+            {{- end }}
+            {{- if .Values.broker.noCache }}
+            - name: {{ .Values.broker.envPrefix }}NOCACHE
+              value: {{ .Values.broker.noCache | upper | quote }}
+            {{- end }}
+            {{- if .Values.broker.connectionMemory }}
+            - name: {{ .Values.broker.envPrefix }}CONN_MEMORY
+              value: {{ .Values.broker.connectionMemory }}
+            {{- end }}
+            {{- if .Values.broker.maxConnections }}
+            - name: {{ .Values.broker.envPrefix }}MAX_CONN
+              value: {{ .Values.broker.maxConnections | quote }}
+            {{- end }}
+            {{- if .Values.broker.reqPoolSize }}
+            - name: {{ .Values.broker.envPrefix }}TRQ_POOL_SIZE
+              value: {{ .Values.broker.reqPoolSize | quote }}
+            {{- end }}
+            {{- if .Values.broker.inReqPayloadMaxSize }}
+            - name: {{ .Values.broker.envPrefix }}IN_REQ_PAYLOAD_MAX_SIZE
+              value: {{ .Values.broker.inReqPayloadMaxSize }}
+            {{- end }}
+            {{- if .Values.broker.outReqMsgMaxSize }}
+            - name: {{ .Values.broker.envPrefix }}OUT_REQ_MSG_MAX_SIZE
+              value: {{ .Values.broker.outReqMsgMaxSize }}
+            {{- end }}
+            {{- if .Values.broker.notificationMode }}
+            - name: {{ .Values.broker.envPrefix }}NOTIF_MODE
+              value: {{ .Values.broker.notificationMode }}
+            {{- end }}
+            {{- if .Values.broker.notificationFlowControl }}
+            - name: {{ .Values.broker.envPrefix }}NOTIF_FLOW_CONTROL
+              value: {{ .Values.broker.notificationFlowControl }}
+            {{- end }}
+            {{- if .Values.broker.simulatedNotification }}
+            - name: {{ .Values.broker.envPrefix }}DROP_NOTIF
+              value: {{ .Values.broker.simulatedNotification }}
+            {{- end }}
+            {{- if .Values.broker.disableCustomNotifications }}
+            - name: {{ .Values.broker.envPrefix }}DISABLE_CUSTOM_NOTIF
+              value: {{ .Values.broker.disableCustomNotifications | upper }}
+            {{- end }}
+            {{- if .Values.broker.insecureNotifEnabled }}
+            - name: {{ .Values.broker.envPrefix }}INSECURE_NOTIF
+              value: {{ .Values.broker.insecureNotifEnabled | upper }}
+            {{- end }}
+            {{- if .Values.broker.forwardingEnabled }}
+            - name: {{ .Values.broker.envPrefix }}FORWARDING
+              value: {{ .Values.broker.forwardingEnabled | quote | upper }}
+            {{- end }}
+
+            # db
+            - name: {{ .Values.broker.envPrefix }}MONGO_HOST
+              {{- if .Values.mongo.enabled }}
+              value: {{ include "orion.fullname" . }}-mongo:27017
+              {{- else }}
+              value: {{ join "," .Values.broker.db.hosts }}
+              {{- end }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_DB
+              value: {{ .Values.broker.db.name }}
+            {{ $numHosts := len .Values.broker.db.hosts }}
+            {{- if gt $numHosts 1 -}}
+            - name: {{ .Values.broker.envPrefix }}MONGO_REPLICA_SET
+              value: {{ .Values.broker.db.replicaSet }}
+            {{- end }}
+            {{- if .Values.broker.db.existingSecret }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_USER
+              value: {{ .Values.broker.db.user }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.broker.db.existingSecret.name }}
+                  key: {{ .Values.broker.db.existingSecret.key }}
+            {{- end }}
+            {{- if .Values.broker.db.auth }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_USER
+              value: {{ .Values.broker.db.user }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "orion.fullname" . }}
+                  key: dbPassword
+              {{- if .Values.broker.db.auth.mech }} 
+            - name: {{ .Values.broker.envPrefix }}MONGO_AUTH_MECH
+              value: {{ .Values.broker.db.auth.mech }}
+              {{- end }}
+            {{- end }}
+            {{- if .Values.broker.db.sslEnabled }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_SSL
+              value: {{ .Values.broker.db.sslEnabled | upper }}
+            {{- end }}
+            {{- if .Values.broker.db.timeout }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_TIMEOUT
+              value: {{ .Values.broker.db.timeout }}
+            {{- end }}
+            {{- if .Values.broker.db.poolSize }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_POOL_SIZE
+              value: {{ .Values.broker.db.poolSize | quote }}
+            {{- end }}
+             {{- if .Values.broker.db.writeConcern }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_WRITE_CONCERN
+              value: {{ .Values.broker.db.writeConcern }}
+            {{- end }}
+
+            # tenancy
+            {{- if .Values.broker.multiserviceEnabled }}
+            - name: {{ .Values.broker.envPrefix }}MULTI_SERVICE
+              value: {{ .Values.broker.multiserviceEnabled | upper }}
+            {{- end }}
+            {{- if .Values.broker.multiserviceEnabled }}
+            - name: {{ .Values.broker.envPrefix }}MONGO_AUTH_SOURCE
+              value: admin
+            {{- end }}
+            
+            # metrics
+            {{ if .Values.broker.metrics  }}
+            {{ if eq .Values.broker.metrics.enabled "false"  }}
+            - name: {{ .Values.broker.envPrefix }}DISABLE_METRICS
+              value: "TRUE"
+            {{ else }}
+            - name: {{ .Values.broker.envPrefix }}DISABLE_METRICS
+              value: "FALSE"
+            {{- end }}
+            {{ if .Values.broker.metrics.statCountersEnabled  }}
+            - name: {{ .Values.broker.envPrefix }}STAT_COUNTERS
+              value: {{ .Values.broker.metrics.statCountersEnabled | upper }}
+            {{ end }}
+            {{ if .Values.broker.metrics.statSemWaitEnabled }}
+            - name: {{ .Values.broker.envPrefix }}STAT_SEM_WAIT
+              value: {{ .Values.broker.metrics.statSemWaitEnabled | upper }}
+            {{- end }}
+            {{ if .Values.broker.metrics.statTimingEnabled }}
+            - name: {{ .Values.broker.envPrefix }}STAT_TIMING
+              value: {{ .Values.broker.metrics.statTimingEnabled | upper }}
+            {{- end }}
+            {{ if .Values.broker.metrics.statNotifQueueEnabled }}
+            - name: {{ .Values.broker.envPrefix }}STAT_NOTIF_QUEUE
+              value: {{ .Values.broker.metrics.statNotifQueueEnabled | upper }}
+            {{- end }}
+            {{- end }}
+
+            # logging
+            - name: {{ .Values.broker.envPrefix }}LOG_LEVEL
+              value: {{ .Values.broker.logging.level }}
+            {{- if .Values.broker.logging.dir }}
+            - name: {{ .Values.broker.envPrefix }}LOG_DIR
+              value: {{ .Values.broker.logging.dir }}
+            {{- end }}
+            {{- if .Values.broker.logging.append }}
+            - name: {{ .Values.broker.envPrefix }}LOG_APPEND
+              value: {{ .Values.broker.logging.append }}
+            {{- end }}
+            {{- if .Values.broker.logging.trace }}
+            - name: {{ .Values.broker.envPrefix }}TRACE
+              value: {{ .Values.broker.logging.trace }}
+            {{- end }}
+            {{- if .Values.broker.logging.summaryPeriod }}
+            - name: {{ .Values.broker.envPrefix }}LOG_SUMMARY_PERIOD
+              value: {{ .Values.broker.logging.summaryPeriod  | quote }}
+            {{- end }}
+            {{- if .Values.broker.logging.relogAlarms }}
+            - name: {{ .Values.broker.envPrefix }}RELOG_ALARMS
+              value: {{ .Values.broker.logging.relogAlarms | upper }}
+            {{- end }} 
+            {{- if .Values.broker.logging.forHumans }}
+            - name: {{ .Values.broker.envPrefix }}LOG_FOR_HUMANS
+              value: {{ .Values.broker.logging.forHumans | upper }}
+            {{- end }}
+            {{- if .Values.broker.logging.lineMaxSize }}
+            - name: {{ .Values.broker.envPrefix }}LOG_LINE_MAX_SIZE
+              value: {{ .Values.broker.logging.lineMaxSize }}
+            {{- end }}
+            {{- if .Values.broker.logging.infoPayloadMaxSize }}
+            - name: {{ .Values.broker.envPrefix }}LOG_INFO_PAYLOAD_MAX_SIZE
+              value: {{ .Values.broker.logging.infoPayloadMaxSize }}
+            {{- end }}
+
+            ##TROE
+            {{ if .Values.broker.troe }}
+            {{ if eq .Values.broker.troe.enabled true }}
+            - name: {{ .Values.broker.envPrefix }}TROE
+              value: "TRUE"
+            {{ else }}
+            - name: {{ .Values.broker.envPrefix }}TROE
+              value: "FALSE"
+            {{- end -}}
+            {{ if .Values.broker.troe.dbUser }}
+            - name: {{ .Values.broker.envPrefix }}TROE_USER
+              value: {{ .Values.broker.troe.dbUser }}
+            {{ end }}
+            {{ if .Values.broker.troe.dbPassword }}
+            - name: {{ .Values.broker.envPrefix }}TROE_PWD
+              value: {{ .Values.broker.troe.dbPassword }}
+            {{ end }}
+            {{ if .Values.broker.troe.dbHost }}
+            - name: {{ .Values.broker.envPrefix }}TROE_HOST
+              value: {{ .Values.broker.troe.dbHost }}
+            {{ end }}
+            {{ if .Values.broker.troe.dbPort }}
+            - name: {{ .Values.broker.envPrefix }}TROE_PORT
+              value: {{ .Values.broker.troe.dbPort | quote }}
+            {{ end }}
+            {{ if .Values.broker.troe.dbPoolsize }}
+            - name: {{ .Values.broker.envPrefix }}TROE_POOL_SIZE
+              value: {{ .Values.broker.troe.dbPoolsize | quote }}
+            {{ end }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.deployment.resources | nindent 12 }}
+      {{- if .Values.deployment.sidecars }}
+        {{- toYaml .Values.deployment.sidecars | nindent 8 }}
+      {{- end }}
+      {{- if .Values.deployment.volumes }}
+      volumes:
+        {{- toYaml .Values.deployment.volumes | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.deployment.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

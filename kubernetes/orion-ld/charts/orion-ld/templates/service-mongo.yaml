@@ -1,0 +1,25 @@
+{{- if .Values.mongo.enabled -}}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "orion.fullname" . }}-mongo
+  {{- if .Values.service.annotations }}
+  annotations:
+    {{ toYaml .Values.service.annotations | nindent 4 }}
+  {{- end }}
+  labels:
+    app.kubernetes.io/name: {{ include "orion.name" . }}-mongo
+    helm.sh/chart: {{ include "orion.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.mongo.port }}
+      targetPort: {{ .Values.mongo.port }}
+      protocol: TCP
+      name: mongo
+  selector:
+    app.kubernetes.io/name: {{ include "orion.name" . }}-mongo
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
