@@ -26,14 +26,14 @@ jobs:
         submodules: recursive
     - name: Build Images
       run: |
-        ./services create test || true
+        ./services create || true
     # - name: Run Orion
     #   run: |
-    #     ./services orion test && ./services stop test
+    #     ./services orion && ./services stop
     - name: Run Stellio
       run: |
-        ./services stellio test && ./services stop test
+        ./services stellio && ./services stop
     # - name: Run Scorpio
     #   run: |
-    #     ./services scorpio test && ./services stop test
+    #     ./services scorpio && ./services stop
 
