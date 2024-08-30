@@ -129,18 +129,6 @@ stoppingContainers () {
 	fi
 }
 
-addDatabaseIndex () {
-	printf "Create \033[1mMongoDB\033[0m database indexes ..."
-	docker exec db-mongo mongo --eval '
-	conn = new Mongo();db.createCollection("orion");
-	db = conn.getDB("orion");
-	db.createCollection("entities");
-	db.entities.createIndex({"_id.servicePath": 1, "_id.id": 1, "_id.type": 1}, {unique: true});
-	db.entities.createIndex({"_id.type": 1});
-	db.entities.createIndex({"_id.id": 1});' > /dev/null
-	echo -e " \033[1;32mdone\033[0m"
-}
-
 displayServices () {
 	echo ""
 	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name="$1"
@@ -164,7 +152,6 @@ case "${command}" in
 		${dockerCmd} -f docker-compose/common.yml -f docker-compose/orion-ld.yml  up -d --remove-orphans --renew-anon-volumes
 		displayServices "orion|fiware"
 		waitForMongo
-		addDatabaseIndex
 		waitForOrion
 		waitForUserContext
 		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
