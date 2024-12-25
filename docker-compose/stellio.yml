@@ -71,7 +71,7 @@ services:
   kafka:
     labels:
       org.fiware: 'tutorial'
-    image: confluentinc/cp-kafka:7.3.1
+    image: confluentinc/cp-kafka:7.6.0
     container_name: kafka
     ports:
       - 29092:29092
@@ -88,9 +88,7 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: 'PLAINTEXT'
       KAFKA_CONTROLLER_LISTENER_NAMES: 'CONTROLLER'
       KAFKA_LOG4J_ROOT_LOGLEVEL: INFO
-    volumes:
-      - ./stellio/kafka/update_run.sh:/tmp/update_run.sh
-    command: "bash -c 'if [ ! -f /tmp/update_run.sh ]; then echo \"ERROR: Did you forget the update_run.sh file that came with this docker-compose.yml file?\" && exit 1 ; else /tmp/update_run.sh && /etc/confluent/docker/run ; fi'"
+      CLUSTER_ID: YzQwZWIyMDZjMmNmMTFlZm
 
 
   # Databases
@@ -98,7 +96,6 @@ services:
     labels:
       org.fiware: 'tutorial'
     image: stellio/stellio-timescale-postgis:${STELLIO_TIMESCALE_POSTGIS}
-
     hostname: postgres
     container_name: db-postgres
     environment:
