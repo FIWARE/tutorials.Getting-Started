@@ -363,8 +363,8 @@ curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
     "id": "urn:ngsi-ld:Building:farm001",
     "type": "Building",
     "category": {
-        "type": "Property",
-        "value": ["farm"]
+        "type": "VocabProperty",
+        "vocab": ["farm"]
     },
     "address": {
         "type": "Property",
@@ -427,8 +427,8 @@ curl -iX POST 'http://localhost:1026/ngsi-ld/v1/entities/' \
     "id": "urn:ngsi-ld:Building:barn002",
     "type": "Building",
     "category": {
-        "type": "Property",
-        "value": ["barn"]
+        "type": "VocabProperty",
+        "vocab": ["barn"]
     },
     "address": {
         "type": "Property",
@@ -565,8 +565,8 @@ curl -G -X GET \
             "value": "Victory Farm"
         },
         "https://uri.fiware.org/ns/dataModels#category": {
-            "type": "Property",
-            "value": "farm"
+            "type": "VocabProperty",
+            "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dfarm"
         },
         "location": {
             "type": "GeoProperty",
@@ -601,8 +601,8 @@ curl -G -X GET \
             "value": "Big Red Barn"
         },
         "https://uri.fiware.org/ns/dataModels#category": {
-            "type": "Property",
-            "value": "barn"
+            "type": "VocabProperty",
+            "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn"
         },
         "location": {
             "type": "GeoProperty",
@@ -661,7 +661,7 @@ Core `@context` が含まれることは常に暗示されることに注意し�
     "id": "urn:ngsi-ld:Building:farm001",
     "type": "Building",
     "category": {
-        "type": "Property",
+        "type": "VocabProperty",
         "value": "farm"
     },
     "address": {
@@ -739,7 +739,9 @@ curl -G -X GET \
             "postalCode": "10557"
         },
         "name": "Victory Farm",
-        "category": "farm",
+        "category": {
+            "vocab": "farm"
+        },
         "location": {
             "type": "Point",
             "coordinates": [
@@ -762,7 +764,9 @@ curl -G -X GET \
             "postalCode": "10557"
         },
         "name": "Big Red Barn",
-        "category": "barn",
+        "category": {
+            "vocab": "barn"
+        },
         "location": {
             "type": "Point",
             "coordinates": [
@@ -816,7 +820,9 @@ curl -G -X GET \
             "postalCode": "10557"
         },
         "name": "Big Red Barn",
-        "category": "barn",
+        "category": {
+            "vocab": "barn"
+        },
         "location": {
             "type": "Point",
             "coordinates": [
@@ -946,7 +952,9 @@ curl -G -X GET \
             "postalCode": "10557"
         },
         "name": "Big Red Barn",
-        "category": "barn",
+        "category": {
+            "vocab": "barn"
+        },
         "location": {
             "type": "Point",
             "coordinates": [
@@ -998,7 +1006,9 @@ curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
             "postalCode": "10557"
         },
         "name": "Victory Farm",
-        "category": "farm",
+        "category": {
+            "vocab": "farm"
+        },
         "location": {
             "type": "Point",
             "coordinates": [
@@ -1021,7 +1031,9 @@ curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
             "postalCode": "10557"
         },
         "name": "Big Red Barn",
-        "category": "barn",
+        "category": {
+            "vocab": "barn"
+        },
         "location": {
             "type": "Point",
             "coordinates": [
@@ -1072,7 +1084,9 @@ curl -G -X GET \
             "postalCode": "10557"
         },
         "name": "Victory Farm",
-        "category": "farm",
+        "category": {
+            "vocab": "farm"
+        },
         "location": {
             "type": "Point",
             "coordinates": [13.3505, 52.5144]
@@ -1088,7 +1102,9 @@ curl -G -X GET \
             "postalCode": "10557"
         },
         "name": "Big Red Barn",
-        "category": "barn",
+        "category": {
+            "vocab": "barn"
+        },
         "location": {
             "type": "Point",
             "coordinates": [13.3698, 52.5163]
@@ -1143,7 +1159,9 @@ curl -G -X GET \
             "postalCode": "10557"
         },
         "name": "Big Red Barn",
-        "category": "barn",
+        "category": {
+            "vocab": "barn"
+        },
         "location": {
             "type": "Point",
             "coordinates": [13.3698, 52.5163]
