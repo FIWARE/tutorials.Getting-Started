@@ -526,7 +526,7 @@ JSON-LD コンテンツを取得するために必要です。
 curl -G -X GET \
   'http://localhost:1026/ngsi-ld/v1/entities' \
   -H 'Accept: application/ld+json' \
-  -d 'type=https://uri.fiware.org/ns/dataModels%23Building'
+  -d 'type=https://smartdatamodels.org/dataModel.Building/Building'
 ```
 
 #### レスポンス:
@@ -537,7 +537,7 @@ curl -G -X GET \
 
 -   `id`, `type`, `location` および `name` は core context で定義され、展開されません
 -   `address` は `http://schema.org/address` にマッピングされました
--   `category`は `https://uri.fiware.org/ns/dataModels#category` にマッピングされました
+-   `category`は `https://smartdatamodels.org/dataModel.Building/category` にマッピングされました
 
 エンティティの作成時に属性が FQN に関連付けられていない場合は、短い名前が**常に**表示されます。
 
@@ -546,7 +546,11 @@ curl -G -X GET \
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
-        "type": "https://uri.fiware.org/ns/dataModels#Building",
+        "type": "https://smartdatamodels.org/dataModel.Building/Building",
+        "https://smartdatamodels.org/dataModel.Building/category": {
+            "type": "Property",
+            "value": "farm"
+        },
         "https://schema.org/address": {
             "type": "Property",
             "value": {
@@ -560,14 +564,6 @@ curl -G -X GET \
                 "value": true
             }
         },
-        "https://schema.org/name": {
-            "type": "Property",
-            "value": "Victory Farm"
-        },
-        "https://uri.fiware.org/ns/dataModels#category": {
-            "type": "VocabProperty",
-            "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dfarm"
-        },
         "location": {
             "type": "GeoProperty",
             "value": {
@@ -577,12 +573,20 @@ curl -G -X GET \
                     52.5144
                 ]
             }
+        },
+        "https://schema.org/name": {
+            "type": "Property",
+            "value": "Victory Farm"
         }
     },
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
-        "type": "https://uri.fiware.org/ns/dataModels#Building",
+        "type": "https://smartdatamodels.org/dataModel.Building/Building",
+        "https://smartdatamodels.org/dataModel.Building/category": {
+            "type": "Property",
+            "value": "barn"
+        },
         "https://schema.org/address": {
             "type": "Property",
             "value": {
@@ -596,14 +600,6 @@ curl -G -X GET \
                 "value": true
             }
         },
-        "https://schema.org/name": {
-            "type": "Property",
-            "value": "Big Red Barn"
-        },
-        "https://uri.fiware.org/ns/dataModels#category": {
-            "type": "VocabProperty",
-            "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn"
-        },
         "location": {
             "type": "GeoProperty",
             "value": {
@@ -613,6 +609,10 @@ curl -G -X GET \
                     52.5163
                 ]
             }
+        },
+        "https://schema.org/name": {
+            "type": "Property",
+            "value": "Big Red Barn"
         }
     }
 ]

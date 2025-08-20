@@ -536,7 +536,7 @@ body.
 curl -G -X GET \
   'http://localhost:1026/ngsi-ld/v1/entities' \
   -H 'Accept: application/ld+json' \
-  -d 'type=https://uri.fiware.org/ns/dataModels%23Building'
+  -d 'type=https://smartdatamodels.org/dataModel.Building/Building'
 ```
 
 #### Response:
@@ -546,7 +546,7 @@ Since no explicit `@context` was sent in the request, the response returns the C
 
 -   `id`, `type`, `location` and `name` are defined in the core context and are not expanded.
 -   `address` has been mapped to `http://schema.org/address`
--   `category` has been mapped to `https://uri.fiware.org/ns/dataModels#category`
+-   `category` has been mapped to `https://smartdatamodels.org/dataModel.Building/category`
 
 Note that if an attribute has not been associated to an FQN when the entity was created, the short name will **always**
 be displayed.
@@ -556,67 +556,73 @@ be displayed.
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld",
         "id": "urn:ngsi-ld:Building:farm001",
-        "type": "https://uri.fiware.org/ns/dataModels#Building",
+        "type": "https://smartdatamodels.org/dataModel.Building/Building",
+        "https://smartdatamodels.org/dataModel.Building/category": {
+            "type": "Property",
+            "value": "farm"
+        },
         "https://schema.org/address": {
             "type": "Property",
             "value": {
-                "https://schema.org/streetAddress": "Großer Stern 1",
-                "https://schema.org/addressRegion": "Berlin",
-                "https://schema.org/addressLocality": "Tiergarten",
-                "https://schema.org/postalCode": "10557"
+                "streetAddress": "Großer Stern 1",
+                "addressRegion": "Berlin",
+                "addressLocality": "Tiergarten",
+                "postalCode": "10557"
             },
             "https://uri.fiware.org/ns/dataModels#verified": {
                 "type": "Property",
                 "value": true
+            }
+        },
+        "location": {
+            "type": "GeoProperty",
+            "value": {
+                "type": "Point",
+                "coordinates": [
+                    13.3505,
+                    52.5144
+                ]
             }
         },
         "https://schema.org/name": {
             "type": "Property",
             "value": "Victory Farm"
-        },
-        "https://uri.fiware.org/ns/dataModels#category": {
-            "type": "Property",
-            "value": "farm"
-        },
-        "location": {
-            "type": "GeoProperty",
-            "value": {
-                "type": "Point",
-                "coordinates": [13.3505, 52.5144]
-            }
         }
     },
     {
         "@context": "https://uri.etsi.org/ngsi-ld/v1/ngsi-ld-core-context-v1.8.jsonld",
         "id": "urn:ngsi-ld:Building:barn002",
-        "type": "https://uri.fiware.org/ns/dataModels#Building",
+        "type": "https://smartdatamodels.org/dataModel.Building/Building",
+        "https://smartdatamodels.org/dataModel.Building/category": {
+            "type": "Property",
+            "value": "barn"
+        },
         "https://schema.org/address": {
             "type": "Property",
             "value": {
-                "https://schema.org/streetAddress": "Straße des 17. Juni",
-                "https://schema.org/addressRegion": "Berlin",
-                "https://schema.org/addressLocality": "Tiergarten",
-                "https://schema.org/postalCode": "10557"
+                "streetAddress": "Straße des 17. Juni",
+                "addressRegion": "Berlin",
+                "addressLocality": "Tiergarten",
+                "postalCode": "10557"
             },
             "https://uri.fiware.org/ns/dataModels#verified": {
                 "type": "Property",
                 "value": true
             }
         },
-        "https://schema.org/name": {
-            "type": "Property",
-            "value": "Big Red Barn"
-        },
-        "https://uri.fiware.org/ns/dataModels#category": {
-            "type": "Property",
-            "value": "barn"
-        },
         "location": {
             "type": "GeoProperty",
             "value": {
                 "type": "Point",
-                "coordinates": [13.3698, 52.5163]
+                "coordinates": [
+                    13.3698,
+                    52.5163
+                ]
             }
+        },
+        "https://schema.org/name": {
+            "type": "Property",
+            "value": "Big Red Barn"
         }
     }
 ]
@@ -696,7 +702,7 @@ files explicitly as element in the array of `@context` sent. The response is nor
 ### Obtain entity data by type
 
 When filtering by `type`, a [`Link` header](https://www.w3.org/wiki/LinkHeader) must be supplied to associate the short
-form `type="Building"` with the FQN `https://uri.fiware.org/ns/dataModels/Building`.
+form `type="Building"` with the FQN `https://smartdatamodels.org/dataModel.Building/Building`.
 
 If a reference to the supplied data is supplied, it is possible to return short name data and limit responses to a
 specific `type` of data. For example, the request below returns the data of all `Building` entities within the context
