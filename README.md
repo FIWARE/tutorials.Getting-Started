@@ -558,8 +558,8 @@ be displayed.
         "id": "urn:ngsi-ld:Building:farm001",
         "type": "https://smartdatamodels.org/dataModel.Building/Building",
         "https://smartdatamodels.org/dataModel.Building/category": {
-            "type": "Property",
-            "value": "farm"
+            "type": "VocabProperty",
+            "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dfarm"
         },
         "https://schema.org/address": {
             "type": "Property",
@@ -594,8 +594,8 @@ be displayed.
         "id": "urn:ngsi-ld:Building:barn002",
         "type": "https://smartdatamodels.org/dataModel.Building/Building",
         "https://smartdatamodels.org/dataModel.Building/category": {
-            "type": "Property",
-            "value": "barn"
+            "type": "VocabProperty",
+            "vocab": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn"
         },
         "https://schema.org/address": {
             "type": "Property",
@@ -887,7 +887,9 @@ directly but would require an additional **JSON-LD** expansion/compaction operat
             "postalCode": "10557"
         },
         "name": "Big Red Barn",
-        "kategorie": "barn",
+        "kategorie": {
+            "vocab": "scheune"
+        },
         "location": {
             "type": "Point",
             "coordinates": [13.3698, 52.5163]
@@ -902,7 +904,7 @@ It should also be noted that the sub-attributes of the `addresse` have also not 
 ### Filter context data by comparing the values of an attribute in an Array
 
 Within the standard `Building` model, the `category` attribute refers to an array of strings. This example returns all
-`Building` entities with a `category` attribute which contains either `commercial` or `office` strings. Filtering can be
+`Building` entities with a `category` attribute which contains either `barn` or `22farm_auxiliary` strings. Filtering can be
 done using the `q` parameter, comma separating the acceptable values.
 
 #### 9️⃣ Request:
@@ -914,7 +916,8 @@ curl -G -X GET \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=category==%22barn%22,%22farm_auxiliary%22' \
-    -d 'options=keyValues'
+    -d 'options=keyValues' \
+    -d 'expandValues=category'
 ```
 
 #### Response:

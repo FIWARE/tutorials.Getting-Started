@@ -897,7 +897,9 @@ curl -G -X GET \
             "postalCode": "10557"
         },
         "name": "Big Red Barn",
-        "kategorie": "barn",
+        "kategorie": {
+            "vocab": "scheune"
+        },
         "location": {
             "type": "Point",
             "coordinates": [
@@ -916,7 +918,7 @@ curl -G -X GET \
 
 ### 配列内の属性の値を比較してコンテキスト・データをフィルタリング
 
-標準の `Building` モデル内で、`category` 属性は文字列の配列を参照します。この例では、`commercial` または `office`
+標準の `Building` モデル内で、`category` 属性は文字列の配列を参照します。この例では、`barn` または `farm_auxiliary`
 文字列を含む `category` 属性を持つすべての `Building` エンティティを返します。フィルタリングは、`q`
 パラメータを使用して、許容値をカンマで区切って行うことができます。
 
@@ -929,7 +931,8 @@ curl -G -X GET \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=category==%22barn%22,%22farm_auxiliary%22' \
-    -d 'options=keyValues'
+    -d 'options=keyValues'\
+    -d 'expandValues=category'
 ```
 
 #### レスポンス:
