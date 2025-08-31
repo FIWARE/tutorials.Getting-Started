@@ -42,7 +42,7 @@ git checkout NGSI-LD
 ./services start
 ```
 
-| [![NGSI LD](https://img.shields.io/badge/NGSI-LD-d6604d.svg)](https://cim.etsi.org/NGSI-LD/official/0--1.html) | :books: [Documentation](https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-LD) | <img  src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/postman.svg" height="15" width="15"> [Postman Collection](https://fiware.github.io/tutorials.Getting-Started/ngsi-ld.html) | ![](https://img.shields.io/github/last-commit/fiware/tutorials.Getting-Started/NGSI-LD) |
+| [![NGSI LD](https://img.shields.io/badge/NGSI-LD-d6604d.svg)](https://cim.etsi.org/NGSI-LD/official/front-page.html) | :books: [Documentation](https://github.com/FIWARE/tutorials.Getting-Started/tree/NGSI-LD) | <img  src="https://cdn.jsdelivr.net/npm/simple-icons@v3/icons/postman.svg" height="15" width="15"> [Postman Collection](https://fiware.github.io/tutorials.Getting-Started/ngsi-ld.html) | ![](https://img.shields.io/github/last-commit/fiware/tutorials.Getting-Started/NGSI-LD) |
 | --- | --- | --- | --- |
 
 ---
