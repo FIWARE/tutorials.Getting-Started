@@ -638,7 +638,8 @@ Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#co
 #### 5️⃣ リクエスト:
 
 ```console
-curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001' \
+curl -L -X GET \
+  'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001' \
 -H 'Accept: application/ld+json' \
 -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
 ```
@@ -704,7 +705,7 @@ Core `@context` が含まれることは常に暗示されることに注意し�
 提供されたデータへの参照が提供された場合、短い名前のデータを返し、データの特定の `type` にレスポンスを制限する
 ことが可能です。たとえば、以下のリクエストはコンテキスト・データ内のすべての `Building` エンティティのデータを
 返します。`type` パラメータを使用すると、レスポンスが `Building` エンティティのみに制限されます。
-`options=keyValues` クエリ・パラメータを使用すると、レスポンスが標準の JSON-LD になります。
+`format=simplified` クエリ・パラメータを使用すると、レスポンスが標準の JSON-LD になります。
 
 #### 6️⃣ リクエスト:
 
@@ -714,12 +715,12 @@ curl -G -X GET \
 -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### レスポンス:
 
-`options=keyValues` を使用しているため、レスポンスは JSON のみで構成され、属性定義 `type="Property"`
+`format=simplified` を使用しているため、レスポンスは JSON のみで構成され、属性定義 `type="Property"`
 やプロパティのプロパティ (_properties-of-properties_) 要素は含まれません。リクエストの `Link`
 ヘッダがレスポンスで返される `@context` として使用されていることがわかります。
 
@@ -784,7 +785,7 @@ curl -G -X GET \
 
 この例は、`name` 属性が _Big Red Barn_ のすべての `Building` エンティティを返します。フィルタリングは、
 `q` パラメータを使用して実行できます。文字列にスペースが含まれている場合、URL エンコードして二重引用符文字
-`"` = `%22` で保持できます。`options=keyValues` が送信されるため、これによりペイロードの構造に影響を与えるため、
+`"` = `%22` で保持できます。`format=simplified` が送信されるため、これによりペイロードの構造に影響を与えるため、
 別の `@context` ファイル - `json-context.jsonld` を提供する必要があります。
 
 #### 7️⃣ リクエスト:
@@ -796,12 +797,12 @@ curl -G -X GET \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=name==%22Big%20Red%20Barn%22' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### レスポンス:
 
-`Link` ヘッダと `options=keyValues` パラメータを使用すると、次のように、短い形式の Key-Value **JSON-LD**
+`Link` ヘッダと `format=simplified` パラメータを使用すると、次のように、短い形式の Key-Value **JSON-LD**
 へのレスポンスが減少します:
 
 ```json
@@ -872,7 +873,7 @@ curl -G -X GET \
 -H 'Accept: application/ld+json' \
     -d 'type=Geb%C3%A4ude' \
     -d 'q=name==%22Big%20Red%20Barn%22' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### レスポンス:
@@ -931,7 +932,7 @@ curl -G -X GET \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=category==%22barn%22,%22farm_auxiliary%22' \
-    -d 'options=keyValues'\
+    -d 'format=simplified'\
     -d 'expandValues=category'
 ```
 
@@ -981,17 +982,18 @@ curl -G -X GET \
 #### 1️⃣0️⃣ リクエスト:
 
 ```console
-curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
+curl -G -X GET \
+  'http://localhost:1026/ngsi-ld/v1/entities/' \
 -H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=address%5BaddressLocality%5D==%22Tiergarten%22' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### レスポンス:
 
-`Link` ヘッダと `options=keyValues` パラメータを使用すると、JSON-LD へのレスポンスが減少します。
+`Link` ヘッダと `format=simplified` パラメータを使用すると、JSON-LD へのレスポンスが減少します。
 
 ```json
 [
@@ -1067,12 +1069,12 @@ curl -G -X GET \
     -H 'Accept: application/json' \
     -d 'type=Building' \
     -d 'q=address.verified==true' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### レスポンス:
 
-`options=keyValues` を Accept HTTP ヘッダ (`application/json`) と共に使用するため、レスポンスは属性 `type` と
+`format=simplified` を Accept HTTP ヘッダ (`application/json`) と共に使用するため、レスポンスは属性 `type` と
 `metadata` 要素を含まない JSON のみで構成されます。
 
 ```json
@@ -1142,12 +1144,12 @@ curl -G -X GET \
   -d 'geometry=Point' \
   -d 'coordinates=%5B13.3777,52.5162%5D' \
   -d 'georel=near%3BmaxDistance==800' \
-  -d 'options=keyValues'
+  -d 'format=simplified'
 ```
 
 #### レスポンス:
 
-`options=keyValues` を Accept HTTP ヘッダ (`application/json`) と共に使用するため、レスポンスは属性 `type` と `metadata`
+`format=simplified` を Accept HTTP ヘッダ (`application/json`) と共に使用するため、レスポンスは属性 `type` と `metadata`
 要素を含まない JSON のみで構成されます。
 
 ```json

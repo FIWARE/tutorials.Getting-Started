@@ -646,7 +646,8 @@ the resource in question. In the case of NGSI-LD, the metadata is a file in `app
 #### 5️⃣ Request:
 
 ```console
-curl -L -X GET 'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001' \
+curl -L -X GET \
+  'http://localhost:1026/ngsi-ld/v1/entities/urn:ngsi-ld:Building:farm001' \
 -H 'Accept: application/ld+json' \
 -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"'
 ```
@@ -706,7 +707,7 @@ form `type="Building"` with the FQN `https://smartdatamodels.org/dataModel.Build
 
 If a reference to the supplied data is supplied, it is possible to return short name data and limit responses to a
 specific `type` of data. For example, the request below returns the data of all `Building` entities within the context
-data. Use of the `type` parameter limits the response to `Building` entities only, use of the `options=keyValues` query
+data. Use of the `type` parameter limits the response to `Building` entities only, use of the `format=simplified` query
 parameter reduces the response down to standard JSON-LD.
 
 #### 6️⃣ Request:
@@ -717,12 +718,12 @@ curl -G -X GET \
 -H 'Link: <http://context/user-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### Response:
 
-Because of the use of the `options=keyValues`, the response consists of JSON only without the attribute definitions
+Because of the use of the `format=simplified`, the response consists of JSON only without the attribute definitions
 `type="Property"` or any _properties-of-properties_ elements. You can see that `Link` header from the request has been
 used as the `@context` returned in the response.
 
@@ -779,7 +780,7 @@ used as the `@context` returned in the response.
 
 This example returns all `Building` entities with the `name` attribute _Big Red Barn_. Filtering can be done using the
 `q` parameter - if a string has spaces in it, it can be URL encoded and held within double quote characters `"` = `%22`.
-Since `options=keyValues` is sent, this will effect the structure of the payload and we will need to supply a different
+Since `format=simplified` is sent, this will effect the structure of the payload and we will need to supply a different
 `@context` file - `json-context.jsonld`
 
 #### 7️⃣ Request:
@@ -791,12 +792,12 @@ curl -G -X GET \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=name==%22Big%20Red%20Barn%22' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### Response:
 
-The use of the `Link` header and the `options=keyValues` parameter reduces the response to short form key-values
+The use of the `Link` header and the `format=simplified` parameter reduces the response to short form key-values
 **JSON-LD** as shown:
 
 ```json
@@ -862,7 +863,7 @@ curl -G -X GET \
 -H 'Accept: application/ld+json' \
     -d 'type=Geb%C3%A4ude' \
     -d 'q=name==%22Big%20Red%20Barn%22' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### Response:
@@ -916,7 +917,7 @@ curl -G -X GET \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=category==%22barn%22,%22farm_auxiliary%22' \
-    -d 'options=keyValues' \
+    -d 'format=simplified' \
     -d 'expandValues=category'
 ```
 
@@ -961,17 +962,18 @@ Filtering can be done using the `q` parameter - sub-attributes are annotated usi
 #### 1️⃣0️⃣ Request:
 
 ```console
-curl -G -X GET 'http://localhost:1026/ngsi-ld/v1/entities/' \
+curl -G -X GET \
+  'http://localhost:1026/ngsi-ld/v1/entities/' \
 -H 'Link: <http://context/json-context.jsonld>; rel="http://www.w3.org/ns/json-ld#context"; type="application/ld+json"' \
 -H 'Accept: application/ld+json' \
     -d 'type=Building' \
     -d 'q=address%5BaddressLocality%5D==%22Tiergarten%22' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### Response:
 
-Use of the `Link` header and the `options=keyValues` parameter reduces the response to JSON-LD.
+Use of the `Link` header and the `format=simplified` parameter reduces the response to JSON-LD.
 
 ```json
 [
@@ -1038,12 +1040,12 @@ curl -G -X GET \
     -H 'Accept: application/json' \
     -d 'type=Building' \
     -d 'q=address.verified==true' \
-    -d 'options=keyValues'
+    -d 'format=simplified'
 ```
 
 #### Response:
 
-Because of the use of the `options=keyValues` together with the Accept HTTP header (`application/json`), the response
+Because of the use of the `format=simplified` together with the Accept HTTP header (`application/json`), the response
 consists of JSON only without the attribute `type` and `metadata` elements.
 
 ```json
@@ -1111,12 +1113,12 @@ curl -G -X GET \
   -d 'geometry=Point' \
   -d 'coordinates=%5B13.3777,52.5162%5D' \
   -d 'georel=near%3BmaxDistance==800' \
-  -d 'options=keyValues'
+  -d 'format=simplified'
 ```
 
 #### Response:
 
-Because of the use of the `options=keyValues` together with the Accept HTTP header (`application/json`), the response
+Because of the use of the `format=simplified` together with the Accept HTTP header (`application/json`), the response
 consists of JSON only without the attribute `type` and `metadata` elements.
 
 ```json
