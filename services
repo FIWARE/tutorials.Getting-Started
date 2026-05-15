@@ -38,7 +38,7 @@ pause(){
 }
 
 getHeartbeat(){
-	response=$(docker run --network fiware_default --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w "%{http_code}" "$1")
+	response=$(docker run --network fiware_default --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w "%{http_code}" "$1") || true
 }
 
 waitForOrion () {
@@ -83,12 +83,12 @@ waitForStellio () {
 
 waitForCoreContext () {
 	echo -e "\n⏳ Checking availability of \033[1m core @context\033[0m from ETSI\n"
-	response=$(docker run --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")
+	response=$(docker run --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT") || true
 	while [ "${response}" -eq 000 ]
 	do
 		echo -e "\n@context HTTP state: ${response} (waiting for 200)"
 		pause 3
-		response=$(docker run --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")
+		response=$(docker run --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT") || true
 	done
 }
 
