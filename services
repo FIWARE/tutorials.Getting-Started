@@ -44,7 +44,7 @@ getHeartbeat(){
 waitForOrion () {
 	echo -e "\n⏳ Waiting for \033[1;34mOrion-LD\033[0m to be available\n"
 	
-	while ! [ `docker inspect --format='{{.State.Health.Status}}' fiware-orion` == "healthy" ]
+	while ! [ "$(docker inspect --format='{{.State.Health.Status}}' fiware-orion)" == "healthy" ]
 	do
 		echo -e "\nContext Broker HTTP state: ${response} (waiting for 200)"
 		pause 6
@@ -66,16 +66,16 @@ waitForScorpio () {
 waitForStellio () {
 	echo -e "\n⏳ Waiting for \033[1;34mStellio\033[0m to respond\n"
 	waitSeconds=30
-	while [ `docker run --network fiware_default --rm quay.io/curl/curl:${CURL_VERSION} -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` -eq 000 ]
+	while [ "$(docker run --network fiware_default --rm quay.io/curl/curl:${CURL_VERSION} -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X')" -eq 000 ]
 	do 
-	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 500)"
+	  echo -e "Context Broker HTTP state: " $(curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X') " (waiting for 500)"
 	  echo -e "Waiting for ${waitSeconds} seconds ..."
 	  sleep ${waitSeconds}
 	done
 	echo -e "\n⏳ Waiting for all \033[1;34mStellio\033[0m services to be available\n"
-	while [ `docker run --network fiware_default --rm quay.io/curl/curl:${CURL_VERSION} -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` -eq 500 ]
+	while [ "$(docker run --network fiware_default --rm quay.io/curl/curl:${CURL_VERSION} -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X')" -eq 500 ]
 	do 
-	  echo -e "Context Broker HTTP state: " `curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X'` " (waiting for 200)"
+	  echo -e "Context Broker HTTP state: " $(curl -s -o /dev/null -w %{http_code} 'http://stellio:8080/ngsi-ld/v1/entities/?type=X') " (waiting for 200)"
 	  echo -e "Waiting for ${waitSeconds} seconds ..."
 	  sleep ${waitSeconds}
 	done
@@ -105,7 +105,7 @@ waitForUserContext () {
 
 waitForMongo () {
 	echo -e "\n⏳ Waiting for \033[1mMongoDB\033[0m to be available\n"
-	while ! [ `docker inspect --format='{{.State.Health.Status}}' db-mongo` == "healthy" ]
+	while ! [ "$(docker inspect --format='{{.State.Health.Status}}' db-mongo)" == "healthy" ]
 	do 
 		sleep 1
 	done
@@ -142,7 +142,7 @@ case "${command}" in
 		exit 0;
 		;;
 	"orion")
-		export $(cat .env | grep "#" -v)
+		set -a; source .env; set +a
 		stoppingContainers
 		waitForCoreContext
 		echo -e "Starting containers:  \033[1;34mOrion-LD\033[0m, a linked data \033[1mContext\033[0m and a \033[1;30mMongoDB\033[0m database."
@@ -157,7 +157,7 @@ case "${command}" in
 		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
 		;;
 	"scorpio")
-		export $(cat .env | grep "#" -v)
+		set -a; source .env; set +a
 		stoppingContainers
 		waitForCoreContext
 		echo -e "Starting containers:  \033[1;34mScorpio\033[0m,  a linked data \033[1mContext\033[0m and a \033[1mPostgres\033[0m database."
@@ -170,7 +170,7 @@ case "${command}" in
 		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
 		;;
 	"stellio")
-		export $(cat .env | grep "#" -v)
+		set -a; source .env; set +a
 		stoppingContainers
 		waitForCoreContext
 		echo -e "Starting containers:  \033[1;34mStellio\033[0m, \033[1mKafka\033[0m, \033[1mPostgreSQL/TimescaleDB\033[0m, and a linked data \033[1mContext\033[0m."
@@ -183,15 +183,15 @@ case "${command}" in
 		echo -e "\033[1;34m${command}\033[0m is now running and exposed on localhost:${EXPOSED_PORT}"
 		;;
 	"stop")
-		export $(cat .env | grep "#" -v)
+		set -a; source .env; set +a
 		stoppingContainers
 		;;
 	"start")
-		export $(cat .env | grep "#" -v)
+		set -a; source .env; set +a
 		./services ${CONTEXT_BROKER:=orion} $2
 		;;
 	"create")
-		export $(cat .env | grep "#" -v)
+		set -a; source .env; set +a
 		echo "Pulling Docker images"
 		docker pull -q quay.io/curl/curl:${CURL_VERSION}
 		${dockerCmd} -f docker-compose/common.yml -f docker-compose/scorpio.yml -f docker-compose/orion-ld.yml -f docker-compose/stellio.yml pull
