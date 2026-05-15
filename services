@@ -5,7 +5,7 @@
 #	For this tutorial the commands are merely a convenience script to run docker compose
 #
 
-set -e
+set -eo pipefail
 
 SCORPIO="http://scorpio:9090/"
 ORION="http://orion:1026/version"
@@ -38,7 +38,7 @@ pause(){
 }
 
 getHeartbeat(){
-	eval "response=$(docker run --network fiware_default --rm quay.io/curl/curl:${CURL_VERSION} -s -o /dev/null -w "%{http_code}" "$1")"
+	response=$(docker run --network fiware_default --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w "%{http_code}" "$1")
 }
 
 waitForOrion () {
@@ -83,12 +83,12 @@ waitForStellio () {
 
 waitForCoreContext () {
 	echo -e "\n⏳ Checking availability of \033[1m core @context\033[0m from ETSI\n"
-	eval "response=$(docker run --rm quay.io/curl/curl:${CURL_VERSION} -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")"
+	response=$(docker run --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")
 	while [ "${response}" -eq 000 ]
 	do
 		echo -e "\n@context HTTP state: ${response} (waiting for 200)"
 		pause 3
-		eval "response=$(docker run --rm quay.io/curl/curl:${CURL_VERSION} -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")"
+		response=$(docker run --rm "quay.io/curl/curl:${CURL_VERSION}" -s -o /dev/null -w "%{http_code}" "$CORE_CONTEXT")
 	done
 }
 
@@ -113,17 +113,17 @@ waitForMongo () {
 
 stoppingContainers () {
 	CONTAINERS=$(docker ps --filter "label=org.fiware=tutorial" -aq)
-	if [[ -n $CONTAINERS ]]; then 
+	if [[ -n "$CONTAINERS" ]]; then 
 		echo "Stopping containers"
 		docker rm -f $CONTAINERS || true
 	fi
 	VOLUMES=$(docker volume ls -qf dangling=true) 
-	if [[ -n $VOLUMES ]]; then 
+	if [[ -n "$VOLUMES" ]]; then 
 		echo "Removing old volumes"
 		docker volume rm $VOLUMES || true
 	fi
 	NETWORKS=$(docker network ls  --filter "label=org.fiware=tutorial" -q) 
-	if [[ -n $NETWORKS ]]; then 
+	if [[ -n "$NETWORKS" ]]; then 
 		echo "Removing tutorial networks"
 		docker network rm $NETWORKS || true
 	fi
