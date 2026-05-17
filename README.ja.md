@@ -523,7 +523,7 @@ curl -G -X GET \
             "type": "Point",
             "coordinates": [13.3986, 52.5547]
         },
-        "name": "Bose Brucke Einkauf"
+        "name": "Bösebrücke Einkauf"
     },
     {
         "id": "urn:ngsi-ld:Store:002",

@@ -499,7 +499,7 @@ Because of the use of the `options=keyValues`, the response consists of JSON onl
             "type": "Point",
             "coordinates": [13.3986, 52.5547]
         },
-        "name": "Bose Brucke Einkauf"
+        "name": "Bösebrücke Einkauf"
     },
     {
         "id": "urn:ngsi-ld:Store:002",
