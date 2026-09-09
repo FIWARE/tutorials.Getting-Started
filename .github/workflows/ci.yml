@@ -27,13 +27,15 @@ jobs:
     - name: Build Images
       run: |
         ./services create || true
-    # - name: Run Orion
-    #   run: |
-    #     ./services orion && ./services stop
+    - name: Run Orion
+      run: |
+        ./services orion && ./services stop
     - name: Run Stellio
       run: |
         ./services stellio && ./services stop
-    # - name: Run Scorpio
-    #   run: |
-    #     ./services scorpio && ./services stop
-
+    - name: Run Scorpio
+      run: |
+        ./services scorpio && ./services stop
+    - name: Run Coraine
+      run: |
+        ./services coraine && ./services stop

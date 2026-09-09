@@ -1,19 +1,19 @@
 # WARNING: Do not deploy this tutorial configuration directly to a production environment
 #
-# The tutorial docker-compose files have not been written for production deployment and will not
-# scale. A proper architecture has been sacrificed to keep the narrative focused on the learning
-# goals, they are just used to deploy everything onto a single Docker machine. All FIWARE components
-# are running at full debug and extra ports have been exposed to allow for direct calls to services.
+# The tutorial docker-compose files have not been written for production deployment and will not 
+# scale. A proper architecture has been sacrificed to keep the narrative focused on the learning 
+# goals, they are just used to deploy everything onto a single Docker machine. All FIWARE components 
+# are running at full debug and extra ports have been exposed to allow for direct calls to services. 
 # They also contain various obvious security flaws - passwords in plain text, no load balancing,
-# no use of HTTPS and so on.
-#
+# no use of HTTPS and so on. 
+# 
 # This is all to avoid the need of multiple machines, generating certificates, encrypting secrets
-# and so on, purely so that a single docker-compose file can be read as an example to build on,
-# not use directly.
-#
+# and so on, purely so that a single docker-compose file can be read as an example to build on, 
+# not use directly. 
+# 
 # When deploying to a production environment, please refer to the Helm Repository
 # for FIWARE Components in order to scale up to a proper architecture:
-#
+# 
 # see: https://github.com/FIWARE/helm-charts/
 #
 services:
