@@ -5,22 +5,37 @@
         "ngsi-ld": "https://uri.etsi.org/ngsi-ld/",
         "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
         "xsd": "http://www.w3.org/2001/XMLSchema#",
+        "fiware": "https://uri.fiware.org/ns/dataModels#",
+        "agrifood": "https://smartdatamodels.org/dataModel.Agrifood/",
+        "building": "https://smartdatamodels.org/dataModel.Building/",
+        "device": "https://smartdatamodels.org/dataModel.Device/",
+        "weather": "https://smartdatamodels.org/dataModel.Weather/",
+        "user": "https://smartdatamodels.org/dataModel.User/",
+        "schema": "https://schema.org/",
         "tutorial": "https://ngsi-ld-tutorials.readthedocs.io/en/latest/datamodels.html#",
-        "Building": "https://uri.fiware.org/ns/dataModels#Building",
-        "Device": "https://uri.fiware.org/ns/dataModels#Device",
-        "Animal": "https://uri.fiware.org/ns/dataModels#Animal",
-        "Female": "https://schema.org/Female",
+        "Building": "building:Building",
+        "Device": "device:Device",
+        "Animal": "agrifood:Animal",
+        "AgriParcel": "agrifood:AgriParcel",
+        "AgriCrop": "agrifood:AgriCrop",
+        "AgriPest": "agrifood:AgriPest",
+        "Female": "schema:Female",
         "FillingLevelSensor": "tutorial:FillingLevelSensor",
         "Herbicide": "tutorial:Product",
         "HVAC": "https://w3id.org/saref#HVAC",
-        "Male": "https://schema.org/Male",
+        "Male": "schema:Male",
         "PartField": "tutorial:PartField",
-        "Person": "https://uri.fiware.org/ns/dataModels#Person",
+        "Person": "schema:Person",
         "SoilSensor": "tutorial:SoilSensor",
         "TemperatureSensor": "tutorial:TemperatureSensor",
-        "Task": "https://uri.fiware.org/ns/dataModels#Activity",
+        "Task": "user:Activity",
         "Tractor": "tutorial:Tractor",
         "Water": "tutorial:Water",
+        "WeatherForecast": "weather:WeatherForecast",
+        "WeatherObserved": "weather:WeatherObserved",
+        "AnimalDisease": "agrifood:AnimalDisease",
+        "Pen": "agrifood:Pen",
+        "VeterinarianTreatment": "agrifood:VeterinarianTreatment",
         "actuator": "https://w3id.org/saref#actuator",
         "additionalName": {
             "@id": "https://schema.org/additionalName",
@@ -34,70 +49,70 @@
         "atmosphericPressure": "https://w3id.org/saref#atmosphericPressure",
         "barn": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dbarn",
         "batteryLevel": {
-            "@id": "https://uri.fiware.org/ns/dataModels#batteryLevel",
+            "@id": "device:batteryLevel",
             "@type": "xsd:number"
         },
         "category": {
-            "@id": "https://uri.fiware.org/ns/dataModels#category",
+            "@id": "building:category",
             "@type": "@vocab"
         },
         "configuration": {
-            "@id": "https://uri.fiware.org/ns/dataModels#configuration",
+            "@id": "device:configuration",
             "@type": "xsd:string"
         },
         "conservatory": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dconservatory",
         "containedInPlace": {
-            "@id": "https://uri.fiware.org/ns/dataModels#containedInPlace",
+            "@id": "building:containedInPlace",
             "@type": "@id"
         },
         "controlledAsset": {
-            "@id": "https://uri.fiware.org/ns/dataModels#controlledAsset",
+            "@id": "device:controlledAsset",
             "@type": "@id"
         },
         "controlledProperty": {
-            "@id": "https://uri.fiware.org/ns/dataModels#controlledProperty",
+            "@id": "device:controlledProperty",
             "@type": "@vocab"
         },
         "cowshed": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dcowshed",
         "dataProvider": {
-            "@id": "https://uri.fiware.org/ns/dataModels#dataProvider",
+            "@id": "device:dataProvider",
             "@type": "xsd:string"
         },
         "dateCreated": {
-            "@id": "https://uri.fiware.org/ns/dataModels#dateCreated",
+            "@id": "device:dateCreated",
             "@type": "xs:dateTime"
         },
         "dateFirstUsed": {
-            "@id": "https://uri.fiware.org/ns/dataModels#dateFirstUsed",
+            "@id": "device:dateFirstUsed",
             "@type": "xs:dateTime"
         },
         "dateInstalled": {
-            "@id": "https://uri.fiware.org/ns/dataModels#dateInstalled",
+            "@id": "device:dateInstalled",
             "@type": "xs:dateTime"
         },
         "dateLastCalibration": {
-            "@id": "https://uri.fiware.org/ns/dataModels#dateLastCalibration",
+            "@id": "device:dateLastCalibration",
             "@type": "xs:dateTime"
         },
         "dateLastValueReported": {
-            "@id": "https://uri.fiware.org/ns/dataModels#dateLastValueReported",
+            "@id": "device:dateLastValueReported",
             "@type": "xs:dateTime"
         },
         "dateManufactured": {
-            "@id": "https://uri.fiware.org/ns/dataModels#dateManufactured",
+            "@id": "device:dateManufactured",
             "@type": "xs:dateTime"
         },
         "dateModified": {
-            "@id": "https://uri.fiware.org/ns/dataModels#dateModified",
+            "@id": "device:dateModified",
             "@type": "xs:dateTime"
         },
         "depth": "https://w3id.org/saref#depth",
         "description": {
-            "@id": "ngsi-ld:description",
+            "@id": "http://purl.org/dc/terms/description",
             "@type": "xsd:string"
         },
         "deviceState": {
-            "@id": "https://uri.fiware.org/ns/dataModels#deviceState",
+            "@id": "device:deviceState",
             "@type": "xsd:string"
         },
         "digester": "https://wiki.openstreetmap.org/wiki/Tag:building%3Ddigester",
@@ -119,15 +134,15 @@
         },
         "filling": "https://w3id.org/saref#fillingLevel",
         "firmwareVersion": {
-            "@id": "https://uri.fiware.org/ns/dataModels#firmwareVersion",
+            "@id": "device:firmwareVersion",
             "@type": "xsd:string"
         },
         "floorsAboveGround": {
-            "@id": "https://uri.fiware.org/ns/dataModels#floorsAboveGround",
+            "@id": "building:floorsAboveGround",
             "@type": "xsd:integer"
         },
         "floorsBelowGround": {
-            "@id": "https://uri.fiware.org/ns/dataModels#floorsBelowGround",
+            "@id": "building:floorsBelowGround",
             "@type": "xsd:integer"
         },
         "gender": {
@@ -141,7 +156,7 @@
         "greenhouse": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dgreenhouse",
         "hangar": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dhangar",
         "hardwareVersion": {
-            "@id": "https://uri.fiware.org/ns/dataModels#hardwareVersion",
+            "@id": "device:hardwareVersion",
             "@type": "xsd:string"
         },
         "honorificPrefix": {
@@ -156,7 +171,7 @@
         "hut": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dhut",
         "implement": "https://w3id.org/saref#implement",
         "ipAddress": {
-            "@id": "https://uri.fiware.org/ns/dataModels#ipAddress",
+            "@id": "device:ipAddress",
             "@type": "xsd:string"
         },
         "irrSection": "https://w3id.org/saref#irrSection",
@@ -171,41 +186,42 @@
         },
         "location": "https://w3id.org/saref#location",
         "macAddress": {
-            "@id": "https://uri.fiware.org/ns/dataModels#macAddress",
+            "@id": "device:macAddress",
             "@type": "xsd:string"
         },
         "mcc": {
-            "@id": "https://uri.fiware.org/ns/dataModels#mcc",
+            "@id": "device:mcc",
             "@type": "xsd:string"
         },
         "meter": "https://w3id.org/saref#meter",
         "milking": "https://w3id.org/saref#milking",
         "mnc": {
-            "@id": "https://uri.fiware.org/ns/dataModels#mnc",
+            "@id": "device:mnc",
             "@type": "xsd:string"
         },
         "motion": "https://w3id.org/saref#motion",
         "movementActivity": "https://w3id.org/saref#movementActivity",
         "multimedia": "https://w3id.org/saref#multimedia",
         "name": {
-            "@id": "https://schema.org/name",            "@type": "xsd:string"
+            "@id": "https://schema.org/name",
+            "@type": "xsd:string"
         },
         "network": "https://w3id.org/saref#network",
         "occupancy": "https://w3id.org/saref#occupancy",
         "occupier": {
-            "@id": "https://uri.fiware.org/ns/dataModels#occupier",
+            "@id": "building:occupier",
             "@type": "@id"
         },
         "openingHours": {
-            "@id": "https://uri.fiware.org/ns/dataModels#openingHours",
+            "@id": "building:openingHours",
             "@type": "xsd:array"
         },
         "osVersion": {
-            "@id": "https://uri.fiware.org/ns/dataModels#osVersion",
+            "@id": "device:osVersion",
             "@type": "xsd:string"
         },
         "owner": {
-            "@id": "https://uri.fiware.org/ns/dataModels#owner",
+            "@id": "building:owner",
             "@type": "@id"
         },
         "postalCode": "https://schema.org/postalCode",
@@ -216,7 +232,7 @@
             "@type": "xsd:string"
         },
         "refDeviceModel": {
-            "@id": "https://uri.fiware.org/ns/dataModels#refDeviceModel",
+            "@id": "device:refDeviceModel",
             "@type": "@id"
         },
         "refMap": {
@@ -224,31 +240,31 @@
             "@type": "xs:anyURI"
         },
         "rssi": {
-            "@id": "https://uri.fiware.org/ns/dataModels#rssi",
+            "@id": "device:rssi",
             "@type": "xsd:string"
         },
         "sensor": "https://w3id.org/saref#sensor",
         "serialNumber": {
-            "@id": "https://uri.fiware.org/ns/dataModels#serialNumber",
+            "@id": "device:serialNumber",
             "@type": "xsd:string"
         },
         "service": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dservice",
         "shed": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dshed",
         "softwareVersion": {
-            "@id": "https://uri.fiware.org/ns/dataModels#softwareVersion",
+            "@id": "device:softwareVersion",
             "@type": "xsd:string"
         },
         "soilMoisture": "https://w3id.org/saref#soilMoisture",
         "solarRadiation": "https://w3id.org/saref#solarRadiation",
         "source": {
-            "@id": "https://uri.fiware.org/ns/dataModels#source",
+            "@id": "building:source",
             "@type": "xsd:string"
         },
         "stable": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dstable",
         "streetAddress": "https://schema.org/streetAddress",
         "sty": "https://wiki.openstreetmap.org/wiki/Tag:building%3Dsty",
         "supportedProtocol": {
-            "@id": "https://uri.fiware.org/ns/dataModels#supportedProtocol",
+            "@id": "device:supportedProtocol",
             "@type": "@vocab"
         },
         "taxID": {
@@ -279,28 +295,113 @@
         "heartRate": "https://purl.bioontology.org/ontology/MESH/D006339",
         "status": "https://saref.etsi.org/core/status",
         "product": {
-            "@id": "https://uri.fiware.org/ns/dataModels#refObject",
+            "@id": "user:refObject",
             "@type": "@id"
         },
-
         "worker": {
-            "@id": "https://uri.fiware.org/ns/dataModels#refAgent",
+            "@id": "user:refAgent",
             "@type": "@id"
         },
         "field": {
-            "@id": "https://uri.fiware.org/ns/dataModels#refTarget",
+            "@id": "user:refTarget",
             "@type": "@id"
         },
         "on": "https://w3id.org/saref#on",
         "off": "https://w3id.org/saref#off",
         "verified": "https://uri.fiware.org/ns/dataModels#verified",
-        "species": "https://uri.fiware.org/ns/dataModels#species",
-        "sex": "https://uri.fiware.org/ns/dataModels#sex",
-        "legalID": "https://uri.fiware.org/ns/dataModels#legalID"
+        "species": "agrifood:species",
+        "sex": "agrifood:sex",
+        "legalId": "agrifood:legalId",
+        "additionalProperty": "schema:additionalProperty",
+        "comment": "schema:comment",
+        "cropType": "agrifood:hasAgriCrop",
+        "cropStatus": "agrifood:cropStatus",
+        "deviceCategory": "device:deviceCategory",
+        "deviceModel": "device:deviceModel",
+        "fedWith": "agrifood:fedWith",
+        "healthCondition": "agrifood:healthCondition",
+        "observedAt": "ngsi-ld:observedAt",
+        "phenologicalCondition": "agrifood:phenologicalCondition",
+        "providedBy": "fiware:providedBy",
+        "reproductiveCondition": "agrifood:reproductiveCondition",
+        "unitCode": "ngsi-ld:unitCode",
+        "alternateName": "schema:alternateName",
+        "areaServed": "schema:areaServed",
+        "seeAlso": "https://www.w3.org/2000/01/rdf-schema#seeAlso",
+        "relatedSource": "agrifood:relatedSource",
+        "appliedProduct": "agrifood:appliedProduct",
+        "quantity": "agrifood:quantity",
+        "date": "agrifood:date",
+        "phaseOutPeriod": "agrifood:phaseOutPeriod",
+        "animals": "agrifood:animals",
+        "veterinarian": "agrifood:veterinarian",
+        "veterinarianTreatment": "agrifood:veterinarianTreatment",
+        "disease": "agrifood:disease",
+        "diagnosticTest": "agrifood:diagnosticTest",
+        "additionalInfo": "agrifood:additionalInfo",
+        "arrivalTimestamp": "agrifood:arrivalTimestamp",
+        "avgGrowth": "agrifood:avgGrowth",
+        "avgWeight": "agrifood:avgWeight",
+        "buildingId": "agrifood:buildingId",
+        "co2": "agrifood:co2",
+        "companyId": "agrifood:companyId",
+        "compartmentId": "agrifood:compartmentId",
+        "deadAnimalsSinceDateOfArrival": "agrifood:deadAnimalsSinceDateOfArrival",
+        "farmId": "agrifood:farmId",
+        "feedConsumption": "agrifood:feedConsumption",
+        "lastUpdate": "agrifood:lastUpdate",
+        "luminosity": "agrifood:luminosity",
+        "numAnimals": "agrifood:numAnimals",
+        "weightStDev": "agrifood:weightStDev",
+        "agroVocConcept": "agrifood:agroVocConcept",
+        "birthdate": "agrifood:birthdate",
+        "calvedBy": "agrifood:calvedBy",
+        "hasAgriParcel": "agrifood:hasAgriParcel",
+        "hasAgriPest": "agrifood:hasAgriPest",
+        "hasAgriSoil": "agrifood:hasAgriSoil",
+        "hasBuilding": "agrifood:hasBuilding",
+        "hasDevices": "agrifood:hasDevices",
+        "locatedAt": "agrifood:locatedAt",
+        "observation": "agrifood:observation",
+        "ownedBy": "agrifood:ownedBy",
+        "prediction": "agrifood:prediction",
+        "siredBy": "agrifood:siredBy",
+        "soilTextureType": "agrifood:soilTextureType",
+        "airQualityIndex": "weather:airQualityIndex",
+        "airQualityIndexForecast": "weather:airQualityIndexForecast",
+        "airTemperatureForecast": "weather:airTemperatureForecast",
+        "airTemperatureTSA": "weather:airTemperatureTSA",
+        "aqiMajorPollutant": "weather:aqiMajorPollutant",
+        "aqiMajorPollutantForecast": "weather:aqiMajorPollutantForecast",
+        "dateIssued": "weather:dateIssued",
+        "dateRetrieved": "weather:dateRetrieved",
+        "dayMaximum": "weather:dayMaximum",
+        "dayMinimum": "weather:dayMinimum",
+        "dewPoint": "weather:dewPoint",
+        "diffuseIrradiation": "weather:diffuseIrradiation",
+        "directIrradiation": "weather:directIrradiation",
+        "feelsLikeTemperature": "weather:feelsLikeTemperature",
+        "gustSpeed": "weather:gustSpeed",
+        "illuminance": "weather:illuminance",
+        "precipitationForecast": "weather:precipitationForecast",
+        "precipitationProbability": "weather:precipitationProbability",
+        "pressureTendency": "weather:pressureTendency",
+        "refDevice": "weather:refDevice",
+        "refPointOfInterest": "weather:refPointOfInterest",
+        "relativeHumidity": "weather:relativeHumidity",
+        "relativeHumidityForecast": "weather:relativeHumidityForecast",
+        "snowHeight": "weather:snowHeight",
+        "streamGauge": "weather:streamGauge",
+        "uVIndexMax": "weather:uVIndexMax",
+        "validFrom": "weather:validFrom",
+        "validTo": "weather:validTo",
+        "validity": "weather:validity",
+        "visibility": "weather:visibility",
+        "weatherType": "weather:weatherType"
     },
     "@graph": [
         {
-            "@id": "https://uri.fiware.org/ns/dataModels#Building",
+            "@id": "https://smartdatamodels.org/dataModel.Building/Building",
             "@type": "rdfs:Class",
             "rdfs:comment": [
                 {
@@ -319,7 +420,7 @@
             }
         },
         {
-            "@id": "https://uri.fiware.org/ns/dataModels#TemperatureSensor",
+            "@id": "https://ngsi-ld-tutorials.readthedocs.io/en/latest/datamodels.html#TemperatureSensor",
             "@type": "rdfs:Class",
             "rdfs:comment": [
                 {
@@ -338,7 +439,7 @@
             }
         },
         {
-            "@id": "https://uri.fiware.org/ns/dataModels#FillingLevelSensor",
+            "@id": "https://ngsi-ld-tutorials.readthedocs.io/en/latest/datamodels.html#FillingLevelSensor",
             "@type": "rdfs:Class",
             "rdfs:comment": [
                 {
@@ -357,7 +458,7 @@
             }
         },
         {
-            "@id": "https://uri.fiware.org/ns/dataModels#Person",
+            "@id": "https://schema.org/Person",
             "@type": "rdfs:Class",
             "rdfs:comment": [
                 {
@@ -376,7 +477,7 @@
             }
         },
         {
-            "@id": "https://uri.fiware.org/ns/dataModels#temperature",
+            "@id": "https://w3id.org/saref#temperature",
             "@type": "ngsi-ld:Property",
             "rdfs:comment": [
                 {
@@ -392,39 +493,7 @@
             ]
         },
         {
-            "@id": "https://uri.fiware.org/ns/dataModels#fillingLevel",
-            "@type": "ngsi-ld:Property",
-            "rdfs:comment": [
-                {
-                    "@language": "en",
-                    "@value": "Property related to some measurements that are characterized by a certain value that is a filling level."
-                }
-            ],
-            "rdfs:label": [
-                {
-                    "@language": "en",
-                    "@value": "fillingLevel"
-                }
-            ]
-        },
-        {
-            "@id": "https://uri.fiware.org/ns/dataModels#temperature",
-            "@type": "ngsi-ld:Property",
-            "rdfs:comment": [
-                {
-                    "@language": "en",
-                    "@value": "Property related to some measurements that are characterized by a certain value that is measured in a temperature unit (degree_Celsius, degree_Fahrenheit, or degree_kelvin)"
-                }
-            ],
-            "rdfs:label": [
-                {
-                    "@language": "en",
-                    "@value": "temperature"
-                }
-            ]
-        },
-        {
-            "@id": "https://uri.fiware.org/ns/dataModels#fillingLevel",
+            "@id": "https://w3id.org/saref#fillingLevel",
             "@type": "ngsi-ld:Property",
             "rdfs:comment": [
                 {
