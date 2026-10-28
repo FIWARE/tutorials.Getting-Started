@@ -19,6 +19,8 @@
         "AgriParcel": "agrifood:AgriParcel",
         "AgriCrop": "agrifood:AgriCrop",
         "AgriPest": "agrifood:AgriPest",
+        "AgriFarm": "agrifood:AgriFarm",
+        "AgriSoil": "agrifood:AgriSoil",
         "Female": "schema:Female",
         "FillingLevelSensor": "tutorial:FillingLevelSensor",
         "Herbicide": "tutorial:Product",
