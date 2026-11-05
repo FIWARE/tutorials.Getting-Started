@@ -28,12 +28,14 @@ services:
       - default
     ports:
       - "${EXPOSED_PORT}:${SCORPIO_PORT}"
+    restart: on-failure
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
   postgres:
     labels:
       org.fiware: 'tutorial'
-    image: postgis/postgis
+    image: postgis/postgis:${POSTGIS_VERSION}
     hostname: postgres
     container_name: db-postgres
     networks:
@@ -44,6 +46,11 @@ services:
       POSTGRES_USER: ngb
       POSTGRES_PASSWORD: ngb
       POSTGRES_DB: ngb
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ngb -d ngb"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
     logging:
       driver: none
     volumes:
