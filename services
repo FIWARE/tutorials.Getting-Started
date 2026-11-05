@@ -127,9 +127,9 @@ stoppingContainers () {
 	CONTAINERS=$(docker ps --filter "label=org.fiware=tutorial" -aq)
 	if [[ -n "$CONTAINERS" ]]; then 
 		echo "Stopping containers"
-		docker rm -f $CONTAINERS || true
+		docker rm -f -v $CONTAINERS || true
 	fi
-	VOLUMES=$(docker volume ls -qf dangling=true) 
+	VOLUMES=$(docker volume ls -q --filter dangling=true --filter "label=com.docker.compose.project=fiware")
 	if [[ -n "$VOLUMES" ]]; then 
 		echo "Removing old volumes"
 		docker volume rm $VOLUMES || true
